@@ -8,8 +8,8 @@
     <link rel="icon" href="Assets/eztoolslogo.png" type="image/x-icon">
     <script src="https://unpkg.com/pdf-lib/dist/pdf-lib.js"></script>
     <script src="https://unpkg.com/downloadjs@1.4.7"></script>
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/ionicons/5.5.4/ionicons.min.js"></script>
-    <title>Wasted Tools</title> -->
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/ionicons/5.5.4/ionicons.min.js"></script> -->
+    <title>Wasted App</title>
 </head>
 <body>
   <dialog id="error"><strong>Error:</strong> <span id="error-txt"></span></dialog>
@@ -17,7 +17,7 @@
     <section class="grid">
         <div class="card"></div> <!-- top left corner -->
         <div class="card">
-          <h1 class="main__header">WASTED TOOLS</h1>
+          <h1 class="main__header">WASTED WORLD APP</h1>
           <!-- <img  
           src="./Assets/tools.png" 
           alt="BCR"
@@ -62,7 +62,7 @@
                     id="rr-tools" 
                     value="rr-tools"
                     class="tool-toggle">
-                    <label for="rr-tools">RR Tools</label>
+                    <label for="rr-tools">Vehicles</label>
                 </p>
                 <p class="form-para">
                     <input 
@@ -71,7 +71,7 @@
                     id="dice-tools" 
                     value="dice-tools"
                     class="tool-toggle">
-                    <label for="dice-tools">Dice Tools</label>
+                    <label for="dice-tools">Holds</label>
                 </p>
                 </fieldset>
             </div>
@@ -80,31 +80,8 @@
                 <section class="button-wrapper" id="all-PC-btns"> 
                   
                   <div id="pc-btns">
-                    <!-- <button class="glide-main" id="full-btn">Everything!</button>
-                    <button class="glide-main" id="path-btn">Path</button>
-                    <button class="glide-main" id="species-btn">Species</button>
-                    <button class="glide-main" id="inclinations-btn">Inclinations</button>
-                    <button class="glide-main" id="gear-btn">Equipment</button>
-                    <button class="glide-main" id="basics-btn">Basics</button>
-                    <button class="glide-main" id="potions-btn">Potions</button>
-                    <button class="glide-main" id="scrolls-btn">Scrolls</button>
-                    <button class="glide-main" id="reset-btn">Reset</button> 
-                    <button class="glide-main" id="pdf-btn">To PDF</button> -->
-                    <!-- <button class="glide-main" id="build-btn">Custom Build</button> -->
-                    <!-- <button class="glide-main" id="settings-btn">Settings</button> -->
-                    <!-- <div class="wrapper">
-                      <div class="select-btn">
-                        <span>Select a Path</span>
-                        <i class="uil uil-angle-down"></i>
-                      </div>
-                      <div class="path-list">
-                        <ul class="path-items"></ul>
-                      </div>
-                    </div>  -->
                   </div>
                 </section>
-                
-                <!-- <hr> -->
 
                 <div class="📝-container" id="📝-container">
                   <div class="📝builder-btns">
@@ -113,23 +90,6 @@
                     <!-- <button class="glide-main" onclick="fillForm()" id="📝pdf-btn">Save to PDF</button> -->
                   </div>
                   <hr>
-                  <!-- <p class="📝-class"><strong>Name:</strong></p>
-                  <div class="📝box">
-                    <p>
-                        <input 
-                        type="text" 
-                        name="📝name"
-                        id="📝name"
-                        class="📝form" 
-                        title="Enter a name or generate one"
-                        placeholder="PC Name"
-                        autocomplete="off">
-                    </p>
-                    <button class="form-btn" onclick="spinName(true)" id="📝name-btn">🎲</button> 
-                    <button class="form-btn" onclick="clearName()">🗙</button> 
-                  </div>
-                  <hr> -->
-
                   <p class="📝-class"><strong>Path:</strong></p>
                   <div class="📝box">
                     <!-- <p class="green-box" id="📝path" ></p> -->
@@ -137,34 +97,8 @@
                     <button class="form-btn" onclick="getPath(1)">🎲</button>
                     <button class="form-btn" onclick="clearPath()">🗙</button>
                     <p class="green-box" id="📝path">Click 'Build' for a custom Path or 🎲 for a random one. Click 🗙 to start over.</p>
-                    <!-- <div class="📝form-btns">
-                      <button class="glide-sml" onclick="getPath(2, this)" id="📝android-btn">Android</button>
-                      <button class="glide-sml" onclick="getPath(2, this)" id="📝clone-btn">Clone</button>
-                      <button class="glide-sml" onclick="getPath(2, this)" id="📝hunter-btn">Hunter</button>
-                      <button class="glide-sml" onclick="getPath(2, this)" id="📝machine-head-btn">Machine Head</button>
-                      <button class="glide-sml" onclick="getPath(2, this)" id="📝mutie-btn">Mutie</button>
-                      <button class="glide-sml" onclick="getPath(2, this)" id="📝rambler-btn">Rambler</button>
-                      <button class="glide-sml" onclick="getPath(2, this)" id="📝scavie-btn">Scavie</button>
-                      <button class="glide-sml" onclick="getPath(2, this)" id="📝wasteland-btn">Wasteland Warrior</button>
-                      <button class="glide-sml" onclick="getPath(2, this)" id="📝weird-btn">Weird</button> 
-                      <button class="glide-sml" onclick="getPath(2, this)" id="📝jack-btn">Jack</button> 
-                    </div>  -->
                   </div>
                   <hr>
-                  <!-- <p class="📝-class"><strong>Species:</strong></p>
-                  <div class="📝box" >
-                    <p class="green-box" id="📝species"></p>
-                    <button class="form-btn" onclick="getPcSpecies(1)">🎲</button>
-                    <button class="form-btn" onclick="clearSpecies()">🗙</button>
-                    <div class="📝form-btns">
-                      <button class="glide-sml" onclick="getPcSpecies(2, this)">Human</button>
-                      <button class="glide-sml" onclick="getPcSpecies(2, this)">Elf</button>
-                      <button class="glide-sml" onclick="getPcSpecies(2, this)">Dwarf</button>
-                      <button class="glide-sml" onclick="getPcSpecies(2, this)">Hafling</button>
-                      <button class="glide-sml" onclick="getPcSpecies(2, this)">Goblin</button>
-                    </div> 
-                  </div>
-                  <hr> -->
                   <div class="inclinations__section" id="incl-header">
                     
                     <p class="📝-class"><strong>Inclinations:</strong></p>
@@ -194,14 +128,6 @@
                         <!-- <p class="green-box" id="📝inclinations2"></p> -->
                         <button class="form-btn" onclick="testMain('physMut')">Physical Mutations</button>
                         <button class="form-btn" onclick="getRndIncl()">🎲</button>
-                        <!-- <button class="form-btn" onclick="clearInclinations()">🗙</button>  -->
-                        <!-- <aside>
-                          <details>
-                            <summary class="summary__dropdown">All Physical Mutations (click to expand)</summary>
-                            <div class="📝form-btns" id="phys-mutations-list">
-                            </div> 
-                          </details>
-                        </aside> -->
                       </div>
                       
                     </div>
@@ -212,14 +138,6 @@
                         <!-- <p class="green-box" id="📝inclinations3"></p> -->
                         <button class="form-btn" onclick="testMain('mentalMut')">Mental Metations</button>
                         <button class="form-btn" onclick="getRndIncl()">🎲</button>
-                        <!-- <button class="form-btn" onclick="clearInclinations()">🗙</button>  -->
-                        <!-- <aside>
-                          <details>
-                            <summary class="summary__dropdown">All Mental Mutations (click to expand)</summary>
-                            <div class="📝form-btns" id="mental-mutations-list">
-                            </div> 
-                          </details>
-                        </aside> -->
                       </div>
                       
                     </div>
@@ -230,14 +148,6 @@
                         <!-- <p class="green-box" id="📝inclinations4"></p> -->
                         <button class="form-btn" onclick="testMain('dnaMods')">DNA Modifications</button>
                         <button class="form-btn" onclick="getRndIncl()">🎲</button>
-                        <!-- <button class="form-btn" onclick="clearInclinations()">🗙</button>  -->
-                        <!-- <aside>
-                          <details>
-                            <summary class="summary__dropdown">All DNA Modifications (click to expand)</summary>
-                            <div class="📝form-btns" id="dna-mods-list">
-                            </div> 
-                          </details>
-                        </aside> -->
                       </div>
                     </div>
                   
@@ -247,14 +157,6 @@
                         <!-- <p class="green-box" id="📝inclinations5"></p> -->
                         <button class="form-btn" onclick="testMain('bioSynth')">BioSynth Packages</button>
                         <button class="form-btn" onclick="getRndIncl()">🎲</button>
-                        <!-- <button class="form-btn" onclick="clearInclinations()">🗙</button>  -->
-                        <!-- <aside>
-                          <details>
-                            <summary class="summary__dropdown">All BioSynth Packages (click to expand)</summary>
-                            <div class="📝form-btns" id="bio-synth-list">
-                            </div> 
-                          </details>
-                        </aside> -->
                       </div>
                     </div>
 
@@ -262,23 +164,6 @@
                     <p class="green-box" id="all-incl-list"></p>
                     <hr>
                   </div>
-
-                  
-                  <!-- <p class="📝-class"><strong>Wealth:</strong></p>
-                  <div class="📝box">
-                    <p class="green-box" id="📝wealth"></p>
-                    <button class="form-btn" onclick="spinWealth(1)">🎲</button>
-                    <button class="form-btn" onclick="clearWealth()">🗙</button> 
-                    <div class="📝form-btns">
-                      <button class="glide-sml" onclick="spinWealth(2, this)">Pauper</button>
-                      <button class="glide-sml" onclick="spinWealth(2, this)">Cash Poor</button>
-                      <button class="glide-sml" onclick="spinWealth(2, this)">Moderate</button>
-                      <button class="glide-sml" onclick="spinWealth(2, this)">Wealthy</button>
-                      <button class="glide-sml" onclick="spinWealth(2, this)">Lordly</button>
-                      <button class="glide-sml" onclick="spinWealth(2, this)">Kingly</button>
-                    </div> 
-                  </div>
-                  <hr> -->
                   
                   <div class="inner__section" id="stats-holder" style="display: none;">
                     <hr>
@@ -301,71 +186,6 @@
                     </div>
                     <hr>
                   </div>
-
-                  <!-- <div class="pdf__output">
-                    <div class="pdf-portrait" data-pdf-trait="portrait"></div>
-                    <span class="pdf-name-text" data-pdf-trait="name"></span>
-                    <span class="pdf-hometown-text" data-pdf-trait="hometown"></span>
-                    <section class="pdf-section-prompts">
-                      <div class="pdf-list-prompts" data-pdf-traits="prompts">
-                        <span class="pdf-prompts" data-all-prompts="false">
-                          <span class="pdf-prompts__key" data-prompt="lineage">I am a</span> <span class="pdf-prompts__value" data-prompt="lineage" data-prompt-has-value="false"></span>
-                          <span class="pdf-prompts__key" data-prompt="equipped">equipped with</span> <span class="pdf-prompts__value" data-prompt="equipped" data-prompt-has-value="false"></span>.
-                          <span class="pdf-prompts__key" data-prompt="start">It all started when</span> <span class="pdf-prompts__value" data-prompt="start" data-prompt-has-value="false"></span>,
-                          <span class="pdf-prompts__key" data-prompt="now">but now I</span> <span class="pdf-prompts__value" data-prompt="now" data-prompt-has-value="false"></span>.
-                        </span>
-                      </div>
-                    </section>
-                    <section class="pdf-section-flaws">
-                      <h3 class="pdf-list-title">Flaws</h3>
-                      <ul class="pdf-list-flaws" data-pdf-traits="flaws">
-                      <li class="pdf-flaw" data-pdf-trait-id="badReputation"><span class="pdf-flaw__label">Bad Reputation:</span></li></ul>
-                    </section>
-                    <section class="pdf-section-core-abilities">
-                      <h3 class="pdf-list-title">Core Ability</h3>
-                      <ul class="pdf-list-core-abilities" data-pdf-traits="coreAbilities">
-                      </ul>
-                    </section>
-                    <section class="pdf-section-companions">
-                      <h3 class="pdf-list-title">Companions</h3>
-                      <ul class="pdf-list-companions" data-pdf-traits="companions">
-                      </ul>
-                    </section>
-                    <section class="pdf-section-spells">
-                      <h3 class="pdf-list-title">Spells</h3>
-                      <ul class="pdf-list-spells" data-pdf-traits="spells">
-                      <li class="pdf-spell" data-spell-id="arcaneLock_PfFP5"><span class="pdf-spell__label">Arcane Lock</span><span class="pdf-spell-mod-lst" data-pdf-itm-mod-lst="true"><span class="pdf-spell-mod-txt" data-spell-mod-id="clairvoyance">clairvoyance</span><span class="pdf-spell-mod-sep">, </span><span class="pdf-spell-mod-txt" data-spell-mod-id="accuracy">accuracy</span><span class="pdf-spell-mod-sep">, </span><span class="pdf-spell-mod-txt" data-spell-mod-id="blast">blast</span></span></li><li class="pdf-spell" data-spell-id="dreamSpike_pupjb"><span class="pdf-spell__label">Dream Spike</span></li><li class="pdf-spell" data-spell-id="vines_fXE7W"><span class="pdf-spell__label">Vines</span></li><li class="pdf-spell" data-spell-id="fireblast_lqSQP"><span class="pdf-spell__label">Fireblast</span></li><li class="pdf-spell" data-spell-id="sprint_SD6lh"><span class="pdf-spell__label">Sprint</span></li></ul>
-                    </section>
-                    <section class="pdf-section-inventory">
-                      <h3 class="pdf-list-title">Other Possessions</h3>
-                      <ul class="pdf-list-inventory" data-pdf-traits="inventory">
-                      </ul>
-                    </section>
-                    <section class="pdf-section-inventory-attrition">
-                      <ul class="pdf-list-inventory-attrition" data-pdf-traits="inventory_attrition">
-                      <li class="pdf-weapons-armor" data-pdf-trait-id="powderKit_Yx6XY"><span class="pdf-weapons-armor__label">Powder Kit: </span></li><li class="pdf-weapons-armor" data-pdf-trait-id="sackBearings_w5GtA"><span class="pdf-weapons-armor__label">Sack of Bearings: </span></li></ul>
-                    </section>
-                    <section class="pdf-section-skills">
-                      <ul class="pdf-list-skills" data-pdf-traits="skills">
-                      </ul>
-                    </section>
-                  </div> -->
-
-         
-
-                  <!-- <p class="📝-class"><strong>Scrolls:</strong></p>
-                  <div class="📝box">
-                    <p class="green-box" id="📝scrolls"></p>
-                    <button class="form-btn" onclick="getScrolls(1)">🎲</button>
-                    <button class="form-btn" onclick="clearScrolls()">🗙</button>
-                  </div>
-                   -->
-                  <!-- <p class="📝-class"><strong>Potions:</strong></p>
-                  <div class="📝box">
-                    <p class="green-box" id="📝potions"></p>
-                    <button class="form-btn" onclick="getPotions(1)">🎲</button>
-                    <button class="form-btn" onclick="clearPotions()">🗙</button>
-                  </div> -->
 
                   <div class="inner__section" id="equipment-holder" style="display: none;">
                     <hr>
@@ -408,75 +228,6 @@
                   </div>
                   <hr>
               </div>
-              
-                <!-- <div class="result-container" id="pc-content">
-                  <section class="🌠" id="nam">
-                    <h2><span id="name"></span></h2>
-                  </section>
-                  <section class="🌠" id="🔥">
-                    <p ><strong>Path: </strong><span id="path"></span> <span id="circle"></span></p>
-                    <p><strong>Boons: </strong><span id="boons"></span></p>
-                    <p><strong>Features: </strong><span id="features"></span></p>
-            
-                    <hr>
-            
-                    <p><strong>Strikes: </strong><span id="strikes"></span></p>
-                    <p><strong>Armor Type: </strong><span id="armor"></span></p>
-                    <p><strong>Armor Save: </strong><span id="aSave"></span></p>
-                    <p><strong>Miracle Save: </strong><span id="mSave"></span></p>
-                    <p><strong>Karma: </strong><span id="karma"></span></p>
-                    <hr>
-                  </section>
-            
-                  <section class="🌠" id="🤹🏽">
-                    <p>
-                      <strong>Inclinations: </strong><span id="inclinations"></span>
-                    </p>
-                    <hr>
-                  </section>
-
-                  <section class="🌠" id="⚗️">
-                    <p>
-                      <strong>Potions: </strong><span class="span" id="potions"></span>
-                    </p>
-                    
-                  </section>
-                
-                  <section class="🌠" id="📜">
-                    <p>
-                      <strong>Scrolls: </strong><span id="scrolls"></span>
-                    </p>
-                    
-                  </section>
-            
-                  <section class="🌠" id="⚔️">
-                    <p><strong>Wealth: </strong><span id="wealth"></span></p>
-                    
-                    <p>
-                      <strong>Gear: </strong><span id="gear"></span>
-                    </p>
-                    <hr>
-                  </section>
-            
-                  <section class="🌠" id="🧝🏽">
-                    <p><strong>Species: </strong><span id="species"></span></p>
-                    
-                  </section>
-                  
-                  <section class="🌠" id="❤️">
-                      <p><strong>Backstory: </strong><span id="story"></span></p>
-            
-                      
-                  
-                      <p><strong>Moral Core: </strong><span id="core"></span></p>
-            
-                      
-            
-                      <p>
-                        <strong>Physical Description: </strong><span id="phys"></span>
-                      </p>
-                  </section>
-                </div> -->
             </div>
 
             <div id="rr-tab" style="display:none">
@@ -497,53 +248,7 @@
             
                 <hr>
               
-                <div class="result-container">
-                  <section class="🔮">
-                    <h4>Monster: </h4>
-                    <p id="monster"></p>
-                    <hr>
-                  </section>
-            
-                  <section class="🔮">
-                    <h4>Lair Creator: </h4>
-                    <p id="lair-locale"></p>
-                    <p id="lair-aspect"></p>
-                    <p id="lair-boss"></p>
-                    
-                    <p>See page 107 for more.</p>
-                    <hr>
-                  </section>
-            
-                  <section class="🔮">
-                    <h4>Magic Item: </h4>
-                    <p id="magic-item"></p>
-                    <hr>
-                  </section>
-            
-                  <section class="🔮">
-                    <h4>Treasures: </h4>
-                    <p id="treasure"></p>
-                    <hr>
-                  </section>
-            
-                  <section class="🔮">
-                    <p><strong>NPC: </strong></p>
-                    <p id="npc"></p>
-                    <hr>
-                  </section>
-            
-                  <section class="🔮">
-                    <p><strong>Quest: </strong></p>
-                    <p id="quests"></p>
-                    
-                  </section>
-            
-                  <section class="🔮">
-                    <p><strong>Twists: </strong></p>
-                    <p id="twists"></p>
-                  </section>
-            
-                </div>
+                <div class="result-container"></div>
             </div>
 
             <div id="dice-tab" style="display:none">
