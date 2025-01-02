@@ -19,11 +19,11 @@ function rollName(checker) {
 
 function getPath(checker, btn) {
     //selectBtn.firstElementChild.innerText = "Select a Path";
-    pcList[0].getPath(checker, btn);
+    app.getPath(checker, btn);
 };
 
 function clearPath() {
-    pcList[0] = new PC;
+    app.resetToDefault();
 
     // document.getElementById("📝path").innerHTML = "";
     // document.getElementById("📝boons").innerHTML = "";
@@ -53,7 +53,7 @@ function reset() {
         el.innerHTML = "";
     });
     //document.getElementById("📝name").value = "";
-    pcList[0].resetToDefault(); 
+    app.resetToDefault(); 
     //document.getElementById("circle").innerHTML = ""
 
     clearAll(); // some fields are just too stubborn
@@ -1163,6 +1163,10 @@ class PC {
         document.getElementById("all-incl-list").textContent = allInclText || "TBD";
     };
 
+    edgesToDom() {
+        console.log("edge selections sent to dom")
+    }
+
     getRndIncl() {
         this.survivorTalents.forEach(obj => { obj.hasIt = false; });
         this.bioSynthPs.forEach(obj => { obj.hasIt = false; });
@@ -1247,7 +1251,6 @@ class PC {
         this.gear.push(item);
     };
 
-    // Original starts here
     resetToDefault() {
         const defaults = new PC();
         // Copy default values to the current instance
@@ -1376,7 +1379,7 @@ class PC {
         //this.updateStats();
         //this.displayValid(checkBuilder);
         console.log("A path was chosen:", this.path);
-        console.log(pcList[0])
+        console.log(app)
 
         loadInclinations();
     };
@@ -1413,6 +1416,7 @@ class PC {
 
 };
 pcList.push(new PC);
+const app = new PC;
   
 document.getElementById("📝-container").style.display = "block";
 
@@ -1421,17 +1425,17 @@ function loadInclinations() {
     document.getElementById("incl-header").classList.add("active");
     document.getElementById("talents-holder").classList.add("active");
 
-    if (pcList[0].physMutatationsMin >= 1) {
+    if (app.physMutatationsMin >= 1) {
         //document.getElementById("phys-mutations-holder").style.display = "block";
         document.getElementById("phys-mutations-holder").classList.add("active");
     };
-    if (pcList[0].mentalMutationsMin >= 1) {
+    if (app.mentalMutationsMin >= 1) {
         document.getElementById("mental-mutations-holder").classList.add("active");
     };
-    if (pcList[0].dnaModsMin >= 1) {
+    if (app.dnaModsMin >= 1) {
         document.getElementById("dna-mods-holder").classList.add("active");
     };
-    if (pcList[0].bioSynthMin >= 1) {
+    if (app.bioSynthMin >= 1) {
         document.getElementById("bio-synth-holder").classList.add("active");
     };
 };
@@ -1441,27 +1445,27 @@ function buildBuilderSheet(elm) {
     let sheetID = elm;
     let arrayToUse = null;
     if (elm == "path") {
-        arrayToUse = pcList[0].paths;
+        arrayToUse = app.paths;
         sheetName = "Paths";
     }
     if (elm == "sTalents") {
-        arrayToUse = pcList[0].survivorTalents;
+        arrayToUse = app.survivorTalents;
         sheetName = "Survivor Talents";
     }
     if (elm == "physMut") {
-        arrayToUse = pcList[0].physMutations;
+        arrayToUse = app.physMutations;
         sheetName = "Phusical Mutations";
     }
     if (elm == "mentalMut") {
-        arrayToUse = pcList[0].mentalMutations;
+        arrayToUse = app.mentalMutations;
         sheetName = "Mental Mutations";
     }
     if (elm == "dnaMods") {
-        arrayToUse = pcList[0].dnaMods;
+        arrayToUse = app.dnaMods;
         sheetName = "DNA Modifications";
     }
     if (elm == "bioSynth") {
-        arrayToUse = pcList[0].bioSynthPs;
+        arrayToUse = app.bioSynthPs;
         sheetName = "BioSynth Packages";
     }
 
@@ -1542,27 +1546,27 @@ function buildBuilderSheet(elm) {
         //         inc.hasIt = true;
         //         console.log(inc.name + " is ready to be removed.")
 
-        //         pcList[0].checkStats();
+        //         app.checkStats();
 
         //         icon.setAttribute("name", "person-remove-outline");
         //         // inner.style.backgroundColor = "green";
         //         inner.classList.add("green__background");
-        //         //pcList[0].getPath(2, inc.name, arrayToUse);
+        //         //app.getPath(2, inc.name, arrayToUse);
         //         //console.log(inc.name)
         //     } else {
         //         inc.hasIt = false;
         //         console.log(inc.name + " is ready to be added.")
 
-        //         pcList[0].checkStats()
+        //         app.checkStats()
 
         //         icon.setAttribute("name", "person-add-outline");
         //         inner.classList.remove("green__background");
         //     }
-        //     pcList[0].updateStatsAndDom();
+        //     app.updateStatsAndDom();
         // });
         toggle.addEventListener("change", () => {
             if (toggle.checked) {
-                if (pcList[0].checkStats(inc.name)) {
+                if (app.checkStats(inc.name)) {
                     icon.setAttribute("name", "person-remove-outline");
                     inner.classList.add("green__background");
                     inc.hasIt = true;
@@ -1574,7 +1578,7 @@ function buildBuilderSheet(elm) {
                 icon.setAttribute("name", "person-add-outline");
                 inner.classList.remove("green__background");
             }
-            pcList[0].updateStatsAndDom();
+            app.updateStatsAndDom();
         });        
 
         // toggle.addEventListener('change', function() {
@@ -1629,8 +1633,8 @@ function toggleBuilderSheet(elm, checker, parentClass) {
 };
 
 function getRndIncl(nameIn) {
-    //pcList[0].rollInclination(1, nameIn);
-    pcList[0].getRndIncl();
+    //app.rollInclination(1, nameIn);
+    app.getRndIncl();
 }
 
 const pathElement = document.getElementById("📝path");

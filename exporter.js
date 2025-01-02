@@ -97,59 +97,59 @@ async function fillForm() {
     const aspectsField = form.getTextField('Aspects');
 
     // Fill in pdf fields
-    //if (pcList[0].name) {nameField.setText(pcList[0].name)};
-    nameField.setText(pcList[0].name)
-    speciesField.setText(pcList[0].species);
+    //if (app.name) {nameField.setText(app.name)};
+    nameField.setText(app.name)
+    speciesField.setText(app.species);
     wealthGroup.select(wealthOptions[wealthDropFix]);
     
-    if (pcList[0].inclinations.length <= 0) {
+    if (app.inclinations.length <= 0) {
         getInclinations(1);
         console.log("Auto rolled Inclinations")
     };
 
     inclField.setText(
-        pcList[0].inclinations.join('\n')
+        app.inclinations.join('\n')
     );
 
-    karmaDrop.select(karmaOptions[pcList[0].karma]);
+    karmaDrop.select(karmaOptions[app.karma]);
     
-    if (pcList[0].boons) {boonsField.setText(pcList[0].boons.join(", "))};
+    if (app.boons) {boonsField.setText(app.boons.join(", "))};
 
-    if (pcList[0].path === "Conjurer") {
-        sorcCircleField.setText(pcList[0].circleTxt);
+    if (app.path === "Conjurer") {
+        sorcCircleField.setText(app.circleTxt);
         sorcDetailsField.setText("Pages 35-39 detail the Circles of Sorcery. ");
     }
     
-    gearField.setText(pcList[0].equipment.join(", "));
-    detailsField.setText(pcList[0].description);
-    featuresField.setText(pcList[0].features);
+    gearField.setText(app.equipment.join(", "));
+    detailsField.setText(app.description);
+    featuresField.setText(app.features);
     
-    armorField.setText("M. Save: " + pcList[0].miracleSave);
+    armorField.setText("M. Save: " + app.miracleSave);
 
     //heroDrop.select(heroOptions[1]); //set by default
     
     aSaveDrop.select(aSaveOptions[aSaveOption]);
 
-    healthField.setText(pcList[0].strikes);
-    aspectsField.setText(pcList[0].story);
+    healthField.setText(app.strikes);
+    aspectsField.setText(app.story);
 
-    if (pcList[0].potions) {
+    if (app.potions) {
         potionsField.setText(
-            pcList[0].potions.join('\n'),
+            app.potions.join('\n'),
         );
     };
-    if (pcList[0].scrolls) {
+    if (app.scrolls) {
         scrollsField.setText(
-            pcList[0].scrolls.join('\n'),
+            app.scrolls.join('\n'),
         );
     };
     weaponsField.setText("Decide on your weaponry (pg. 40)");
-    pathField.setText(pcList[0].path);
-    strikesField.setText(pcList[0].strikes);
+    pathField.setText(app.path);
+    strikesField.setText(app.strikes);
 
     // Serialize the PDFDocument to bytes (a Uint8Array)
     const pdfBytes = await pdfDoc.save();
 
     // Trigger the browser to download the PDF document
-    download(pdfBytes, pcList[0].name, "application/pdf");
+    download(pdfBytes, app.name, "application/pdf");
 };

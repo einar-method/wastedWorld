@@ -2,16 +2,16 @@ function loadInclinations() {
     document.getElementById("incl-header").style.display = "block";
     document.getElementById("talents-holder").style.display = "block";
 
-    if (pcList[0].physMutatationsMin >= 1) {
+    if (app.physMutatationsMin >= 1) {
         document.getElementById("phys-mutations-holder").style.display = "block";
     };
-    if (pcList[0].mentalMutationsMin >= 1) {
+    if (app.mentalMutationsMin >= 1) {
         document.getElementById("mental-mutations-holder").style.display = "block";
     };
-    if (pcList[0].dnaModsMin >= 1) {
+    if (app.dnaModsMin >= 1) {
         document.getElementById("dna-mods-holder").style.display = "block";
     };
-    if (pcList[0].bioSynthMin >= 1) {
+    if (app.bioSynthMin >= 1) {
         document.getElementById("bio-synth-holder").style.display = "block";
     };
 
@@ -24,7 +24,7 @@ function loadInclinations() {
     //     // document.getElementById("talents-holder").style.display = "block";
     // });
 
-    // if (pcList[0].physMutatationsMin >= 1) {
+    // if (app.physMutatationsMin >= 1) {
     //     physicalMutationsArray.forEach(talent => {
     //         const button = document.createElement("button");
     //         button.classList.add("glide-sml");
@@ -35,7 +35,7 @@ function loadInclinations() {
     //     });
     // };
 
-    // if (pcList[0].mentalMutationsMin >= 1) {
+    // if (app.mentalMutationsMin >= 1) {
     //     mentalMutationsArray.forEach(talent => {
     //         const button = document.createElement("button");
     //         button.classList.add("glide-sml");
@@ -46,7 +46,7 @@ function loadInclinations() {
     //     });
     // };
 
-    // if (pcList[0].dnaModsMin >= 1) {
+    // if (app.dnaModsMin >= 1) {
     //     dnaModsArray.forEach(talent => {
     //         const button = document.createElement("button");
     //         button.classList.add("glide-sml");
@@ -57,7 +57,7 @@ function loadInclinations() {
     //     });
     // };
 
-    // if (pcList[0].bioSynthMin >= 1) {
+    // if (app.bioSynthMin >= 1) {
     //     bioSynthPackagesArray.forEach(talent => {
     //         const button = document.createElement("button");
     //         button.classList.add("glide-sml");
