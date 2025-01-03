@@ -504,10 +504,14 @@ dialog {
   height: 100%;
   border: transparent; /* 1px solid rgba(0, 0, 0, 0.1); */
   display: grid;
-  grid-template-columns: 4fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr;
   transition: all 0.2s ease-in-out;
   gap: 0.15rem;
   /* grid-auto-rows: 6vmin; */
+}
+.📝box.threeCol {
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-auto-rows: 6vmin 1fr;
 }
 
 /* .📝builder-btns {
@@ -622,14 +626,19 @@ input[type="number"] {
   background-color: #99ca3c;
   color: black;
 }
-#📝path {
+.green-box.large {
+  font-weight: normal;
+  font-size: normal;
+  grid-column: 1 / -1; /* Starts at first column, spans to last */
+}
+#📝path, #📝aspects {
   color: rgb(59, 59, 59); /* Grayed out color */
   font-weight: normal;
   font-size: x-small;
   grid-column: 1 / -1; /* Starts at first column, spans to last */
   transition: color 0.3s ease;
 }
-#📝path.active {
+#📝path.active, #📝aspects.active {
   color: #000; /* Normal text color when updated */
   font-weight: bold;
   font-size: initial;
@@ -661,7 +670,7 @@ p {
   margin: 0;
 }
 
-#📝clearBuild-btn {
+#📝clearBuild-btn, #📝pdf-btn {
   width: 100%;
 }
 
@@ -714,10 +723,10 @@ p {
   overflow-y: auto;
 }
 
-.inclinations__section {
+.outer__section {
   display: none;
 }
-.inclinations__section.active {
+.outer__section.active {
   display: flex;
   flex-direction: column;
   gap: 4px;
@@ -882,7 +891,23 @@ p {
 
 
 
-
+.textarea__dynamic {
+  background-color: transparent;
+  resize: none;
+  width: 100%;
+  border: #99ca3c;
+  border-width: 2px;
+  border-style: solid;
+  border-radius: 1px;
+  border: none;
+  padding: .2rem;
+  outline: 2px solid #231F20;
+  transition: .3s all ease-in-out;
+}
+.textarea__dynamic:focus {
+  outline: 2px dashed #BA6F35;
+  background-color: #A9BAB4;
+}
 
 
 

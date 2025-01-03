@@ -86,6 +86,7 @@
                 <div class="📝-container" id="📝-container">
                   <div class="📝builder-btns">
                     <button class="form-btn" onclick="rndAll()" id="📝clearBuild-btn">Quick Survivor</button>
+                    <button class="form-btn" onclick="clearPath()">🗙</button>
                     <!-- <button class="glide-main" onclick="testMain()" id="📝test-btn">test</button> -->
                     <!-- <button class="glide-main" onclick="fillForm()" id="📝pdf-btn">Save to PDF</button> -->
                   </div>
@@ -93,16 +94,13 @@
                   <p class="📝-class"><strong>Path:</strong></p>
                   <div class="📝box">
                     <!-- <p class="green-box" id="📝path" ></p> -->
-                    <button class="form-btn" onclick="testMain('path')">Build</button>
+                    <button class="form-btn" onclick="testMain('path')">Choose Path</button>
                     <button class="form-btn" onclick="getPath(1)">🎲</button>
-                    <button class="form-btn" onclick="clearPath()">🗙</button>
                     <p class="green-box" id="📝path">Click 'Build' for a custom Path or 🎲 for a random one. Click 🗙 to start over.</p>
                   </div>
-                  <hr>
-                  <div class="inclinations__section" id="incl-header">
-                    
+                  <div class="outer__section" id="incl-header">
+                    <hr>
                     <p class="📝-class"><strong>Inclinations:</strong></p>
-                    <p>You still have Inclinations to choose from.</p>
                     <div class="inner__section" id="talents-holder">
                       
                       <!-- <p class="📝-class"><strong>Survivor Talents: </strong><span class="keep-span" id="📝inc-tip">2 of 2 remaining</span></p> -->
@@ -160,9 +158,8 @@
                       </div>
                     </div>
 
-                    <p class="📝-class">Selected Inclinations (<span class="keep-span" id="incl-tip-main">5 of 5 remaining</span>):</p>
+                    <div id="incl-tip-main"></div>
                     <p class="green-box" id="all-incl-list"></p>
-                    <hr>
                   </div>
                   
                   <div class="inner__section" id="stats-holder" style="display: none;">
@@ -176,34 +173,36 @@
                     <p class="📝-class"><strong>Features:</strong> <span id="📝features"></span></p>
                   </div>
 
-                  <div class="inner__section" id="equipment-holder" style="display: none;">
-                    <hr>
-                    <p class="📝-class"><strong>Equipment:</strong></p>
+                  <div class="inner__section active" id="name-holder">
+                    <!-- <hr> -->
+                    <p class="📝-class"><strong>Name:</strong></p>
                     <div class="📝box">
-                      <p class="green-box" id="📝gear"></p>
-                      <button class="form-btn" onclick="getGear(1)">🎲</button>
-                      <button class="form-btn" onclick="clearGear()">🗙</button>
-                    </div>
-                    <hr>
-                  </div>
-
-                  <div class="inner__section" id="equipment-holder" style="display: none;">
-                    <hr>
-                    <p class="📝-class"><strong>Aspects:</strong></p>
-                    <div class="📝box">
-                      <p>
+                      <!-- <p>
                         <input 
                         type="text" 
-                        name="📝story"
-                        id="📝story"
+                        name="📝name"
+                        id="📝name"
                         class="📝form" 
-                        title="Write a short backstory or generate one."
-                        placeholder="Backstory"
+                        title="Type in a name, or generate one."
+                        placeholder="Name"
                         autocomplete="off">
-                    </p>
-                      <button class="form-btn" onclick="getStory()">🎲</button>
-                      <button class="form-btn" onclick="clearStory()">🗙</button>
+                      </p> -->
+                      <textarea id="📝name" name="📝name" rows="1" class="textarea__dynamic" spellcheck="false" title="Edit Name" placeholder="Name"></textarea>
+                      <button class="form-btn" onclick="initName()">🎲</button>
+                      <textarea id="notes" name="notes" rows="3" class="textarea__dynamic" spellcheck="false" title="Notes" placeholder="Additional notes for your Survivor."></textarea>
                     </div>
+                  </div>
+
+                  <div class="inner__section active" id="equipment-holder">
+                    <hr>
+                    <p class="📝-class"><strong>Equipment:</strong></p>
+                    <div class="📝box threeCol">
+                      <button class="form-btn" onclick="getItem('weapon')">🎲 Weapon</button>
+                      <button class="form-btn" onclick="getItem('gear')">🎲 Gear</button>
+                      <button class="form-btn" onclick="getItem('drug')">🎲 Drug</button>
+                      <p class="green-box large" id="📝gear"></p>
+                    </div>
+                    <hr>
                   </div>
                   <!--  -->
                   <!-- <p class="📝-class"><strong>Description:</strong></p> -->
@@ -223,10 +222,12 @@
                   </div> -->
                   <!-- <hr> -->
                   <div class="📝builder-btns">
-                    <button class="glide-main" onclick="clearBuilder()" id="📝clearBuild-btn">clear</button>
-                    <button class="glide-main" onclick="fillForm()" id="📝pdf-btn">Save to PDF</button>
+                    <hr>
+                    <!-- <button class="glide-main" onclick="clearBuilder()" id="📝clearBuild-btn">clear</button> -->
+                    <button class="form-btn" onclick="fillForm()" id="📝pdf-btn">Save to PDF</button>
+                    <hr>
                   </div>
-                  <hr>
+                  
               </div>
             </div>
 
@@ -288,6 +289,7 @@
     </section>
 
     <script src="helpers.js"></script>
+    <script src="arrays.js"></script>
     <script src="app.js"></script>
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
 <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>

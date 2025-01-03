@@ -310,17 +310,30 @@ const firstNames = [
 ];
 
 const lastNames = [
-    "Bloodfang", "Ironclad", "Rustbane", "Gloomspire", "Ashthorn", "Steelgrim", "Deadlock", "Blazebane", "Crowhammer", "Grimveil",
-    "Skullgrin", "Frostfang", "Blackthorn", "Vulture", "Shardspire", "Deathclutch", "Wraithbone", "Gravelock", "Stormgale", "Nightfall",
-    "Crimson", "Driftbane", "Duskcaller", "Gloomfang", "Scorchveil", "Blighthorn", "Voidspire", "Dustreaver", "Pyreblade", "Grimjaw",
-    "Howlgrave", "Cinderdust", "Mournfall", "Havocshade", "Ironfang", "Deadspire", "Stormcloak", "Ravenskull", "Wildflare", "Bonegrit",
-    "Darkshard", "Fangsteel", "Ironwraith", "Shadowmoor", "Rumblethorn", "Stormscar", "Hellsong", "Doomveil", "Rustfang", "Blightbone",
-    "Hollowfang", "Rivetlock", "Grindstone", "Warpclaw", "Crackstone", "Scorchmark", "Grimshade", "Bloodthorn", "Stonefang", "Warpgrin",
-    "Knuckleflare", "Fleshrust", "Ironcoil", "Ragetooth", "Thundertusk", "Scarspire", "Gnashclaw", "Frostbite", "Shadowclaw", "Skullveil",
-    "Venomshade", "Blazetongue", "Deadmaul", "Thunderbane", "Scarjaw", "Nightreaver", "Stormspike", "Hateforge", "Deathspire", "Firethorn",
-    "Grudgeveil", "Rustjaw", "Ironbrand", "Coldfang", "Blighthammer", "Tearspine", "Hallowfang", "Crimsonlock", "Fangsorrow", "Voidbrand",
-    "Shatterskull", "Ruinspire", "Gravetide", "Steelthorn", "Darkjaw", "Frostveil", "Scarbrand", "Baneclaw", "Nightsnarl", "Wildfang",
-    "Dreadlock", "Ashclaw", "Knucklespike", "Razorbone", "Mourngrip", "Shadefang"
+    // "Bloodfang", "Ironclad", "Rustbane", "Gloomspire", "Ashthorn", "Steelgrim", "Deadlock", "Blazebane", "Crowhammer", "Grimveil",
+    // "Skullgrin", "Frostfang", "Blackthorn", "Vulture", "Shardspire", "Deathclutch", "Wraithbone", "Gravelock", "Stormgale", "Nightfall",
+    // "Crimson", "Driftbane", "Duskcaller", "Gloomfang", "Scorchveil", "Blighthorn", "Voidspire", "Dustreaver", "Pyreblade", "Grimjaw",
+    // "Howlgrave", "Cinderdust", "Mournfall", "Havocshade", "Ironfang", "Deadspire", "Stormcloak", "Ravenskull", "Wildflare", "Bonegrit",
+    // "Darkshard", "Fangsteel", "Ironwraith", "Shadowmoor", "Rumblethorn", "Stormscar", "Hellsong", "Doomveil", "Rustfang", "Blightbone",
+    // "Hollowfang", "Rivetlock", "Grindstone", "Warpclaw", "Crackstone", "Scorchmark", "Grimshade", "Bloodthorn", "Stonefang", "Warpgrin",
+    // "Knuckleflare", "Fleshrust", "Ironcoil", "Ragetooth", "Thundertusk", "Scarspire", "Gnashclaw", "Frostbite", "Shadowclaw", "Skullveil",
+    // "Venomshade", "Blazetongue", "Deadmaul", "Thunderbane", "Scarjaw", "Nightreaver", "Stormspike", "Hateforge", "Deathspire", "Firethorn",
+    // "Grudgeveil", "Rustjaw", "Ironbrand", "Coldfang", "Blighthammer", "Tearspine", "Hallowfang", "Crimsonlock", "Fangsorrow", "Voidbrand",
+    // "Shatterskull", "Ruinspire", "Gravetide", "Steelthorn", "Darkjaw", "Frostveil", "Scarbrand", "Baneclaw", "Nightsnarl", "Wildfang",
+    // "Dreadlock", "Ashclaw", "Knucklespike", "Razorbone", "Mourngrip", "Shadefang",
+
+    //expanded
+    "Rivet", "Smokes", "Grind", "Burns", "Slag", "Ruin", "Havoc", "Wreck", "Flicker", "Drift",
+    "Throttle", "Tremor", "Scrap", "Snarl", "Ashes", "Blight", "Rust", "Vex", "Scar", "Grime",
+    "Crank", "Gore", "Hollow", "Spike", "Scorch", "Flint", "Razor", "Grit", "Crash", "Blaze",
+    "Taint", "Howl", "Mangle", "Blister", "Glitch", "Fangs", "Furnace", "Cinder", "Dredge", "Spill",
+    "Grinder", "Warp", "Frost", "Rattle", "Tear", "Vandal", "Taint", "Stain", "Sludge", "Flare",
+    "Rustbelt", "Flick", "Tomb", "Splinter", "Ragged", "Murk", "Rot", "Husk", "Splint", "Crush",
+    "Soot", "Snag", "Grinder", "Vice", "Scorn", "Torn", "Piston", "Torque", "Purge", "Blaze",
+    "Kerosene", "Diesel", "Clash", "Knox", "Scrag", "Twist", "Rend", "Slash", "Crater", "Singe",
+    "Bolt", "Fissure", "Smoulder", "Tusk", "Rivet", "Lash", "Dust", "Fray", "Rake", "Mourn",
+    "Sledge", "Vile", "Shatter", "Brim", "Grave", "Dagger", "Fume", "Gnash", "Wrack", "Spit",
+    "Rotgut", "Fever", "Gasp", "Shrike", "Fuse", "Void"
 ];
 
 const nickNames = [

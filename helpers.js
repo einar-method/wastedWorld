@@ -2,7 +2,15 @@
 function pickUnique(array, count) {
     const shuffled = [...array].sort(() => 0.5 - Math.random());
     return shuffled.slice(0, count);
-}
+};
+
+const isElmPresent = (id) => document.getElementById(id) ? true : false;
+
+const toCamelCase = (str) =>
+    str
+      .replace(/[^a-zA-Z0-9]+(.)/g, (_, chr) => chr.toUpperCase())
+      .replace(/^[A-Z]/, (match) => match.toLowerCase())
+;
 
 function fadeInElements(elementIds) {
     requestAnimationFrame(function () {
@@ -122,7 +130,7 @@ function makingElements(variable, parentId) {
 // };
 
 function runArrLoop(limit, arr) {
-    console.error(limit)
+    console.log("Initiating loop looking for " + limit + " item(s).")
     let i = 0;
     while (i < limit) {
         let tempIncl = randomMath(arr);
