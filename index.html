@@ -12,7 +12,7 @@
     <title>Wasted App</title>
 </head>
 <body>
-  <dialog id="error"><strong>Error:</strong> <span id="error-txt"></span></dialog>
+  <dialog id="error"><strong>Tip:</strong> <span id="error-txt"></span></dialog>
   <dialog id="tip"><strong></strong> <span id="tip-txt"></span></dialog>
     <section class="grid">
         <div class="card"></div> <!-- top left corner -->
@@ -84,30 +84,36 @@
                 </section>
 
                 <div class="📝-container" id="📝-container">
-                  <div class="📝builder-btns">
-                    <button class="form-btn" onclick="rndAll()" id="📝clearBuild-btn">Quick Survivor</button>
-                    <button class="form-btn" onclick="clearPath()">🗙</button>
-                    <!-- <button class="glide-main" onclick="testMain()" id="📝test-btn">test</button> -->
-                    <!-- <button class="glide-main" onclick="fillForm()" id="📝pdf-btn">Save to PDF</button> -->
+                  <div class="outer__section active">
+                    <div class="📝builder-btns top">
+                      <button class="form-btn" onclick="rndAll()" id="📝clearBuild-btn">Quick Survivor</button>
+                      <button class="form-btn" onclick="clearPath()">🗙</button>
+                      <!-- <button class="glide-main" onclick="selectMain()" id="📝test-btn">test</button> -->
+                      <!-- <button class="glide-main" onclick="fillForm()" id="📝pdf-btn">Save to PDF</button> -->
+                    </div>
                   </div>
-                  <hr>
-                  <p class="📝-class"><strong>Path:</strong></p>
-                  <div class="📝box">
-                    <!-- <p class="green-box" id="📝path" ></p> -->
-                    <button class="form-btn" onclick="testMain('path')">Choose Path</button>
-                    <button class="form-btn" onclick="getPath(1)">🎲</button>
-                    <p class="green-box" id="📝path">Click 'Build' for a custom Path or 🎲 for a random one. Click 🗙 to start over.</p>
+                  <div class="outer__section active">
+                    <hr>
+                    <p class="📝-class"><strong>Path:</strong></p>
+                    <div class="📝box">
+                      <!-- <p class="green-box" id="📝path" ></p> -->
+                      <button class="form-btn" onclick="selectMain('path')">Choose Path</button>
+                      <button class="form-btn" onclick="getPath(1)">🎲</button>
+                      <p class="green-box" id="📝path">Choose or roll (🎲) your Path</p>
+                    </div>
+                    <hr>
                   </div>
-                  <div class="outer__section" id="incl-header">
+                  
+                  <div class="outer__section active" id="incl-header">
                     <hr>
                     <p class="📝-class"><strong>Inclinations:</strong></p>
-                    <div class="inner__section" id="talents-holder">
+                    <div class="inner__section active" id="talents-holder">
                       
                       <!-- <p class="📝-class"><strong>Survivor Talents: </strong><span class="keep-span" id="📝inc-tip">2 of 2 remaining</span></p> -->
                       <div class="📝box" id="survivor-talents-box">
                         <!-- <p class="green-box" id="📝inclinations"></p> -->
-                        <button class="form-btn" onclick="testMain('sTalents')">Survivor Talents</button>
-                        <button class="form-btn" onclick="getRndIncl()">🎲</button>
+                        <button class="form-btn" onclick="selectMain('sTalents')">Survivor Talents</button>
+                        <button class="form-btn" onclick="getRndIncl('sTalents')">🎲</button>
                         <!-- <button class="form-btn" onclick="clearInclinations()">🗙</button>  -->
                         <!-- <aside>
                           <details>
@@ -124,8 +130,8 @@
                       <!-- <p class="📝-class"><strong>Physical Mutations: </strong><span class="keep-span" id="📝inc-tip2">2 of 2 remaining</span></p> -->
                       <div class="📝box" id="phys-mutations-box" >
                         <!-- <p class="green-box" id="📝inclinations2"></p> -->
-                        <button class="form-btn" onclick="testMain('physMut')">Physical Mutations</button>
-                        <button class="form-btn" onclick="getRndIncl()">🎲</button>
+                        <button class="form-btn" onclick="selectMain('physMut')">Physical Mutations</button>
+                        <button class="form-btn" onclick="getRndIncl('physMut')">🎲</button>
                       </div>
                       
                     </div>
@@ -134,8 +140,8 @@
                       <!-- <p class="📝-class"><strong>Mental Mutations: </strong><span class="keep-span" id="📝inc-tip3">2 of 2 remaining</span></p> -->
                       <div class="📝box" id="mental-mutations-box" >
                         <!-- <p class="green-box" id="📝inclinations3"></p> -->
-                        <button class="form-btn" onclick="testMain('mentalMut')">Mental Metations</button>
-                        <button class="form-btn" onclick="getRndIncl()">🎲</button>
+                        <button class="form-btn" onclick="selectMain('mentalMut')">Mental Metations</button>
+                        <button class="form-btn" onclick="getRndIncl('mentalMut')">🎲</button>
                       </div>
                       
                     </div>
@@ -144,8 +150,8 @@
                       <!-- <p class="📝-class"><strong>DNA Modifications: </strong><span class="keep-span" id="📝inc-tip4">2 of 2 remaining</span></p> -->
                       <div class="📝box" id="dna-mods-box" >
                         <!-- <p class="green-box" id="📝inclinations4"></p> -->
-                        <button class="form-btn" onclick="testMain('dnaMods')">DNA Modifications</button>
-                        <button class="form-btn" onclick="getRndIncl()">🎲</button>
+                        <button class="form-btn" onclick="selectMain('dnaMods')">DNA Modifications</button>
+                        <button class="form-btn" onclick="getRndIncl('dnaMods')">🎲</button>
                       </div>
                     </div>
                   
@@ -153,16 +159,40 @@
                       <!-- <p class="📝-class"><strong>BioSynth Packages: </strong><span class="keep-span" id="📝inc-tip5">2 of 2 remaining</span></p> -->
                       <div class="📝box" id="bio-synth-box" >
                         <!-- <p class="green-box" id="📝inclinations5"></p> -->
-                        <button class="form-btn" onclick="testMain('bioSynth')">BioSynth Packages</button>
-                        <button class="form-btn" onclick="getRndIncl()">🎲</button>
+                        <button class="form-btn" onclick="selectMain('bioSynth')">BioSynth Packages</button>
+                        <button class="form-btn" onclick="getRndIncl('bioSynth')">🎲</button>
                       </div>
                     </div>
-
+                    <p class="green-box tall" id="all-incl-list">First, pick a Path</p>
                     <div id="incl-tip-main"></div>
-                    <p class="green-box" id="all-incl-list"></p>
+                    <hr>
                   </div>
+
+                  <div class="outer__section active" id="edges-holder">
+                    <hr>
+                    <p class="📝-class"><strong>Edge:</strong></p>
+                    <div class="inner__section active" id="edges-list">
+                        <ul class="ability__sheet__list">
+                          <li>First, pick a Path</li>
+                        </ul>
+                    </div>
+                    <hr>
+                  </div>
+                
+
+                  <div class="outer__section active" id="aspects-holder">
+                    <hr>
+                    <p class="📝-class"><strong>Aspects:</strong></p>
+                    <div class="📝box" id="aspects-box">
+                        <button class="form-btn" onclick="toggleBuilderSheet('aspects', true, true)">Choose Aspects</button>
+                        <button class="form-btn" onclick="getRndAspect()">🎲</button>
+                        <p class="green-box" id="📝aspects">Choose or roll (🎲) for 2 Aspects.</p>
+                    </div>
+                    <hr>
+                  </div>
+                
                   
-                  <div class="inner__section" id="stats-holder" style="display: none;">
+                  <div class="outer__section" id="stats-holder" style="display: none;">
                     <hr>
                     <p class="📝-class"><strong>Strikes:</strong> <span id="📝strikes"></span></p>
                     <p class="📝-class"><strong>Karma:</strong> <span id="📝karma"></span></p>
@@ -173,8 +203,8 @@
                     <p class="📝-class"><strong>Features:</strong> <span id="📝features"></span></p>
                   </div>
 
-                  <div class="inner__section active" id="name-holder">
-                    <!-- <hr> -->
+                  <div class="outer__section active" id="name-holder">
+                    <hr>
                     <p class="📝-class"><strong>Name:</strong></p>
                     <div class="📝box">
                       <!-- <p>
@@ -191,17 +221,23 @@
                       <button class="form-btn" onclick="initName()">🎲</button>
                       <textarea id="notes" name="notes" rows="3" class="textarea__dynamic" spellcheck="false" title="Notes" placeholder="Additional notes for your Survivor."></textarea>
                     </div>
+                    <hr>
                   </div>
 
-                  <div class="inner__section active" id="equipment-holder">
+                  <div class="outer__section active" id="equipment-holder">
                     <hr>
                     <p class="📝-class"><strong>Equipment:</strong></p>
                     <div class="📝box threeCol">
                       <button class="form-btn" onclick="getItem('weapon')">🎲 Weapon</button>
                       <button class="form-btn" onclick="getItem('gear')">🎲 Gear</button>
                       <button class="form-btn" onclick="getItem('drug')">🎲 Drug</button>
-                      <p class="green-box large" id="📝gear"></p>
+                    
+                      
                     </div>
+                    <p class="p__semi_bold">Rolled Equipment:</p>
+                    <p class="green-box" id="rnd-equipment-txt">1 Weapon, Gear, or Drug</p>
+                    <p class="p__semi_bold">Path Equipment:</p>
+                    <p class="green-box large tall" id="📝gear">First, pick a Path</p>
                     <hr>
                   </div>
                   <!--  -->
@@ -232,24 +268,160 @@
             </div>
 
             <div id="rr-tab" style="display:none">
-                <section class="button-wrapper">
-                  <div id="rr-btns">  
-              
-                    <button class="glide-main" id="rrAll-btn">Everything!</button>
-                    <button class="glide-main" id="monsters-btn">Monster</button>
-                    <button class="glide-main" id="lair-btn">Lair</button>
-                    <button class="glide-main" id="magicItem-btn">Magic Item</button>
-                    <button class="glide-main" id="treasure-btn">Treasure</button>
-                    <button class="glide-main" id="npc-btn">NPC</button>
-                    <button class="glide-main" id="twist-btn">Twists</button>
-                    <button class="glide-main" id="quest-btn">Quests</button>
-                    <button class="glide-main" id="rr-reset">Reset</button>
+                <div class="📝-container">
+                  <div class="📝builder-btns top">
+                    <button class="form-btn" onclick="rndAll()" id="📝clearBuild-btn">Quick Vehicle</button>
+                    <button class="form-btn" onclick="clearPath()">🗙 Reset</button>
                   </div>
-                </section>
-            
-                <hr>
+                  
+                  <div class="outer__section active" id="vehicles-holder">
+                    <hr>
+                    <div class="inner__section active" id="vehType-holder">
+                      <p class="📝-class"><strong>Type:</strong></p>
+                      <div class="📝box threeCol">
+                        <button class="form-btn" onclick="getVehicle('weapon')">Choose Vehicle</button>
+                        <button class="form-btn" onclick="getVehicle('weapon')">🎲 Light</button>
+                        <button class="form-btn" onclick="getVehicle('gear')">🎲 Medium</button>
+                        <button class="form-btn" onclick="getVehicle('drug')">🎲 Heavy</button>
+                        <button class="form-btn" onclick="getVehicle('drug')">🎲 Super H.</button>
+                        <button class="form-btn" onclick="getVehicle('drug')">🎲 Heavy Metal!</button>
+                      </div>
+                    </div>
+                    <p class="green-box large" id="vehTypeText">Choose a premade or random (🎲) vehicle</p>
+                    <hr>
+                  </div>
+                
+                  <div class="outer__section active" id="vehicleStats-holder">
+                    <hr>
+                    <p class="📝-class"><strong>Stats:</strong></p>
+                    <div class="inner__section active" id="allStats-list">
+                      <p id="verNameDef"><strong>Name: </strong></p>
+                      <p id="psgCountDef"><strong>Passengers: </strong></p>
+                      <p id="vehStrikesDef"><strong>Strikes: </strong></p>
+                      <p id="vehStrcSaveDef"><strong>Structure Save: </strong></p>
+                      <p id="vehMnvRollDef"><strong>Maneuver Roll: </strong></p>
+                      <p id="vehramDef"><strong>Rammage: </strong></p>
+                      <p id="vehLdsDef"><strong>Last Ditch Save (LDS): </strong></p>
+                    </div>
+                    <hr>
+                  </div>
+                
+                  <div class="outer__section active" id="vehicleMods-holder">
+                    <hr>
+                    <p class="📝-class"><strong>Mods:</strong></p>
+                    <div class="inner__section active" id="vehMods-list">
+                        <ul class="ability__sheet__list">
+                          <li>First, create a Vehicle</li>
+                        </ul>
+                    </div>
+                    <hr>
+                  </div>
+
+                  <div class="outer__section active" id="vehicleMods-holder">
+                    <hr>
+                    <p class="📝-class"><strong>Additional Info:</strong></p>
+                    <div class="inner__section active" id="vehMods-list">
+                        <textarea id="veh-notes" name="veh-notes" rows="3" class="textarea__dynamic" spellcheck="false" title="Vehicle Notes" placeholder="Additional notes for Vehicle."></textarea>
+                    </div>
+                    <hr>
+                  </div>
+                </div>
+                
+              <!-- </div> -->
+
+                <div class="outer__section active">
+                  <h1>Vehicle Configuration</h1>
+                  
+                  <form id="vehicleForm">
+                      
+                      <div class="section">
+                          <label for="vehicleName"><strong>Vehicle Name:</strong></label>
+                          <input type="text" id="vehicleName" name="vehicleName" required>
+                      </div>
+                      
+                      <div class="section">
+                          <label for="passengerCount"><strong>Passenger Count:</strong></label>
+                          <input type="number" id="passengerCount" name="passengerCount" min="0">
+                      </div>
+          
+                      <div class="section">
+                          <label for="strikes"><strong>Strikes:</strong></label>
+                          <input type="number" id="strikes" name="strikes" min="0">
+                      </div>
+          
+                      <div class="section">
+                          <label for="saveValue"><strong>Structure Save Value:</strong></label>
+                          <input type="number" id="saveValue" name="saveValue" min="1" max="6">
+                      </div>
+          
+                      <div class="section">
+                          <label for="mnvRoll"><strong>Maneuver Roll:</strong></label>
+                          <input type="number" id="mnvRoll" name="mnvRoll">
+                      </div>
+          
+                      <div class="section">
+                          <label for="rammage"><strong>Rammage:</strong></label>
+                          <input type="number" id="rammage" name="rammage">
+                      </div>
+          
+                      <div class="section">
+                          <label for="lds"><strong>Last Ditch Save (LDS):</strong></label>
+                          <input type="number" id="lds" name="lds">
+                      </div>
+          
+                      <div class="section">
+                          <label for="isWrecked"><strong>Is Wrecked:</strong></label>
+                          <select id="isWrecked" name="isWrecked">
+                              <option value="false" selected>No</option>
+                              <option value="true">Yes</option>
+                          </select>
+                      </div>
+          
+                      <div class="section">
+                          <h3>Select Vehicle Class</h3>
+                          <div class="checkbox-grid">
+                              <label><input type="radio" name="vehicleClass" value="Light" required> Light (Motorcycle, ATV, Buggy)</label>
+                              <label><input type="radio" name="vehicleClass" value="Medium"> Medium (Car or Small SUV)</label>
+                              <label><input type="radio" name="vehicleClass" value="Heavy"> Heavy (Pickup, Van, or Large SUV)</label>
+                              <label><input type="radio" name="vehicleClass" value="Superheavy"> Superheavy (Semi or Bus)</label>
+                          </div>
+                      </div>
+          
+                      <div class="section">
+                          <h3>Select Vehicle Mods</h3>
+                          <div class="checkbox-grid">
+                              <label><input type="checkbox" name="mod" value="Reinforced Frame"> Reinforced Frame</label>
+                              <label><input type="checkbox" name="mod" value="Welded Armor"> Welded Armor</label>
+                              <label><input type="checkbox" name="mod" value="Juiced"> Juiced</label>
+                              <label><input type="checkbox" name="mod" value="Tire Grips"> Tire Grips</label>
+                              <label><input type="checkbox" name="mod" value="Spiked Body"> Spiked Body</label>
+                              <label><input type="checkbox" name="mod" value="Heavy Machine Gun Mount"> Heavy Machine Gun Mount</label>
+                              <label><input type="checkbox" name="mod" value="Reinforced Ram"> Reinforced Ram</label>
+                              <label><input type="checkbox" name="mod" value="Powered Winch"> Powered Winch</label>
+                              <label><input type="checkbox" name="mod" value="Smokescreen"> Smokescreen</label>
+                              <label><input type="checkbox" name="mod" value="Killjacks"> Killjacks</label>
+                              <label><input type="checkbox" name="mod" value="Rigged to Blow"> Rigged to Blow</label>
+                              <label><input type="checkbox" name="mod" value="Hellfire Roaster"> Hellfire Roaster</label>
+                              <label><input type="checkbox" name="mod" value="Boom Spear"> Boom Spear</label>
+                              <label><input type="checkbox" name="mod" value="Trailer"> Trailer</label>
+                              <label><input type="checkbox" name="mod" value="Steering Wheel Lock Bar"> Steering Wheel Lock Bar</label>
+                          </div>
+                      </div>
+          
+                      <div class="section">
+                          <label for="notes"><strong>Additional Notes:</strong></label><br>
+                          <textarea id="notes" name="notes" rows="5"></textarea>
+                      </div>
+          
+                      <div class="section">
+                          <label for="equipment"><strong>Equipment (comma separated):</strong></label>
+                          <input type="text" id="equipment" name="equipment">
+                      </div>
+          
+                      <button type="submit">Save Vehicle</button>
+                  </form>
+                </div>
               
-                <div class="result-container"></div>
             </div>
 
             <div id="dice-tab" style="display:none">

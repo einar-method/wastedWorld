@@ -500,7 +500,7 @@ dialog {
   -moz-appearance: none;
 }
 
-.📝box {
+.📝box, .📝builder-btns.top {
   height: 100%;
   border: transparent; /* 1px solid rgba(0, 0, 0, 0.1); */
   display: grid;
@@ -618,7 +618,7 @@ input[type="number"] {
   -moz-appearance: textfield;
 }
 
-.green-box, .📝form{
+.📝form{
   box-shadow: inset 1px 1px 2px #000000, inset -1px -1px 2px #a2d740;
   text-align: center;
   font-weight: bold;
@@ -626,29 +626,48 @@ input[type="number"] {
   background-color: #99ca3c;
   color: black;
 }
+.green-box {
+  box-shadow: inset 1px 1px 2px #000000, inset -1px -1px 2px #a2d740;
+  text-align: center;
+  border-radius: 4px;
+  background-color: white;
+  color: rgb(59, 59, 59);
+  font-weight: normal;
+  height: 25px;
+}
+.green-box.bold {
+  font-weight: 500;
+  color: black;
+}
 .green-box.large {
   font-weight: normal;
   font-size: normal;
   grid-column: 1 / -1; /* Starts at first column, spans to last */
 }
+.green-box.tall {
+  height: 85px;
+}
+
 #📝path, #📝aspects {
-  color: rgb(59, 59, 59); /* Grayed out color */
-  font-weight: normal;
-  font-size: x-small;
+  /* color: rgb(59, 59, 59);
+  font-weight: normal; */
+  /* font-size: x-small; */
   grid-column: 1 / -1; /* Starts at first column, spans to last */
   transition: color 0.3s ease;
 }
-#📝path.active, #📝aspects.active {
-  color: #000; /* Normal text color when updated */
+/* #📝path.active, #📝aspects.active {
+  color: #000;
   font-weight: bold;
   font-size: initial;
-}
+} */
 
 hr {
   background-color: #000;
   height: 10px;
-  margin-top: 0.8rem;
-  margin-bottom: 0.8rem;
+  /* margin-top: 0.8rem;
+  margin-bottom: 0.8rem; */
+  margin-top: 0;
+  margin-bottom: 0;
   color: #99ca3c;
   background-image: linear-gradient(
     -45deg,
@@ -670,7 +689,7 @@ p {
   margin: 0;
 }
 
-#📝clearBuild-btn, #📝pdf-btn {
+#📝pdf-btn {
   width: 100%;
 }
 
@@ -725,6 +744,8 @@ p {
 
 .outer__section {
   display: none;
+  border: #000 3px solid;
+  border-radius: 2px;
 }
 .outer__section.active {
   display: flex;
@@ -752,7 +773,7 @@ p {
   width: 100%;
 }
 
-.ability__sheet__header-footer h1 {
+.ability__sheet__header-footer h2 {
   text-align: center;
 }
 
@@ -894,7 +915,8 @@ p {
 .textarea__dynamic {
   background-color: transparent;
   resize: none;
-  width: 100%;
+  margin-left: 4px;
+  width: 95%;
   border: #99ca3c;
   border-width: 2px;
   border-style: solid;
@@ -908,7 +930,15 @@ p {
   outline: 2px dashed #BA6F35;
   background-color: #A9BAB4;
 }
-
+#notes {
+  grid-column: 1 / -1;
+}
+.p__semi_bold {
+  font-weight: 500;
+}
+#incl-tip-main {
+  height: 60px;
+}
 
 
 

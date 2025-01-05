@@ -143,6 +143,27 @@ function runArrLoop(limit, arr) {
         } else {
             let match = arr.find(obj => obj.name === tempIncl.name);
             if (match) {
+                //match.hasIt = true; //remove return for all random
+                i++;
+                return match
+            }
+        }
+    }
+};
+function runNoReturnArrLoop(limit, arr) {
+    console.log("Initiating loop looking for " + limit + " item(s).")
+    let i = 0;
+    while (i < limit) {
+        let tempIncl = randomMath(arr);
+        console.log(tempIncl);
+
+        let existing = arr.find(obj => obj.name === tempIncl.name && obj.hasIt);
+        
+        if (existing) {
+            console.log(tempIncl.name + " was a duplicate.");
+        } else {
+            let match = arr.find(obj => obj.name === tempIncl.name);
+            if (match) {
                 match.hasIt = true;
                 i++;
             }

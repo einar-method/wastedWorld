@@ -3,7 +3,9 @@ const tabToggle = document.getElementById("tab-toggle");
 const tabBtns = document.querySelectorAll('input[name="tool-toggle"]');
 const diceModal = document.getElementById("dice-modal");
 
-const defPathMsg = "Click 'Build' for a custom Path or 🎲 for a random one. Click 🗙 to start over.";
+const defPathMsg = "Choose or roll (🎲) your Path";
+const defRndItemMsg = "1 Weapon, Gear, or Drug";
+const defEquipmentMsg = "First, pick a Path";
 
 /// PC VARIABLES CALLED IN VARIOUS FUNCTIONS ///
 const pcList = [];
@@ -36,10 +38,16 @@ function clearPath() {
     document.querySelectorAll(".inner__section").forEach( elm => {
         elm.classList.remove("active");
     });
+    document.querySelectorAll(".green-box").forEach( elm => {
+        elm.classList.remove("bold");
+    });
     document.getElementById("incl-header").classList.remove("active");
     document.getElementById("talents-holder").classList.remove("active");
     document.getElementById("📝path").textContent = defPathMsg;
-    console.log(pcList)
+    document.getElementById("📝gear").textContent = defEquipmentMsg;
+    document.getElementById("rnd-equipment-txt").textContent = defRndItemMsg;
+    document.getElementById("📝name").value = "";
+    console.log("Verifying character is reset to default", app)
 };
 
 /// PC Reset ///
@@ -654,13 +662,13 @@ class PC {
 
     aspectsToDom() {
         if (app.aspects.length == 0) {
-            document.getElementById("📝aspects").textContent = "Click 'Choose Aspects' to pick your own, or '🎲' for random ones.";
-            document.getElementById("📝aspects").classList.remove("active");
+            document.getElementById("📝aspects").textContent = "Choose or roll (🎲) for 2 Aspects.";
+            document.getElementById("📝aspects").classList.remove("bold");
         }
 
         if (app.aspects.length > 0) {
             document.getElementById("📝aspects").textContent = app.aspects.join(", ");
-            document.getElementById("📝aspects").classList.add("active")
+            document.getElementById("📝aspects").classList.add("bold")
         }
 
         if (app.aspects.length == 2) {
@@ -674,19 +682,30 @@ class PC {
 
     updateStatsAndDom() {
         //this.getPath();
-        this.applyPathAttributes();
+        // this.applyPathAttributes();
         //document.getElementById("📝path").style.display = "block";
-        this.incTip = this.getIncTxt();
-        console.log("max incs:", this.maxInclinations)
-        this.displayValid();
-        loadInclinations();
-        this.allInclToDom();
-        this.checkRequirements();
-        //console.error(this.getCurrentPath())
-        //console.error(this.getCurrentPath().gear)
-        //TODO: this prob doesn't go here? or does it
-        document.getElementById("📝gear").innerHTML = this.getCurrentPath().gear.join(", ");
-    }
+        
+
+        // TODO: !!! sometimes this works and sometimes it
+        // clears edges when it should not
+        // I think the edge creator is overwriting now after
+        // removing the exists? checker
+        if(this.getCurrentPath()) {
+            this.applyPathAttributes();
+            this.incTip = this.getIncTxt();
+            console.log("max incs:", this.maxInclinations)
+            document.getElementById("📝path").textContent = this.getCurrentPath().name;
+            document.getElementById("all-incl-list").classList.add("bold");
+            this.edgesToDom();
+            document.getElementById("📝gear").classList.add("bold");
+            document.getElementById("edges-list").classList.add("active"); //when was it made not active??
+            loadInclinations();
+            this.allInclToDom();
+            this.checkRequirements();
+            document.getElementById("📝gear").innerHTML = this.getCurrentPath().gear.join(", ");
+        }
+        //this.displayValid(); //only Path is tied to this??
+    };
 
     // applyPathAttributes() {
     //     switch (this.path) {
@@ -1165,7 +1184,12 @@ class PC {
         const allInclText = this.calcAllIncl().map(incl => incl.name).join(',\n');
 
         console.log(allInclText);
-        document.getElementById("all-incl-list").textContent = allInclText || "TBD";
+        if(this.getCurrentPath()) {
+            //`The ${this.getCurrentPath().name} has no Path Inclinations`
+            document.getElementById("all-incl-list").textContent = allInclText || "";
+        } else { document.getElementById("all-incl-list").textContent = "First, pick a Path"; }
+        //document.getElementById("all-incl-list").textContent = allInclText || "First, pick a Path";
+        
     };
 
     checkRequirements() {
@@ -1179,9 +1203,10 @@ class PC {
         requirements.forEach(({ list, min, label }) => {
             const selectedCount = list.filter(i => i.hasIt).length;
             const deficit = min - selectedCount;
+            const satisfied = 0 + selectedCount;
     
             if (deficit > 0) {
-                unmet.push(`${deficit} more ${label} needed (min ${min}).`);
+                unmet.push(`${label}: ${satisfied}/${min}min.`);
             }
         });
     
@@ -1190,9 +1215,9 @@ class PC {
         const slotsInfo = `Inclinations assigned: ${assigned}/${total}.`;
     
         // Trigger if all requirements are met
-        if (unmet.length === 0 && assigned == total) {
-            this.edgesToDom();
-        }
+        // if (unmet.length === 0 && assigned == total) {
+        //     this.edgesToDom();
+        // }
 
         //const output = [slotsInfo, ...unmet].join("\n");
         //document.getElementById("incl-tip-main").textContent = output;
@@ -1218,43 +1243,88 @@ class PC {
             console.log(obj.name)
         })
         buildEdgesSection(this.getCurrentPath().edges);
-
-        //TODO: this goes elsewere?
-        pickUnique(survivorAspectsArray, 2).forEach(o => { console.log(o)})
-        //buildAspectsSection(survivorAspectsArray);
-        //toggleBuilderSheet("aspects", true, true);
-        setUpAspects();
     }
 
-    getRndIncl() {
-        this.survivorTalents.forEach(obj => { obj.hasIt = false; });
-        this.bioSynthPs.forEach(obj => { obj.hasIt = false; });
+    getRndIncl(nameIn, isRnd) {
+        //this.survivorTalents.forEach(obj => { obj.hasIt = false; });
+        //this.bioSynthPs.forEach(obj => { obj.hasIt = false; });
         console.log("max incl:", this.maxInclinations)
-        let bigNum = this.maxInclinations; 
+        let bigNum = this.maxInclinations;
+
+        // TODO: get random based on exact group selected
+        //if(nameIn == "sTalents")
+        let arrayToUse = null;
+        let sheetName //don't think we need
+        if (nameIn == "sTalents") {
+            arrayToUse = this.survivorTalents;
+            sheetName = "Survivor Talents";
+        }
+        if (nameIn == "physMut") {
+            arrayToUse = this.physMutations;
+            sheetName = "Phusical Mutations";
+        }
+        if (nameIn == "mentalMut") {
+            arrayToUse = this.mentalMutations;
+            sheetName = "Mental Mutations";
+        }
+        if (nameIn == "dnaMods") {
+            arrayToUse = this.dnaMods;
+            sheetName = "DNA Modifications";
+        }
+        if (nameIn == "bioSynth") {
+            arrayToUse = this.bioSynthPs;
+            sheetName = "BioSynth Packages";
+        }
+
+        
+        if (isRnd) {
+            // runArrLoop(1, arrayToUse);
+            const tempIncl = runArrLoop(1, arrayToUse);
+            console.log(tempIncl)
+            if (this.checkStats(tempIncl.name)) {
+                tempIncl.hasIt = true;
+                this.updateStatsAndDom()
+            } else {
+                tempIncl.hasIt = false;
+                console.log("Set inclination back to false")
+                console.log(tempIncl)
+            }
+            
+            console.log("Completed try for random Inclination")
+            return
+        } else { 
+            console.log("Manual selection?") 
+            return
+        }
+    };
+
+    getAllRndIncls() {
+        console.log("Attempting to randomnly assign all Incinations...");
+        let bigNum = this.maxInclinations;
         switch (this.path) {
             case "Android":
-                runArrLoop(this.sTalentsMin, this.survivorTalents);
-                runArrLoop(this.bioSynthMin, this.bioSynthPs);
+                runNoReturnArrLoop(this.sTalentsMin, this.survivorTalents);
+                runNoReturnArrLoop(this.bioSynthMin, this.bioSynthPs);
                 bigNum = this.maxInclinations - this.bioSynthMin - this.sTalentsMin;
 
-                runArrLoop(bigNum, [...this.bioSynthPs, ...this.survivorTalents]);
+                runNoReturnArrLoop(bigNum, [...this.bioSynthPs, ...this.survivorTalents]);
                 break;
             case "Clone":
-                runArrLoop(this.sTalentsMin, this.survivorTalents);
-                runArrLoop(this.dnaModsMin, this.dnaMods);
+                runNoReturnArrLoop(this.sTalentsMin, this.survivorTalents);
+                runNoReturnArrLoop(this.dnaModsMin, this.dnaMods);
                 bigNum = this.maxInclinations - this.dnaModsMin - this.sTalentsMin;
-                runArrLoop(bigNum, [...this.dnaMods, ...this.survivorTalents]);
+                runNoReturnArrLoop(bigNum, [...this.dnaMods, ...this.survivorTalents]);
                 break;
             // case "Hunter":
-            //     runArrLoop(this.sTalentsMin, this.survivorTalents);
+            //     runNoReturnArrLoop(this.sTalentsMin, this.survivorTalents);
             //     bigNum = this.maxInclinations - this.sTalentsMin;
-            //     runArrLoop(bigNum, this.survivorTalents);
+            //     runNoReturnArrLoop(bigNum, this.survivorTalents);
             //     break;
             case "Mutie":
-                runArrLoop(this.sTalentsMin, this.survivorTalents);
-                runArrLoop(this.physMutatationsMin, this.physMutations);
+                runNoReturnArrLoop(this.sTalentsMin, this.survivorTalents);
+                runNoReturnArrLoop(this.physMutatationsMin, this.physMutations);
                 bigNum = this.maxInclinations - this.physMutatationsMin - this.sTalentsMin;
-                runArrLoop(bigNum, [...this.physMutations, ...this.survivorTalents]);
+                runNoReturnArrLoop(bigNum, [...this.physMutations, ...this.survivorTalents]);
 
                 // this.inclinations.push(...pickUnique(physicalMutationsArray, this.physMutatationsMin));
                 // this.inclinations.push(...pickUnique(survivorTalentsArray, this.sTalentsMin));  
@@ -1270,17 +1340,17 @@ class PC {
             case "Rambler":
             case "Scavie":
             case "Wasteland Warrior":
-                runArrLoop(this.sTalentsMin, this.survivorTalents);
+                runNoReturnArrLoop(this.sTalentsMin, this.survivorTalents);
                 bigNum = this.maxInclinations - this.sTalentsMin;
-                runArrLoop(bigNum, this.survivorTalents);
+                runNoReturnArrLoop(bigNum, this.survivorTalents);
                 // this.inclinations.push(...pickUnique(survivorTalentsArray, this.sTalentsMin));
                 // this.inclinations.push(...pickUnique(survivorTalentsArray, this.maxInclinations - this.sTalentsMin));
                 break;
             case "Weird":
-                runArrLoop(this.sTalentsMin, this.survivorTalents);
-                runArrLoop(this.mentalMutationsMin, this.mentalMutations);
+                runNoReturnArrLoop(this.sTalentsMin, this.survivorTalents);
+                runNoReturnArrLoop(this.mentalMutationsMin, this.mentalMutations);
                 bigNum = this.maxInclinations - this.mentalMutationsMin - this.sTalentsMin;
-                runArrLoop(bigNum, [...this.mentalMutations, ...this.survivorTalents]);
+                runNoReturnArrLoop(bigNum, [...this.mentalMutations, ...this.survivorTalents]);
 
                 // this.inclinations.push(...pickUnique(mentalMutationsArray, this.mentalMutationsMin));
                 // this.inclinations.push(...pickUnique(survivorTalentsArray, this.sTalentsMin));
@@ -1290,11 +1360,11 @@ class PC {
             //     this.inclinations.push(...pickUnique(survivorTalentsArray, this.maxInclinations));
             //     break;
             default:
-                console.error("Could not assign a random Inclinations. Error Code: 2429.")
+                console.error("Could not assign random Inclinations. Error Code: 2429.")
         };
         //this.allInclToDom();
-        this.updateStatsAndDom()
-    };    
+        this.updateStatsAndDom();
+    }
 
     getRndGear() {
         let selectedList;
@@ -1416,11 +1486,8 @@ class PC {
             randomPath.hasIt = true;  // Set the selected path to active
         } else if (checker == 2) { // custom builder manual
             //this.path = getButtonText(nameIn);
-            const randomPath = arrIn.find(obj => obj.name === nameIn);
+            const randomPath = this.paths.find(obj => obj.name === nameIn);
             randomPath.hasIt = true;
-        } 
-        else if (checker == 3) {
-            arrIn[pathID - 1].hasIt = true;
         }
 
         // else { // main tool random
@@ -1439,9 +1506,8 @@ class PC {
         //this.updateStats();
         //this.displayValid(checkBuilder);
         console.log("A path was chosen:", this.path);
-        console.log(app)
 
-        loadInclinations();
+        //loadInclinations();
     };
 
     getIncTxt() {
@@ -1551,8 +1617,7 @@ function buildBuilderSheet(elm) {
 
     header.innerHTML = `
         <div class="orange"></div>
-        <h1 class="builder__sheet__title">${sheetName}</h1>
-        <p><strong></strong><span class="keep-span" id="📝inc-tip">2 of 2 remaining</span></p>
+        <h2 class="builder__sheet__title">${sheetName}</h2>
         <div class="orange"></div>  
     `;
 
@@ -1561,7 +1626,7 @@ function buildBuilderSheet(elm) {
     footer.classList.add("ability__sheet__header-footer");
     footer.innerHTML = `
         <div class="orange"></div>
-        <button type="button" onclick="toggleBuilderSheet(this, false, 'edit-overlay')"><h1><span class="title__text-green">Save</span> & <span class="title__text-camo">Close</span></h1></button>
+        <button type="button" onclick="toggleBuilderSheet(this, false, 'edit-overlay')">Save & Close</button>
         <div class="orange"></div>
     `;
 
@@ -1629,22 +1694,62 @@ function buildBuilderSheet(elm) {
         //     }
         //     app.updateStatsAndDom();
         // });
+
         toggle.addEventListener("change", () => {
             if (toggle.checked) {
-                if (app.checkStats(inc.name)) {
+                if (sheetID == "path") {
+                    // (app.getCurrentPath().name == inc.name) {
                     icon.setAttribute("name", "person-remove-outline");
                     inner.classList.add("green__background");
-                    inc.hasIt = true;
-                    console.log(`${inc.name} is active and ready to be removed.`);
-                } else { toggle.checked = false}
+                    //inc.hasIt = true;
+                    console.log(`${inc.name} is being set as the active Path...`);
+                    //app.applyPathAttributes();
+                    app.getPath(2, inc.name);
+                    console.log("Verifying new Path is updated:", app)
+                    
+                } else if (app.checkStats(inc.name)) {
+                        icon.setAttribute("name", "person-remove-outline");
+                        inner.classList.add("green__background");
+                        inc.hasIt = true;
+                        console.log(`${inc.name} is active and ready to be removed.`);
+                    }
+
+                
+                 else { toggle.checked = false}
             } else {
-                inc.hasIt = false;
-                console.log(`${inc.name} is inactive and ready to be added.`);
+                
+                if (sheetID == "path") {
+                    console.log("Reseting entire Survivor...")
+                    //app.resetToDefault();
+                    clearPath();
+                } else {
+                    console.log("This toggle was not from the Path sheet")
+                    inc.hasIt = false;
+                    console.log(`${inc.name} is inactive and ready to be added.`);
+                }
                 icon.setAttribute("name", "person-add-outline");
                 inner.classList.remove("green__background");
             }
             app.updateStatsAndDom();
-        });        
+        });
+
+        //THIS WAS WORKING OK
+        // toggle.addEventListener("change", () => {
+        //     if (toggle.checked) {
+        //         if (app.checkStats(inc.name)) {
+        //             icon.setAttribute("name", "person-remove-outline");
+        //             inner.classList.add("green__background");
+        //             inc.hasIt = true;
+        //             console.log(`${inc.name} is active and ready to be removed.`);
+        //         } else { toggle.checked = false}
+        //     } else {
+        //         inc.hasIt = false;
+        //         console.log(`${inc.name} is inactive and ready to be added.`);
+        //         icon.setAttribute("name", "person-add-outline");
+        //         inner.classList.remove("green__background");
+        //     }
+        //     app.updateStatsAndDom();
+        // });        
 
         // toggle.addEventListener('change', function() {
         //     const isChecked = toggle.checked;
@@ -1666,64 +1771,24 @@ function buildBuilderSheet(elm) {
 // console.log(isElmPresent("📝-container"))
 
 function buildEdgesSection(arr) {
-    if (isElmPresent("edges-holder")) {
-        console.log("edges elm exists, exiting buildEdgesSection function")
-        return;
-    }
-    let arrayToUse = arr;
-    // if (elm == "path") {
-    //     arrayToUse = app.paths;
-    //     sheetName = "Paths";
-    // }
-
-    //<div class="outer__section" id="edges-holder">
-    const divSection = document.createElement("div");
-    divSection.classList.add("outer__section");
-    divSection.id = "edges-holder";
-
-    //<hr>
-    //<p class="📝-class"><strong>Edges:</strong></p>
-    const hr = document.createElement("hr");
-
-    const titleP = document.createElement("p");
-    titleP.classList.add("📝-class");
-    const strongElement = document.createElement("strong");
-    strongElement.textContent = "Edges:";
-    titleP.appendChild(strongElement);
-
-    // <div class="inner__section" id="edges-list">
-    // list of all edges
-    const main = document.createElement("div");
-    main.classList.add("inner__section");
-    main.classList.add("active");
-    main.id = "edges-list"
+    // if (isElmPresent("edge-list-checker")) {
+    //     console.log("edges elm exists, exiting buildEdgesSection function")
+    //     return;
+    // } // TODO: there may be a better way to do this, basically, we only
+    // want to create the edges list if it does not exist, or
+    // if we change Paths
 
     const list = document.createElement("ul");
+    list.id = "edge-list-checker";
     list.classList.add("ability__sheet__list");
-
-    //document.getElementById("pc-tab").appendChild(divSection);
-    //document.getElementById("📝-container")?.lastElementChild?.insertAdjacentHTML('beforebegin', divSection);
-    // document.querySelector("📝-container")?.lastElementChild?.insertAdjacentHTML('beforebegin', "");
-    const lastChild = document.querySelector("#📝-container")?.lastElementChild;
-    if (lastChild) {
-    lastChild.parentNode.insertBefore(divSection, lastChild);
-    }
-
-
-    divSection.classList.add("active");
+    document.getElementById("edges-list").innerHTML = "";
+    document.getElementById("edges-list").appendChild(list)
     
-    divSection.appendChild(hr);
-    divSection.appendChild(titleP);
-    divSection.appendChild(main);
-    main.appendChild(list);
-
-    console.log(app.getCurrentPath()) // are any edges already true?
-
-    arrayToUse.forEach(inc => {
+    arr.forEach(inc => {
         const inner = document.createElement("div");
         inner.innerHTML = `
         <label class="switch">
-            <input type="checkbox" id="incToggle-${toCamelCase(inc.name)}" autocomplete="off">
+            <input type="checkbox" id="edgeToggle-${toCamelCase(inc.name)}" autocomplete="off">
             <span class="toggle__slider">
                 <ion-icon id="icon-${toCamelCase(inc.name)}" name="person-add-outline"></ion-icon>
             </span>
@@ -1731,20 +1796,15 @@ function buildEdgesSection(arr) {
         <li><strong>${inc.name}:</strong> ${inc.description}</li>
         `;
 
+        inner.id = "edges-li-holder-" + toCamelCase(inc.name);
         list.appendChild(inner);
 
-        const toggle = document.getElementById("incToggle-" + toCamelCase(inc.name));
+        const toggle = document.getElementById("edgeToggle-" + toCamelCase(inc.name));
         const icon = document.getElementById("icon-" + toCamelCase(inc.name));
-
-        console.log(inc.hasIt)
-        console.log(toggle)
 
         toggle.checked = false;
         toggle.value = "off"
         icon.setAttribute("name", "person-add-outline");
-
-        console.log(toggle.value)
-        console.log(toggle.checked)
 
         if (app.getCurrentPath().name === "Jack") {
             console.log("Survivor is a Jack (disabling toggle)");
@@ -1759,20 +1819,7 @@ function buildEdgesSection(arr) {
             inner.classList.add("green__background");
             inc.hasIt = true;
             return;
-        }        
-
-        // if (inc.hasIt) {
-        //     // toggle slider
-        //     toggle.checked = true;
-        // } else { toggle.checked = false }
-        // if (inc.hasIt) {
-        //     toggle.checked = true;
-        //     icon.setAttribute("name", "person-remove-outline");
-        //     inner.classList.add("green__background");
-        // } else {
-        //     toggle.checked = false;
-        //     icon.setAttribute("name", "person-add-outline");
-        // }
+        };
 
         toggle.addEventListener("change", () => {
             if (toggle.checked) {
@@ -1794,47 +1841,164 @@ function buildEdgesSection(arr) {
                 icon.setAttribute("name", "person-add-outline");
                 inner.classList.remove("green__background");
             }            
-            // if (toggle.checked == true) {
-            //     console.log("got here")
-            //     if (app.getCurrentPath().edges.find(obj => obj.hasIt)?.name != inc.name) {
-            //         console.log("got here too")
-            //         icon.setAttribute("name", "person-remove-outline");
-            //         inner.classList.add("green__background");
-            //         inc.hasIt = true;
-            //         console.log(`${inc.name} is ready to be removed.`);
-            //     } else { 
-            //         console.log("toggle back off here")
-            //         toggle.checked = false
-            //     }
-            // } else {
-            //     inc.hasIt = false;
-            //     console.log(`${inc.name} is ready to be added.`);
-            //     icon.setAttribute("name", "person-add-outline");
-            //     inner.classList.remove("green__background");
-            // }
-            //app.updateStatsAndDom();
         });        
     });
 };
-
-// function setUpAspects() {
-//     if (isElmPresent("aspects-holder")) {
-//         console.log("Aspects elm exists, exiting buildEdgesSection function")
+// function buildEdgesSection(arr) {
+//     if (isElmPresent("edges-holder")) {
+//         console.log("edges elm exists, exiting buildEdgesSection function")
 //         return;
 //     }
-//     const customBtn = document.createElement("button");
-//     customBtn.className = "form-btn";
-//     customBtn.textContent = "Choose Aspects";
-//     customBtn.onclick = () => toggleBuilderSheet(null, true, true);
+//     let arrayToUse = arr;
+//     // if (elm == "path") {
+//     //     arrayToUse = app.paths;
+//     //     sheetName = "Paths";
+//     // }
 
-//     const randomButton = document.createElement("button");
-//     randomButton.className = "form-btn";
-//     randomButton.innerHTML = "🎲";
-//     randomButton.onclick = getRndAspect;
-// }
+//     //<div class="outer__section" id="edges-holder">
+//     const divSection = document.createElement("div");
+//     divSection.classList.add("outer__section");
+//     divSection.id = "edges-holder";
+
+//     //<hr>
+//     //<p class="📝-class"><strong>Edges:</strong></p>
+//     const hr = document.createElement("hr");
+
+//     const titleP = document.createElement("p");
+//     titleP.classList.add("📝-class");
+//     const strongElement = document.createElement("strong");
+//     strongElement.textContent = "Edges:";
+//     titleP.appendChild(strongElement);
+
+//     // <div class="inner__section" id="edges-list">
+//     // list of all edges
+//     const main = document.createElement("div");
+//     main.classList.add("inner__section");
+//     main.classList.add("active");
+//     main.id = "edges-list"
+
+//     const list = document.createElement("ul");
+//     list.classList.add("ability__sheet__list");
+
+//     //document.getElementById("pc-tab").appendChild(divSection);
+//     //document.getElementById("📝-container")?.lastElementChild?.insertAdjacentHTML('beforebegin', divSection);
+//     // document.querySelector("📝-container")?.lastElementChild?.insertAdjacentHTML('beforebegin', "");
+//     const lastChild = document.querySelector("#📝-container")?.lastElementChild;
+//     if (lastChild) {
+//     lastChild.parentNode.insertBefore(divSection, lastChild);
+//     }
+
+
+//     divSection.classList.add("active");
+    
+//     divSection.appendChild(hr);
+//     divSection.appendChild(titleP);
+//     divSection.appendChild(main);
+//     main.appendChild(list);
+
+//     console.log(app.getCurrentPath()) // are any edges already true?
+
+//     arrayToUse.forEach(inc => {
+//         const inner = document.createElement("div");
+//         inner.innerHTML = `
+//         <label class="switch">
+//             <input type="checkbox" id="incToggle-${toCamelCase(inc.name)}" autocomplete="off">
+//             <span class="toggle__slider">
+//                 <ion-icon id="icon-${toCamelCase(inc.name)}" name="person-add-outline"></ion-icon>
+//             </span>
+//         </label>
+//         <li><strong>${inc.name}:</strong> ${inc.description}</li>
+//         `;
+
+//         list.appendChild(inner);
+
+//         const toggle = document.getElementById("incToggle-" + toCamelCase(inc.name));
+//         const icon = document.getElementById("icon-" + toCamelCase(inc.name));
+
+//         console.log(inc.hasIt)
+//         console.log(toggle)
+
+//         toggle.checked = false;
+//         toggle.value = "off"
+//         icon.setAttribute("name", "person-add-outline");
+
+//         console.log(toggle.value)
+//         console.log(toggle.checked)
+
+//         if (app.getCurrentPath().name === "Jack") {
+//             console.log("Survivor is a Jack (disabling toggle)");
+//             toggle.disabled = true;
+//             toggle.checked = true;
+//             //toggle.style.setProperty("cursor", "not-allowed", "important");
+//             const span = inner.querySelector("span");
+//             if (span) {
+//                 span.style.setProperty("cursor", "not-allowed", "important");
+//             }
+//             icon.setAttribute("name", "person-remove-outline");
+//             inner.classList.add("green__background");
+//             inc.hasIt = true;
+//             return;
+//         }        
+
+//         // if (inc.hasIt) {
+//         //     // toggle slider
+//         //     toggle.checked = true;
+//         // } else { toggle.checked = false }
+//         // if (inc.hasIt) {
+//         //     toggle.checked = true;
+//         //     icon.setAttribute("name", "person-remove-outline");
+//         //     inner.classList.add("green__background");
+//         // } else {
+//         //     toggle.checked = false;
+//         //     icon.setAttribute("name", "person-add-outline");
+//         // }
+
+//         toggle.addEventListener("change", () => {
+//             if (toggle.checked) {
+//                 const edges = app.getCurrentPath().edges;
+//                 const otherObj = edges.find(obj => obj !== inc);
+                
+//                 if (!otherObj.hasIt) {
+//                     icon.setAttribute("name", "person-remove-outline");
+//                     inner.classList.add("green__background");
+//                     inc.hasIt = true;
+//                     console.log(`${inc.name} is active and ready to be removed.`);
+//                 } else {
+//                     callError("You can only select one Edge.");
+//                     toggle.checked = false;
+//                 }
+//             } else {
+//                 inc.hasIt = false;
+//                 console.log(`${inc.name} is inactive and ready to be added.`);
+//                 icon.setAttribute("name", "person-add-outline");
+//                 inner.classList.remove("green__background");
+//             }            
+//             // if (toggle.checked == true) {
+//             //     console.log("got here")
+//             //     if (app.getCurrentPath().edges.find(obj => obj.hasIt)?.name != inc.name) {
+//             //         console.log("got here too")
+//             //         icon.setAttribute("name", "person-remove-outline");
+//             //         inner.classList.add("green__background");
+//             //         inc.hasIt = true;
+//             //         console.log(`${inc.name} is ready to be removed.`);
+//             //     } else { 
+//             //         console.log("toggle back off here")
+//             //         toggle.checked = false
+//             //     }
+//             // } else {
+//             //     inc.hasIt = false;
+//             //     console.log(`${inc.name} is ready to be added.`);
+//             //     icon.setAttribute("name", "person-add-outline");
+//             //     inner.classList.remove("green__background");
+//             // }
+//             //app.updateStatsAndDom();
+//         });        
+//     });
+// };
+
 function setUpAspects() {
     if (isElmPresent("aspects-holder")) {
-        console.log("Aspects elm exists, exiting buildEdgesSection function");
+        console.log("Aspects elm exists, exiting setUpAspects function");
         return;
     }
 
@@ -1874,6 +2038,9 @@ function setUpAspects() {
 };
 
 function getRndAspect() {
+    if(!app.getCurrentPath()) {
+        callTip("Don't forget to pick a Path")
+    }
     console.log("trying to get a random Aspect")
     app.getRndAspect();
 }
@@ -1971,7 +2138,7 @@ function buildAspectsSection() {
     footer.classList.add("ability__sheet__header-footer");
     footer.innerHTML = `
         <div class="orange"></div>
-        <button type="button" onclick="toggleBuilderSheet(this, false, 'edit-overlay')"><h1><span class="title__text-green">Save</span> & <span class="title__text-camo">Close</span></h1></button>
+        <button type="button" onclick="toggleBuilderSheet(this, false, 'edit-overlay')">Save & Close</button>
         <div class="orange"></div>
     `;
 
@@ -2084,18 +2251,34 @@ function buildAspectsSection() {
     });
 };
 
-function testMain(checker) {
-    toggleBuilderSheet(checker, true, null);
+function selectMain(checker) {
+    if(app.getCurrentPath() || checker == "path") {
+        toggleBuilderSheet(checker, true, null);
+    } else { callError("Please pick a Path first.") }
+    
 }
-#
-function getItem(checker) {
-    if (checker == "weapon") {
-        console.log(app.getCurrentPath().gear)
-        app.equipment.push(pickUnique([...wwWeaponsArr, ...app.getCurrentPath().gear], 1))
-        console.log(app.equipment)
-    }
 
-    document.getElementById("📝gear").innerHTML = [...app.getCurrentPath().gear, ...app.equipment].join(", ");
+function getItem(checker) {
+    if(app.getCurrentPath()) {
+        app.equipment = [];
+        if (checker == "weapon") {
+            console.log("Equipment for the current Path:", app.getCurrentPath().gear)
+            app.equipment.push(pickUnique([...wwWeaponsArr, ...app.getCurrentPath().gear], 1))
+        }
+        if (checker == "gear") {
+            console.log("Equipment for the current Path:", app.getCurrentPath().gear)
+            app.equipment.push(pickUnique([...wwGearArr, ...app.getCurrentPath().gear], 1))
+        }
+        if (checker == "drug") {
+            console.log("Equipment for the current Path:", app.getCurrentPath().gear)
+            app.equipment.push(pickUnique([...drugsArray, ...app.getCurrentPath().gear], 1))
+        }
+        console.log("Current equipment:", app.equipment)
+        //document.getElementById("rnd-equipment-txt").innerHTML = [...app.getCurrentPath().gear, ...app.equipment].join(", ");
+        document.getElementById("rnd-equipment-txt").innerHTML = app.equipment.join(", ");
+        document.getElementById("rnd-equipment-txt").classList.add("bold");
+    } else { callError("Please pick a Path to begin.") }
+   
 }
 
 function toggleBuilderSheet(elm, checker, aspect) {
@@ -2137,7 +2320,10 @@ function toggleBuilderSheet(elm, checker, aspect) {
 
 function getRndIncl(nameIn) {
     //app.rollInclination(1, nameIn);
-    app.getRndIncl();
+    if(app.getCurrentPath()) {
+        app.getRndIncl(nameIn, true);
+    } else { callError("Please pick a Path first.")}
+    
 }
 
 const pathElement = document.getElementById("📝path");
@@ -2145,11 +2331,71 @@ const pathElement = document.getElementById("📝path");
 // Create a MutationObserver instance
 const observer = new MutationObserver(() => {
     if (pathElement.innerText !== defPathMsg) {
-        pathElement.classList.add("active");
+        pathElement.classList.add("bold");
     } else {
-        pathElement.classList.remove("active");
+        pathElement.classList.remove("bold");
     }
 });
 
 // Observe changes to the child nodes (text) of the path element
 observer.observe(pathElement, { childList: true, subtree: true });
+
+function fillForm() {
+    callError("Exporter coming soon...");
+}
+
+function rndAll() {
+    console.log("Initiating a completely random Survivor...");
+    // Get random Path
+    app.getPath(1);
+
+    // Get random Inclinations
+    app.getAllRndIncls();
+
+    // Random Edge
+    if (app.getCurrentPath().edges.length > 1) {
+        console.log("Attempting to select a random Edge...")
+        const pickTrue = Math.random() < 0.5;
+        app.getCurrentPath().edges.forEach((item, i) => item.hasIt = i === (pickTrue ? 0 : 1));
+        //app.getCurrentPath().edges.forEach(item => item.hasIt = Math.random() < 0.5 ? true : false);
+
+        //const edges = app.getCurrentPath().edges;
+        const otherObj = app.getCurrentPath().edges.find(obj => obj.hasIt == true);
+        const inner = document.getElementById("edges-li-holder-" + toCamelCase(otherObj.name));
+        const toggle = document.getElementById("edgeToggle-" + toCamelCase(otherObj.name));
+        const icon = document.getElementById("icon-" + toCamelCase(otherObj.name));
+        
+        if (otherObj.hasIt) {
+            //icon.setAttribute("name", "person-remove-outline");
+            //inner.classList.add("green__background");
+            console.log(toggle)
+            toggle.checked = true;
+            toggle.dispatchEvent(new Event("change"));
+            //toggle.checked = !toggle.checked;
+            console.log(`${otherObj.name} was randomly selected and updated in dom.`);
+        } else {
+            //callError("You can only select one Edge.");
+            toggle.checked = false;
+        }
+        console.log("Verification of Edge selection:", app.getCurrentPath().edges)
+    }
+
+    // Random aspects and name
+    getRndAspect();
+    initName();
+
+    // Random equipment
+    const eqRoll = getRndInteger(1, 3);
+    if (eqRoll == 1) {
+        getItem("weapon");
+    }
+    if (eqRoll == 2) {
+        getItem("gear");
+    }
+    if (eqRoll == 3) {
+        getItem("drug");
+    }
+
+    //app.updateStatsAndDom();
+
+}
