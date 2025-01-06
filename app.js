@@ -82,16 +82,16 @@ function checkToggle() {
 function assignTab() {
     if (checkToggle() == "pc-tools") {
         document.getElementById("pc-tab").style.display = 'block';
+        document.getElementById("veh-tab").style.display = 'none';
         document.getElementById("rr-tab").style.display = 'none';
-        document.getElementById("dice-tab").style.display = 'none';
+    } else if (checkToggle() == "veh-tools") {
+        document.getElementById("veh-tab").style.display = 'block';
+        document.getElementById("pc-tab").style.display = 'none';
+        document.getElementById("rr-tab").style.display = 'none';
     } else if (checkToggle() == "rr-tools") {
+        document.getElementById("veh-tab").style.display = 'none';
+        document.getElementById("pc-tab").style.display = 'none';
         document.getElementById("rr-tab").style.display = 'block';
-        document.getElementById("pc-tab").style.display = 'none';
-        document.getElementById("dice-tab").style.display = 'none';
-    } else if (checkToggle() == "dice-tools") {
-        document.getElementById("rr-tab").style.display = 'none';
-        document.getElementById("pc-tab").style.display = 'none';
-        document.getElementById("dice-tab").style.display = 'block';
     } else {
         alert("Sorry, there was an error getting a tab. Please refresh the page. ERROR CODE: 1409");
 }};
@@ -2425,7 +2425,7 @@ function rndAll() {
     initName();
 
     // Random equipment
-    const eqRoll = getRndInteger(1, 3);
+    const eqRoll = getRndInt(1, 3);
     if (eqRoll == 1) {
         getItem("weapon");
     }

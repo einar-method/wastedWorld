@@ -59,19 +59,19 @@
                     <input 
                     type="radio" 
                     name="tool-toggle" 
-                    id="rr-tools" 
-                    value="rr-tools"
+                    id="veh-tools" 
+                    value="veh-tools"
                     class="tool-toggle">
-                    <label for="rr-tools">Vehicles</label>
+                    <label for="veh-tools">Vehicles</label>
                 </p>
                 <p class="form-para">
                     <input 
                     type="radio" 
                     name="tool-toggle" 
-                    id="dice-tools" 
-                    value="dice-tools"
+                    id="rr-tools" 
+                    value="rr-tools"
                     class="tool-toggle">
-                    <label for="dice-tools">Holds</label>
+                    <label for="rr-tools">RR Tools</label>
                 </p>
                 </fieldset>
             </div>
@@ -267,7 +267,7 @@
               </div>
             </div>
 
-            <div id="rr-tab" style="display:none">
+            <div id="veh-tab" style="display:none">
                 <div class="📝-container">
                   <div class="📝builder-btns top">
                     <button class="form-btn" onclick="getVehicle('select')">Choose Vehicle</button>
@@ -314,7 +314,7 @@
                     </div>
                     <hr>
                   </div>
-
+                  
                   <div class="📝builder-btns">
                     <hr>
                     <button class="form-btn full" onclick="exportVehicle()">Export</button>
@@ -330,28 +330,22 @@
               
             </div>
 
-            <div id="dice-tab" style="display:none">
+            <div id="rr-tab" style="display:none">
                 <section class="button-wrapper">
                   <div id="dice-btns">  
               
-                    <button class="glide-main" id="d6-btn">D6</button>
-                    <button class="glide-main" id="boon-btn">Boon</button>
-                    <button class="glide-main" id="bane-btn">Bane</button>
-                    <div class="dice-box">
-                      <p>
-                          <input 
-                          type="text" 
-                          name="formula-input" 
-                          id="formula-input"
-                          class="dice-input" 
-                          pattern="\d+d\d+(kl|kh|fr)?"
-                          title="Enter a valid dice formula, such as 2d20kh"
-                          placeholder="#d#"
-                          autocomplete="off">
-                      </p>
-                      <button id="formula-btn">Formula</button> 
-                    </div>
-                    <button class="glide-main" id="dice-reset">Clear</button>
+                    <button class="glide-main" onclick="rrRandomRoll('holdName')">Hold Name</button>
+                    <button class="glide-main" onclick="rrRandomRoll('gang')">Gang</button>
+                    <button class="glide-main" onclick="rrRandomRoll('dude')">Some Dude</button>
+                    <button class="glide-main" onclick="rrRandomRoll('lady')">Some Lady</button>
+                    <button class="glide-main" onclick="rrRandomRoll('hTech')">High-Tech Loot</button>
+                    <button class="glide-main" onclick="rrRandomRoll('miasma')">Crystalized Miasma</button>
+                    <button class="glide-main" onclick="rrRandomRoll('mKissed')">Miasma Kissed</button>
+                    <button class="glide-main" onclick="rrRandomRoll('sEnhance')">Synth Enhance</button>
+                    <button class="glide-main" onclick="rrRandomRoll('stock')">Stock Hold</button>
+                    <button class="glide-main" onclick="rrRandomRoll('mission')">Mission</button>
+                    
+                    <button class="glide-main" id="dice-reset" onclick="clearDiceResults()">Clear</button>
                   </div>
                 </section>
             
@@ -359,7 +353,8 @@
               
                 <section class="dice-results">
                   <dialog id="🎲🎲">Final Roll: <span id="final-roll"></span></dialog>
-                  <dialog id="🎲">All Rolls: <span id="all-roll"></span></dialog>
+                  <dialog id="🎲"><span id="rr-result-name"></span><span id="all-roll"></span></dialog>
+                  <dialog id="stock-hold-result"></dialog>
                 </section>
             </div>
         </div>
@@ -369,6 +364,7 @@
     <script src="helpers.js"></script>
     <script src="arrays.js"></script>
     <script src="vehicles.js"></script>
+    <script src="rrTools.js"></script>
     <script src="app.js"></script>
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
 <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>

@@ -222,7 +222,7 @@ fieldset {
   user-select: none;
 }
 
-.glide-main {
+.old-glide {
   color: rgb(255, 255, 255);
   background-color: #000000;
   border: 0px solid rgba(1, 92, 24, 0.246);
@@ -241,10 +241,28 @@ fieldset {
   transition: ease-out 0.4s;
   /*    flex-grow: 1; */
 }
-
-.glide-main:hover {
+.old-glide:hover {
   box-shadow: inset 0 0 0 25px #99ca3c;
   color: rgb(0, 0, 0);
+}
+
+.glide-main {
+  color: black;
+  background-color: #99ca3c;
+  border: 4px solid black;
+  border-radius: 3px;
+  padding: 0;
+  /*   padding: 5px; */
+  /*   margin: 0.1rem; */
+  display: inline-block;
+  font-size: 2.8vmin;
+  font-size: minMax(2.8vmin, 1rem);
+  /* letter-spacing: 1px; */
+  cursor: pointer;
+}
+
+.glide-main:hover {
+  filter: brightness(85%);
 }
 
 .glide-sml {
@@ -441,9 +459,10 @@ dialog {
 }
 
 .dice-results {
-  display: grid;
+  /* display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: .15rem;
+  gap: .15rem; */
+  display: flex;
 }
 
 #error {

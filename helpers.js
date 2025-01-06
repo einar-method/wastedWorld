@@ -4,6 +4,10 @@ function pickUnique(array, count) {
     return shuffled.slice(0, count);
 };
 
+function pickWithDuplicates(count, array) {
+    return Array.from({ length: count }, () => array[Math.floor(Math.random() * array.length)]);
+};
+
 const isElmPresent = (id) => document.getElementById(id) ? true : false;
 
 const toCamelCase = (str) =>
@@ -56,7 +60,7 @@ function randomMath(input) {
     return input[Math.floor(Math.random() * input.length)];
 }; // Great for picking a random element from an array.
 
-function getRndInteger(min, max) {
+function getRndInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1) ) + min;
 }; // Easy random int between two numbers. 
 
