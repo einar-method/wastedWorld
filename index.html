@@ -17,7 +17,7 @@
     <section class="grid">
         <div class="card"></div> <!-- top left corner -->
         <div class="card">
-          <h1 class="main__header">WASTED WORLD APP</h1>
+          <!-- <h1 class="main__header">WASTED WORLD APP</h1> -->
           <!-- <img  
           src="./Assets/tools.png" 
           alt="BCR"
@@ -217,9 +217,9 @@
                         placeholder="Name"
                         autocomplete="off">
                       </p> -->
-                      <textarea id="📝name" name="📝name" rows="1" class="textarea__dynamic" spellcheck="false" title="Edit Name" placeholder="Name"></textarea>
+                      <textarea id="📝name" name="📝name" rows="1" class="textarea__dynamic" spellcheck="false" autocomplete="off" title="Edit Name" placeholder="Name"></textarea>
                       <button class="form-btn" onclick="initName()">🎲</button>
-                      <textarea id="notes" name="notes" rows="3" class="textarea__dynamic" spellcheck="false" title="Notes" placeholder="Additional notes for your Survivor."></textarea>
+                      <textarea id="notes" name="notes" rows="3" class="textarea__dynamic" spellcheck="false" autocomplete="off" title="Notes" placeholder="Additional notes for your Survivor."></textarea>
                     </div>
                     <hr>
                   </div>
@@ -270,157 +270,63 @@
             <div id="rr-tab" style="display:none">
                 <div class="📝-container">
                   <div class="📝builder-btns top">
-                    <button class="form-btn" onclick="rndAll()" id="📝clearBuild-btn">Quick Vehicle</button>
-                    <button class="form-btn" onclick="clearPath()">🗙 Reset</button>
-                  </div>
-                  
-                  <div class="outer__section active" id="vehicles-holder">
-                    <hr>
-                    <div class="inner__section active" id="vehType-holder">
-                      <p class="📝-class"><strong>Type:</strong></p>
-                      <div class="📝box threeCol">
-                        <button class="form-btn" onclick="getVehicle('weapon')">Choose Vehicle</button>
-                        <button class="form-btn" onclick="getVehicle('weapon')">🎲 Light</button>
-                        <button class="form-btn" onclick="getVehicle('gear')">🎲 Medium</button>
-                        <button class="form-btn" onclick="getVehicle('drug')">🎲 Heavy</button>
-                        <button class="form-btn" onclick="getVehicle('drug')">🎲 Super H.</button>
-                        <button class="form-btn" onclick="getVehicle('drug')">🎲 Heavy Metal!</button>
-                      </div>
-                    </div>
-                    <p class="green-box large" id="vehTypeText">Choose a premade or random (🎲) vehicle</p>
-                    <hr>
+                    <button class="form-btn" onclick="getVehicle('select')">Choose Vehicle</button>
+                    <button class="form-btn" onclick="getVehicle('random')">🎲 Vehicle</button>
                   </div>
                 
                   <div class="outer__section active" id="vehicleStats-holder">
                     <hr>
-                    <p class="📝-class"><strong>Stats:</strong></p>
-                    <div class="inner__section active" id="allStats-list">
-                      <p id="verNameDef"><strong>Name: </strong></p>
-                      <p id="psgCountDef"><strong>Passengers: </strong></p>
-                      <p id="vehStrikesDef"><strong>Strikes: </strong></p>
-                      <p id="vehStrcSaveDef"><strong>Structure Save: </strong></p>
-                      <p id="vehMnvRollDef"><strong>Maneuver Roll: </strong></p>
-                      <p id="vehramDef"><strong>Rammage: </strong></p>
-                      <p id="vehLdsDef"><strong>Last Ditch Save (LDS): </strong></p>
-                    </div>
+                    <p class="section__title">Vehicle Stats:</p>
+                    <ul class="ability__sheet__list simple" id="allStats-list">
+                      <li><textarea id="vehNameDef" name="vehNameDef" rows="1" class="textarea__dynamic" spellcheck="false" autocomplete="off" title="Edit Name" placeholder="Name"></textarea></li>
+                      <!-- <li id="vehNameDef"><strong>Name: </strong></li> -->
+                      <li id="vehTypeDef"><strong>Type: </strong></li>
+                      <li id="psgCountDef"><strong>Passengers: </strong></li>
+                      <li id="vehStrikesDef"><strong>Strikes: </strong></li>
+                      <li id="vehStrcSaveDef"><strong>Structure Save: </strong></li>
+                      <!-- <li id="vehMnvRollDef"><strong>Maneuver Roll: </strong></li> -->
+                      <li id="vehramDef"><strong>Rammage: </strong></li>
+                      <!-- <li id="vehLdsDef"><strong>Last Ditch Save (LDS): </strong></li> -->
+                    </ul>
                     <hr>
                   </div>
                 
                   <div class="outer__section active" id="vehicleMods-holder">
                     <hr>
-                    <p class="📝-class"><strong>Mods:</strong></p>
-                    <div class="inner__section active" id="vehMods-list">
-                        <ul class="ability__sheet__list">
+                    <p class="section__title">Mods:</p>
+                    <div class="📝box">
+                      <button class="form-btn" onclick="getMod('select')">Choose Mod</button>
+                      <button class="form-btn" onclick="getMod('random')">🎲 Mod</button>
+                    </div>
+                    <div class="inner__section active">
+                        <ul class="ability__sheet__list simple" id="vehMods-list">
                           <li>First, create a Vehicle</li>
                         </ul>
                     </div>
                     <hr>
                   </div>
 
-                  <div class="outer__section active" id="vehicleMods-holder">
+                  <div class="outer__section active" id="vehicleInfo-holder">
                     <hr>
-                    <p class="📝-class"><strong>Additional Info:</strong></p>
-                    <div class="inner__section active" id="vehMods-list">
+                    <p class="section__title">Additional Info:</p>
+                    <div class="inner__section active" id="vehInfo-list">
                         <textarea id="veh-notes" name="veh-notes" rows="3" class="textarea__dynamic" spellcheck="false" title="Vehicle Notes" placeholder="Additional notes for Vehicle."></textarea>
                     </div>
                     <hr>
                   </div>
+
+                  <div class="📝builder-btns">
+                    <hr>
+                    <button class="form-btn full" onclick="exportVehicle()">Export</button>
+                    <!-- <button class="form-btn full" onclick="clearVeh()">🗙 Reset</button> -->
+                    <hr>
+                  </div>
+                    
+                 
+                  
                 </div>
                 
               <!-- </div> -->
-
-                <div class="outer__section active">
-                  <h1>Vehicle Configuration</h1>
-                  
-                  <form id="vehicleForm">
-                      
-                      <div class="section">
-                          <label for="vehicleName"><strong>Vehicle Name:</strong></label>
-                          <input type="text" id="vehicleName" name="vehicleName" required>
-                      </div>
-                      
-                      <div class="section">
-                          <label for="passengerCount"><strong>Passenger Count:</strong></label>
-                          <input type="number" id="passengerCount" name="passengerCount" min="0">
-                      </div>
-          
-                      <div class="section">
-                          <label for="strikes"><strong>Strikes:</strong></label>
-                          <input type="number" id="strikes" name="strikes" min="0">
-                      </div>
-          
-                      <div class="section">
-                          <label for="saveValue"><strong>Structure Save Value:</strong></label>
-                          <input type="number" id="saveValue" name="saveValue" min="1" max="6">
-                      </div>
-          
-                      <div class="section">
-                          <label for="mnvRoll"><strong>Maneuver Roll:</strong></label>
-                          <input type="number" id="mnvRoll" name="mnvRoll">
-                      </div>
-          
-                      <div class="section">
-                          <label for="rammage"><strong>Rammage:</strong></label>
-                          <input type="number" id="rammage" name="rammage">
-                      </div>
-          
-                      <div class="section">
-                          <label for="lds"><strong>Last Ditch Save (LDS):</strong></label>
-                          <input type="number" id="lds" name="lds">
-                      </div>
-          
-                      <div class="section">
-                          <label for="isWrecked"><strong>Is Wrecked:</strong></label>
-                          <select id="isWrecked" name="isWrecked">
-                              <option value="false" selected>No</option>
-                              <option value="true">Yes</option>
-                          </select>
-                      </div>
-          
-                      <div class="section">
-                          <h3>Select Vehicle Class</h3>
-                          <div class="checkbox-grid">
-                              <label><input type="radio" name="vehicleClass" value="Light" required> Light (Motorcycle, ATV, Buggy)</label>
-                              <label><input type="radio" name="vehicleClass" value="Medium"> Medium (Car or Small SUV)</label>
-                              <label><input type="radio" name="vehicleClass" value="Heavy"> Heavy (Pickup, Van, or Large SUV)</label>
-                              <label><input type="radio" name="vehicleClass" value="Superheavy"> Superheavy (Semi or Bus)</label>
-                          </div>
-                      </div>
-          
-                      <div class="section">
-                          <h3>Select Vehicle Mods</h3>
-                          <div class="checkbox-grid">
-                              <label><input type="checkbox" name="mod" value="Reinforced Frame"> Reinforced Frame</label>
-                              <label><input type="checkbox" name="mod" value="Welded Armor"> Welded Armor</label>
-                              <label><input type="checkbox" name="mod" value="Juiced"> Juiced</label>
-                              <label><input type="checkbox" name="mod" value="Tire Grips"> Tire Grips</label>
-                              <label><input type="checkbox" name="mod" value="Spiked Body"> Spiked Body</label>
-                              <label><input type="checkbox" name="mod" value="Heavy Machine Gun Mount"> Heavy Machine Gun Mount</label>
-                              <label><input type="checkbox" name="mod" value="Reinforced Ram"> Reinforced Ram</label>
-                              <label><input type="checkbox" name="mod" value="Powered Winch"> Powered Winch</label>
-                              <label><input type="checkbox" name="mod" value="Smokescreen"> Smokescreen</label>
-                              <label><input type="checkbox" name="mod" value="Killjacks"> Killjacks</label>
-                              <label><input type="checkbox" name="mod" value="Rigged to Blow"> Rigged to Blow</label>
-                              <label><input type="checkbox" name="mod" value="Hellfire Roaster"> Hellfire Roaster</label>
-                              <label><input type="checkbox" name="mod" value="Boom Spear"> Boom Spear</label>
-                              <label><input type="checkbox" name="mod" value="Trailer"> Trailer</label>
-                              <label><input type="checkbox" name="mod" value="Steering Wheel Lock Bar"> Steering Wheel Lock Bar</label>
-                          </div>
-                      </div>
-          
-                      <div class="section">
-                          <label for="notes"><strong>Additional Notes:</strong></label><br>
-                          <textarea id="notes" name="notes" rows="5"></textarea>
-                      </div>
-          
-                      <div class="section">
-                          <label for="equipment"><strong>Equipment (comma separated):</strong></label>
-                          <input type="text" id="equipment" name="equipment">
-                      </div>
-          
-                      <button type="submit">Save Vehicle</button>
-                  </form>
-                </div>
               
             </div>
 
@@ -462,6 +368,7 @@
 
     <script src="helpers.js"></script>
     <script src="arrays.js"></script>
+    <script src="vehicles.js"></script>
     <script src="app.js"></script>
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
 <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>

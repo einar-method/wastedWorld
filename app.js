@@ -1599,8 +1599,16 @@ function buildBuilderSheet(elm) {
         arrayToUse = app.bioSynthPs;
         sheetName = "BioSynth Packages";
     }
+    if (elm == "vehicle") {
+        arrayToUse = garage.getAllVeh();
+        sheetName = "Vehicles";
+    }
+    if (elm == "mod") {
+        arrayToUse = garage.current.mods;
+        sheetName = "Vehicle Mods";
+    }
 
-    console.log(sheetName + " sheet was called for.")
+    console.log("Initiating " + sheetName + " sheet...")
 
     //const self = unit;
     const overlay = document.createElement("div");
@@ -1645,9 +1653,9 @@ function buildBuilderSheet(elm) {
         const inner = document.createElement("div");
         inner.innerHTML = `
         <label class="switch">
-            <input type="checkbox" id="incToggle${inc.id}" autocomplete="off">
+            <input type="checkbox" id="incToggle${toCamelCase(inc.name)}" autocomplete="off">
             <span class="toggle__slider">
-                <ion-icon id="icon${inc.id}" name="person-add-outline"></ion-icon>
+                <ion-icon id="icon${toCamelCase(inc.name)}" name="person-add-outline"></ion-icon>
             </span>
         </label>
         <li><strong>${inc.name}:</strong> ${inc.description}</li>
@@ -1655,8 +1663,8 @@ function buildBuilderSheet(elm) {
 
         list.appendChild(inner);
         
-        const toggle = document.getElementById("incToggle"+inc.id);
-        const icon = document.getElementById("icon" + inc.id);
+        const toggle = document.getElementById("incToggle"+toCamelCase(inc.name));
+        const icon = document.getElementById("icon" + toCamelCase(inc.name));
 
         // if (inc.hasIt) {
         //     // toggle slider
@@ -1705,23 +1713,55 @@ function buildBuilderSheet(elm) {
                     console.log(`${inc.name} is being set as the active Path...`);
                     //app.applyPathAttributes();
                     app.getPath(2, inc.name);
+
+                    const onTimeout = () => {
+                        toggleBuilderSheet(this, false, 'edit-overlay');
+                    };
+                    setTimeout(onTimeout, 800);
                     console.log("Verifying new Path is updated:", app)
                     
+                } else if (sheetID == "vehicle") {
+                    icon.setAttribute("name", "person-remove-outline");
+                    inner.classList.add("green__background");
+                    inc.isActive = true;
+                    garage.current = inc;
+                    console.log(garage.current)
+                    garage.updateDisplay();
+                    const onTimeout = () => {
+                        toggleBuilderSheet(this, false, 'edit-overlay');
+                    };
+                    setTimeout(onTimeout, 800);                   
+
+                } else if (sheetID == "mod") {
+                    icon.setAttribute("name", "person-remove-outline");
+                    inner.classList.add("green__background");
+                    inc.hasIt = true;
+                    console.log(inc)
+                    console.log(garage.current)
+                    console.log(`${inc.name} is active and ready to be removed.`);
+                    garage.updateDisplay();
                 } else if (app.checkStats(inc.name)) {
                         icon.setAttribute("name", "person-remove-outline");
                         inner.classList.add("green__background");
                         inc.hasIt = true;
                         console.log(`${inc.name} is active and ready to be removed.`);
-                    }
-
-                
-                 else { toggle.checked = false}
+                } else { toggle.checked = false}
             } else {
                 
                 if (sheetID == "path") {
                     console.log("Reseting entire Survivor...")
                     //app.resetToDefault();
                     clearPath();
+                } else if (sheetID == "vehicle") {
+                    console.log("This toggle was from the Mods sheet")
+                    inc.hasIt = false;
+                    console.log(`${inc.name} is inactive and ready to be added.`);
+                    garage.updateDisplay();
+                } else if (sheetID == "mod") {
+                    console.log("This toggle was from the Mods sheet")
+                    inc.hasIt = false;
+                    console.log(`${inc.name} is inactive and ready to be added.`);
+                    garage.updateDisplay();
                 } else {
                     console.log("This toggle was not from the Path sheet")
                     inc.hasIt = false;
@@ -2395,7 +2435,92 @@ function rndAll() {
     if (eqRoll == 3) {
         getItem("drug");
     }
+};
 
-    //app.updateStatsAndDom();
+function getVehicle(typeIn) {
+    if (typeIn == "select") {
+        toggleBuilderSheet("vehicle", true)
+    }
+    if (typeIn == "random") {
+        console.log("Rolling for a random vehicle...")
+        if (garage.current) {
+            garage.reset();
+        }
+        garage.rollRndVeh();
+    }
+    if (typeIn == "med") {
+        console.log("Rolling for a random medium vehicle...")
+    }
+    if (typeIn == "heavy") {
+        console.log("Rolling for a random heavy vehicle...")
+    }
+    if (typeIn == "super") {
+        console.log("Rolling for a random super heavy vehicle...")
+    }
+    if (typeIn == "metal") {
+        console.log("Rolling for a random heavy metal vehicle...")
+    }
+};
 
+function getMod(modIn) {
+    if (!garage.current) {
+        callError("First, create a Vehicle.");
+        return;
+    }
+    if (modIn == "select") {
+        toggleBuilderSheet("mod", true)
+    }
+    if (modIn == "random") {
+        console.log("Rolling for a random mod...");
+        garage.rollRndMod();
+    }
+};
+
+function exportVehicle() {
+    callError("Vehicle exporter coming soon!")
 }
+
+function clearVeh() {
+    garage.reset();
+}
+
+function setUpTextAreas() {
+    const textAreas = document.querySelectorAll(`.textarea__dynamic`);
+    textAreas.forEach((item) => {
+        item.addEventListener('blur', function (event) {
+            checkInputChange(event.target);
+        });
+    });
+};
+setUpTextAreas()
+
+function checkInputChange(target) {
+    if (target.id === "vehNameDef") {
+        console.log("Changing vehicle name from " + garage.current.name + " to " + target.value + "...")
+        garage.current.name = target.value;
+        console.log("Verification of vehicle name change:", garage.current)
+    }
+    if (target.id === "veh-notes") {
+        console.log("Changing vehicle description from (" + garage.current.description + ") to (" + target.value + ")...")
+        garage.current.description = target.value;
+        console.log("Verification of vehicle description change:", garage.current)
+    }
+    // if (target.id === `forceCardName-${unit.unitID}`) {
+    //     unit.name = target.value;
+    // }
+    // if (target.id === `editReserves-${unit.unitID}`) {
+    //     unit.reserveCount = target.value;
+    // }
+    // if (target.id === `freeRerolls-${unit.unitID}`) {
+    //     unit.freeRerolls = target.value;
+    // }
+    // if (target.id === `range-${unit.unitID}`) {
+    //     unit.attackRange = target.value;
+    // }
+    // if (target.id === `unitDice-${unit.unitID}`) {
+    //     unit.unitDice = target.value;
+    // }
+    // if (target.id === `maxAbilities-${unit.unitID}`) {
+    //     unit.maxAbilities = target.value;
+    // }
+};

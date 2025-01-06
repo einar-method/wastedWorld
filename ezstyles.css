@@ -560,6 +560,9 @@ aside {
   align-self: center;
   transition: all 0.3s ease-in-out;
 }
+.form-btn.full {
+  width: 100%;
+}
 
 .form-btn:hover {
   background-color: #99ca3c;
@@ -836,6 +839,9 @@ p {
 .ability__sheet__list div:nth-child(odd) { 
   background: rgba(169, 186, 180, 0.25);
 }
+.ability__sheet__list.simple li:nth-child(even) { 
+  background: rgba(169, 186, 180, 0.25);
+}
 
 #editForm {
   display: grid;
@@ -939,6 +945,11 @@ p {
 #incl-tip-main {
   height: 60px;
 }
+.section__title {
+  text-align: center;
+  background-color: #000;
+  color: white;
+}
 
 
 
@@ -970,6 +981,7 @@ p {
   display: flex;
   align-items: center;
   justify-content: center;
+  border: 3px black transparent;
   border-radius: 2px;
 }
 
@@ -982,6 +994,7 @@ p {
 
 input:checked + .toggle__slider {
   background-color: greenyellow;
+  border: 3px black solid
 }
 
 input:checked + .toggle__slider ion-icon {
