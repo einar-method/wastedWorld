@@ -33,7 +33,7 @@
       </div>
       <div class="card">
           <p class="footer-txt">
-              This app was made by <a href="https://traveling-bard-games.itch.io/" target="_blank">E•M</a> using <a href="https://www.runehammer.online/online-store/EZD6-Wasted-Worlds-p639159086" target="_blank">Wasted World</a>, an EZD6 Playset. Check out the <a href="https://github.com/einar-method/EZ-Tools#ez-tools" target="_blank">Github repo</a> for Documentation & Support.
+              This app was made by <a href="https://einar-method.github.io/maccreations/" target="_blank">E•M</a> using <a href="https://www.runehammer.online/online-store/EZD6-Wasted-Worlds-p639159086" target="_blank">Wasted World</a>, an EZD6 Playset. Check out the <a href="https://github.com/einar-method/wastedWorld" target="_blank">Github repo</a> for Documentation & Support.
           </p>
       </div>
       <div class="card"></div> <!-- bottom right corner -->
@@ -78,92 +78,74 @@
           
           <div class="grid-box" id="pc-tab">
               <div class="📝-container" id="📝-container">
-                <div class="📝builder-btns top">
+                <div class="📝builder-btns">
                   <button class="glide-main" onclick="rndAll()" id="📝clearBuild-btn">Quick Survivor</button>
                   <button class="glide-main" onclick="clearPath()">🗙 Reset</button>
                 </div>
                 
                 <div class="outer__section active">
-                  <hr>
-                  <p class="📝-class"><strong>Path:</strong></p>
+                  <div>
+                    <hr>
+                    <p class="section__title">Path:</p>
+                  </div>
+
+                  <div class="📝builder-btns inner">
+                    <button class="glide-main" onclick="selectMain('path')">Choose Path</button>
+                    <button class="glide-main" onclick="getPath(1)">🎲</button>
+                  </div>
+                  
                   <div class="inner__section active">
-                    <div class="📝box">
-                      <!-- <p class="green-box" id="📝path" ></p> -->
-                      <button class="glide-main" onclick="selectMain('path')">Choose Path</button>
-                      <button class="glide-main" onclick="getPath(1)">🎲</button>
-                      <p class="green-box" id="📝path">Choose or roll (🎲) your Path</p>
-                    </div>
+                    <p class="green-box" id="📝path">Choose or roll (🎲) your Path</p>
                   </div>
                   <hr>
                 </div>
                 
                 <div class="outer__section active" id="incl-header">
-                  <hr>
-                  <p class="📝-class"><strong>Inclinations:</strong></p>
-                  <div class="inner__section active" id="talents-holder">
-                    
-                    <!-- <p class="📝-class"><strong>Survivor Talents: </strong><span class="keep-span" id="📝inc-tip">2 of 2 remaining</span></p> -->
-                    <div class="📝box" id="survivor-talents-box">
-                      <!-- <p class="green-box" id="📝inclinations"></p> -->
-                      <button class="glide-main" onclick="selectMain('sTalents')">Survivor Talents</button>
-                      <button class="glide-main" onclick="getRndIncl('sTalents')">🎲</button>
-                      <!-- <button class="glide-main" onclick="clearInclinations()">🗙</button>  -->
-                      <!-- <aside>
-                        <details>
-                          <summary class="summary__dropdown">All Survivor Talents (click to expand)</summary>
-                          <div class="📝glide-mains" id="survivor-talents-list">
-                          </div> 
-                        </details>
-                      </aside> -->
-                    </div>
-                    
+                  <div >
+                    <hr>
+                    <p class="section__title">Inclinations:</p>
                   </div>
 
-                  <div class="inner__section" id="phys-mutations-holder">
-                    <!-- <p class="📝-class"><strong>Physical Mutations: </strong><span class="keep-span" id="📝inc-tip2">2 of 2 remaining</span></p> -->
-                    <div class="📝box" id="phys-mutations-box" >
-                      <!-- <p class="green-box" id="📝inclinations2"></p> -->
-                      <button class="glide-main" onclick="selectMain('physMut')">Physical Mutations</button>
-                      <button class="glide-main" onclick="getRndIncl('physMut')">🎲</button>
-                    </div>
-                    
+                  <div class="📝builder-btns inner" id="talents-holder">
+                    <!-- <p class="green-box" id="📝inclinations"></p> -->
+                    <button class="glide-main" onclick="selectMain('sTalents')">Survivor Talents</button>
+                    <button class="glide-main" onclick="getRndIncl('sTalents')">🎲</button>
                   </div>
-                
-                  <div class="inner__section" id="mental-mutations-holder">
-                    <!-- <p class="📝-class"><strong>Mental Mutations: </strong><span class="keep-span" id="📝inc-tip3">2 of 2 remaining</span></p> -->
-                    <div class="📝box" id="mental-mutations-box" >
-                      <!-- <p class="green-box" id="📝inclinations3"></p> -->
-                      <button class="glide-main" onclick="selectMain('mentalMut')">Mental Metations</button>
-                      <button class="glide-main" onclick="getRndIncl('mentalMut')">🎲</button>
-                    </div>
-                    
+
+                  <div class="📝builder-btns dynamic inner" id="phys-mutations-holder" >
+                    <button class="glide-main" onclick="selectMain('physMut')">Physical Mutations</button>
+                    <button class="glide-main" onclick="getRndIncl('physMut')">🎲</button>
                   </div>
-                
-                  <div class="inner__section" id="dna-mods-holder">
-                    <!-- <p class="📝-class"><strong>DNA Modifications: </strong><span class="keep-span" id="📝inc-tip4">2 of 2 remaining</span></p> -->
-                    <div class="📝box" id="dna-mods-box" >
-                      <!-- <p class="green-box" id="📝inclinations4"></p> -->
-                      <button class="glide-main" onclick="selectMain('dnaMods')">DNA Modifications</button>
-                      <button class="glide-main" onclick="getRndIncl('dnaMods')">🎲</button>
-                    </div>
+
+                  <div class="📝builder-btns dynamic inner" id="mental-mutations-holder" >
+                    <button class="glide-main" onclick="selectMain('mentalMut')">Mental Metations</button>
+                    <button class="glide-main" onclick="getRndIncl('mentalMut')">🎲</button>
                   </div>
-                
-                  <div class="inner__section" id="bio-synth-holder">
-                    <!-- <p class="📝-class"><strong>BioSynth Packages: </strong><span class="keep-span" id="📝inc-tip5">2 of 2 remaining</span></p> -->
-                    <div class="📝box" id="bio-synth-box" >
-                      <!-- <p class="green-box" id="📝inclinations5"></p> -->
-                      <button class="glide-main" onclick="selectMain('bioSynth')">BioSynth Packages</button>
-                      <button class="glide-main" onclick="getRndIncl('bioSynth')">🎲</button>
-                    </div>
+
+                  <div class="📝builder-btns dynamic inner" id="dna-mods-holder" >
+                    <button class="glide-main" onclick="selectMain('dnaMods')">DNA Modifications</button>
+                    <button class="glide-main" onclick="getRndIncl('dnaMods')">🎲</button>
                   </div>
-                  <p class="green-box tall" id="all-incl-list">First, pick a Path</p>
-                  <div id="incl-tip-main"></div>
+
+                  <div class="📝builder-btns dynamic inner" id="bio-synth-holder" >
+                    <button class="glide-main" onclick="selectMain('bioSynth')">BioSynth Packages</button>
+                    <button class="glide-main" onclick="getRndIncl('bioSynth')">🎲</button>
+                  </div>
+
+                  <div class="inner__section active">
+                    <p class="green-box tall" id="all-incl-list">First, pick a Path</p>
+                    <div id="incl-tip-main"></div>
+                  </div>
+
                   <hr>
                 </div>
 
                 <div class="outer__section active" id="edges-holder">
-                  <hr>
-                  <p class="📝-class"><strong>Edge:</strong></p>
+                  <div>
+                    <hr>
+                    <p class="section__title">Edge:</p>
+                  </div>
+                  
                   <div class="inner__section active" id="edges-list">
                       <ul class="ability__sheet__list">
                         <li>First, pick a Path</li>
@@ -174,12 +156,17 @@
               
 
                 <div class="outer__section active" id="aspects-holder">
-                  <hr>
-                  <p class="📝-class"><strong>Aspects:</strong></p>
-                  <div class="📝box" id="aspects-box">
+                  <div>
+                    <hr>
+                    <p class="section__title">Aspects:</p>
+                  </div>
+                  
+                  <div class="📝builder-btns inner" id="aspects-box">
                       <button class="glide-main" onclick="toggleBuilderSheet('aspects', true, true)">Choose Aspects</button>
                       <button class="glide-main" onclick="getRndAspect()">🎲</button>
-                      <p class="green-box" id="📝aspects">Choose or roll (🎲) for 2 Aspects.</p>
+                  </div>
+                  <div class="inner__section active">
+                    <p class="green-box" id="📝aspects">Choose or roll (🎲) for 2 Aspects.</p>
                   </div>
                   <hr>
                 </div>
@@ -197,63 +184,47 @@
                 </div>
 
                 <div class="outer__section active" id="name-holder">
-                  <hr>
-                  <p class="📝-class"><strong>Name:</strong></p>
-                  <div class="📝box">
-                    <!-- <p>
-                      <input 
-                      type="text" 
-                      name="📝name"
-                      id="📝name"
-                      class="📝form" 
-                      title="Type in a name, or generate one."
-                      placeholder="Name"
-                      autocomplete="off">
-                    </p> -->
+                  <div>
+                    <hr>
+                    <p class="section__title">Name:</p>
+                  </div>
+                  
+                  <div class="📝builder-btns inner">
                     <textarea id="📝name" name="📝name" rows="1" class="textarea__dynamic" spellcheck="false" autocomplete="off" title="Edit Name" placeholder="Name"></textarea>
                     <button class="glide-main" onclick="initName()">🎲</button>
+                  </div>
+                  <div class="inner__section active">
                     <textarea id="notes" name="notes" rows="3" class="textarea__dynamic" spellcheck="false" autocomplete="off" title="Notes" placeholder="Additional notes for your Survivor."></textarea>
                   </div>
                   <hr>
                 </div>
 
                 <div class="outer__section active" id="equipment-holder">
-                  <hr>
-                  <p class="📝-class"><strong>Equipment:</strong></p>
-                  <div class="📝box threeCol">
+                  <div>
+                    <hr>
+                    <p class="section__title"><strong>Equipment:</strong></p>
+                  </div>
+                  
+                  <div class="📝builder-btns inner threeCol">
                     <button class="glide-main" onclick="getItem('weapon')">🎲 Weapon</button>
                     <button class="glide-main" onclick="getItem('gear')">🎲 Gear</button>
                     <button class="glide-main" onclick="getItem('drug')">🎲 Drug</button>
-                  
-                    
                   </div>
-                  <p class="p__semi_bold">Rolled Equipment:</p>
-                  <p class="green-box" id="rnd-equipment-txt">1 Weapon, Gear, or Drug</p>
-                  <p class="p__semi_bold">Path Equipment:</p>
-                  <p class="green-box large tall" id="📝gear">First, pick a Path</p>
+
+                  <div class="inner__section active">
+                    <p class="p__semi_bold">Rolled Equipment:</p>
+                    <p class="green-box" id="rnd-equipment-txt">1 Weapon, Gear, or Drug</p>
+                    <p class="p__semi_bold">Path Equipment:</p>
+                    <p class="green-box large tall" id="📝gear">First, pick a Path</p>
+                  </div>
                   <hr>
                 </div>
-                <!--  -->
-                <!-- <p class="📝-class"><strong>Description:</strong></p> -->
-                <!-- <div class="📝box">
-                  <p>
-                    <input 
-                    type="text" 
-                    name="📝phys"
-                    id="📝phys"
-                    class="📝form" 
-                    title="Enter a description or generate one"
-                    placeholder="PC Description"
-                    autocomplete="off">
-                </p>
-                  <button class="glide-main" onclick="getDescrip()">🎲</button>
-                  <button class="glide-main" onclick="clearDescrip()">🗙</button>
-                </div> -->
-                <!-- <hr> -->
-                <div class="📝builder-btns">
+
+                <div class="outer__section active">
                   <hr>
-                  <!-- <button class="glide-main" onclick="clearBuilder()" id="📝clearBuild-btn">clear</button> -->
-                  <button class="glide-main" onclick="fillForm()" id="📝pdf-btn">Save to PDF</button>
+                  <div class="📝builder-btns bottom inner">
+                    <button class="glide-main" onclick="fillForm()" id="📝pdf-btn">Save to PDF</button>
+                  </div>
                   <hr>
                 </div>
                 
@@ -262,36 +233,44 @@
 
           <div class="grid-box" id="veh-tab">
               <div class="📝-container">
-                <div class="📝builder-btns top">
+                <div class="📝builder-btns">
                   <button class="glide-main" onclick="getVehicle('select')">Choose Vehicle</button>
                   <button class="glide-main" onclick="getVehicle('random')">🎲 Vehicle</button>
                 </div>
               
                 <div class="outer__section active" id="vehicleStats-holder">
-                  <hr>
-                  <p class="section__title">Vehicle Stats:</p>
-                  <ul class="ability__sheet__list simple" id="allStats-list">
-                    <li><textarea id="vehNameDef" name="vehNameDef" rows="1" class="textarea__dynamic" spellcheck="false" autocomplete="off" title="Edit Name" placeholder="Name"></textarea></li>
-                    <!-- <li id="vehNameDef"><strong>Name: </strong></li> -->
-                    <li id="vehTypeDef"><strong>Type: </strong></li>
-                    <li id="psgCountDef"><strong>Passengers: </strong></li>
-                    <li id="vehStrikesDef"><strong>Strikes: </strong></li>
-                    <li id="vehStrcSaveDef"><strong>Structure Save: </strong></li>
-                    <!-- <li id="vehMnvRollDef"><strong>Maneuver Roll: </strong></li> -->
-                    <li id="vehramDef"><strong>Rammage: </strong></li>
-                    <!-- <li id="vehLdsDef"><strong>Last Ditch Save (LDS): </strong></li> -->
-                  </ul>
+                  <div>
+                    <hr>
+                    <p class="section__title">Vehicle Stats:</p>
+                  </div>
+                  
+                  <div class="inner__section active">
+                    <ul class="ability__sheet__list simple" id="allStats-list">
+                      <li><textarea id="vehNameDef" name="vehNameDef" rows="1" class="textarea__dynamic" spellcheck="false" autocomplete="off" title="Edit Name" placeholder="Name"></textarea></li>
+                      <!-- <li id="vehNameDef"><strong>Name: </strong></li> -->
+                      <li id="vehTypeDef"><strong>Type: </strong></li>
+                      <li id="psgCountDef"><strong>Passengers: </strong></li>
+                      <li id="vehStrikesDef"><strong>Strikes: </strong></li>
+                      <li id="vehStrcSaveDef"><strong>Structure Save: </strong></li>
+                      <!-- <li id="vehMnvRollDef"><strong>Maneuver Roll: </strong></li> -->
+                      <li id="vehramDef"><strong>Rammage: </strong></li>
+                      <!-- <li id="vehLdsDef"><strong>Last Ditch Save (LDS): </strong></li> -->
+                    </ul>
+                  </div>
                   <hr>
                 </div>
               
                 <div class="outer__section active" id="vehicleMods-holder">
-                  <hr>
-                  <p class="section__title">Mods:</p>
-                  <div class="inner__section active">
-                    <div class="📝box">
+                  <div>
+                    <hr>
+                    <p class="section__title">Mods:</p>
+                  </div>
+                  
+                  <div class="📝builder-btns inner">
+                    <!-- <div class="📝box"> -->
                       <button class="glide-main" onclick="getMod('select')">Choose Mod</button>
                       <button class="glide-main" onclick="getMod('random')">🎲 Mod</button>
-                    </div>
+                    <!-- </div> -->
                   </div>
                   <div class="inner__section active">
                       <ul class="ability__sheet__list simple" id="vehMods-list">
@@ -302,20 +281,32 @@
                 </div>
 
                 <div class="outer__section active" id="vehicleInfo-holder">
-                  <hr>
-                  <p class="section__title">Additional Info:</p>
+                  <div>
+                    <hr>
+                    <p class="section__title">Additional Info:</p>
+                  </div>
+                  
                   <div class="inner__section active" id="vehInfo-list">
                       <textarea id="veh-notes" name="veh-notes" rows="3" class="textarea__dynamic" spellcheck="false" title="Vehicle Notes" placeholder="Additional notes for Vehicle."></textarea>
                   </div>
                   <hr>
                 </div>
                 
-                <div class="📝builder-btns">
+                <div class="outer__section active">
                   <hr>
-                  <button class="glide-main full" onclick="exportVehicle()">Export</button>
-                  <!-- <button class="glide-main full" onclick="clearVeh()">🗙 Reset</button> -->
+                  <!-- <div class="inner__section active"> -->
+                    <div class="📝builder-btns bottom inner">
+                  
+                      <button class="glide-main" onclick="exportVehicle()">Export</button>
+                      <!-- <button class="glide-main full" onclick="clearVeh()">🗙 Reset</button> -->
+                      
+                    </div>
+                  <!-- </div> -->
+                  
+                  
                   <hr>
                 </div>
+               
                   
                 
                 
@@ -347,21 +338,21 @@
               <hr>
             
               <section class="dice-results">
-                <dialog id="🎲🎲">Final Roll: <span id="final-roll"></span></dialog>
-                <dialog id="🎲"><span id="rr-result-name"></span><span id="all-roll"></span></dialog>
-                <dialog id="stock-hold-result"></dialog>
+                <!-- <dialog id="🎲🎲">Final Roll: <span id="final-roll"></span></dialog> -->
+                <dialog class="rr__results" id="🎲"><span id="rr-result-name"></span><span id="all-roll"></span></dialog>
+                <dialog class="rr__results" id="stock-hold-result"></dialog>
               </section>
           </div>
       </div>
 
   </section>
 
-    <script src="helpers.js"></script>
-    <script src="arrays.js"></script>
-    <script src="vehicles.js"></script>
-    <script src="rrTools.js"></script>
-    <script src="app.js"></script>
-    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
-<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+  <script src="helpers.js"></script>
+  <script src="arrays.js"></script>
+  <script src="vehicles.js"></script>
+  <script src="rrTools.js"></script>
+  <script src="app.js"></script>
+  <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 </body>
 </html>

@@ -57,15 +57,28 @@ function rrDisplay(textIn, titleIn) {
     document.getElementById("all-roll").innerHTML = textIn;
     document.getElementById("rr-result-name").textContent = titleIn;
     document.getElementById("🎲").open = true;
-    fadeInElements(["🎲", "🎲🎲"]);
+    document.getElementById("🎲").classList.add("active");
+    fadeInElements(["🎲"]);
 };
 
 
 function clearDiceResults() {
-    document.getElementById("stock-hold-result").innerHTML = "";
-    dialogFade(document.getElementById("🎲🎲"), 0)
-    dialogFade(document.getElementById("🎲"), 0)
-    dialogFade(document.getElementById("stock-hold-result"), 0)
+    
+    //dialogFade(document.getElementById("🎲🎲"), 0)
+    dialogFade(document.getElementById("🎲"), 0);
+    dialogFade(document.getElementById("stock-hold-result"), 0);
+    
+    document.getElementById("🎲").classList.remove("active");
+    document.getElementById("stock-hold-result").classList.remove("active");
+
+
+    const largeDialog = document.getElementById("stock-hold-result");
+    if (largeDialog.innerHTML != "") {
+        setTimeout(() => {
+            largeDialog.innerHTML = "";
+        }, 1000);
+    } // this prevents a small black box from showing
+    
 };
 
 function showDiceRoll(num, face) {
@@ -173,6 +186,7 @@ function displayStockResults(results) {
 
     document.getElementById("stock-hold-result").appendChild(output);
     document.getElementById("stock-hold-result").open = true;
+    document.getElementById("stock-hold-result").classList.add("active");
     fadeInElements(["stock-hold-result"]);
 };
 
@@ -214,5 +228,6 @@ function displayMission(results) {
 
     document.getElementById("stock-hold-result").appendChild(output);
     document.getElementById("stock-hold-result").open = true;
+    document.getElementById("stock-hold-result").classList.add("active");
     fadeInElements(["stock-hold-result"]);
 };

@@ -52,7 +52,7 @@ body {
     "h i j";
 
   grid-template-rows: 3rem auto auto 3rem;
-  grid-template-columns: auto 575px auto;
+  grid-template-columns: 3rem auto 3rem;
 }
 
 .card {
@@ -255,8 +255,10 @@ fieldset {
   /*   padding: 5px; */
   /*   margin: 0.1rem; */
   display: inline-block;
-  font-size: 2.8vmin;
-  font-size: minMax(2.8vmin, 1rem);
+  width: 100%;
+  /* font-size: 2.8vmin;
+  font-size: minMax(2.8vmin, 1rem); */
+  font-size: 14px;
   /* letter-spacing: 1px; */
   cursor: pointer;
 }
@@ -463,10 +465,12 @@ dialog {
 }
 
 .dice-results {
-  /* display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: .15rem; */
-  display: flex;
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  /* grid-template-rows: repeat(3, minmax(0, 1fr)); */
+  gap: .15rem;
+  /* display: flex;
+  flex-direction: column; */
 }
 
 #error {
@@ -485,20 +489,31 @@ dialog {
   /* transform: translate(-50%, -50%); */
 }
 
-#🎲🎲 {
+/* #🎲🎲 {
   grid-column: span 1;
   position: relative;
-}
-#🎲 {
-  grid-column: span 2;
+} */
+/* #🎲 {
+  grid-row: span 1;
   position: relative;
-}
+} */
 
-#🎲🎲, #🎲 {
+.rr__results {
   width: 100%;
   height: 100%;
+  position: relative;
   box-sizing: border-box; /* Include padding and border in the element's total width and height */
 }
+.rr__results.active {
+  grid-row: 1 / 3; /* Span from row 1 to 3 (covers both rows) */
+  z-index: 2000;      /* Ensures it overlaps other content */
+}
+/* #stock-hold-result {
+  align-self: stretch;
+  order: -1;
+} */
+
+#stock-hold-result
 
 /* INPUT FORMS */
 .📝form-btns {
@@ -523,8 +538,8 @@ dialog {
   -moz-appearance: none;
 }
 
-.📝box, .📝builder-btns.top {
-  height: 100%;
+.📝builder-btns {
+  height: 25px;
   border: transparent; /* 1px solid rgba(0, 0, 0, 0.1); */
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -532,9 +547,19 @@ dialog {
   gap: 0.15rem;
   /* grid-auto-rows: 6vmin; */
 }
-.📝box.threeCol {
+.📝builder-btns.dynamic {
+  display: none;
+}
+.📝builder-btns.inner {
+  padding-left: 4px;
+  padding-right: 4px;
+}
+.📝builder-btns.bottom {
+  grid-template-columns: 1fr;
+}
+.📝builder-btns.threeCol {
   grid-template-columns: 1fr 1fr 1fr;
-  grid-auto-rows: 6vmin 1fr;
+  /* grid-auto-rows: 6vmin 1fr; */
 }
 
 /* .📝builder-btns {
@@ -653,13 +678,15 @@ input[type="number"] {
   color: black;
 }
 .green-box {
-  box-shadow: inset 1px 1px 2px #000000, inset -1px -1px 2px #a2d740;
+  box-shadow: inset 1px 1px 2px #000000;
   text-align: center;
   border-radius: 4px;
   background-color: white;
   color: rgb(59, 59, 59);
   font-weight: normal;
   height: 25px;
+  width: 100%;
+  transition: all 0.3s ease;
 }
 .green-box.bold {
   font-weight: 500;
@@ -673,19 +700,6 @@ input[type="number"] {
 .green-box.tall {
   height: 85px;
 }
-
-#📝path, #📝aspects {
-  /* color: rgb(59, 59, 59);
-  font-weight: normal; */
-  /* font-size: x-small; */
-  grid-column: 1 / -1; /* Starts at first column, spans to last */
-  transition: color 0.3s ease;
-}
-/* #📝path.active, #📝aspects.active {
-  color: #000;
-  font-weight: bold;
-  font-size: initial;
-} */
 
 hr {
   background-color: #000;
@@ -785,7 +799,8 @@ p {
   display: none;
 }
 .inner__section.active {
-  display: block;
+  display: flex;
+  flex-direction: column;
   padding-left: 4px;
   padding-right: 4px;
 }
@@ -814,7 +829,7 @@ p {
 
 .ability__sheet__list {
   display: grid;
-  color: var(--primary-color);
+  /* color: var(--primary-color); */
   grid-template-columns: 1fr;
   /* grid-template-columns: 1fr 6fr; */
   gap: .3rem;
@@ -858,7 +873,9 @@ p {
   white-space: nowrap;
   word-break: keep-all;
 }
-
+.ability__sheet__list.simple {
+  width: 100%;
+}
 
 /* .ability__sheet__list > p { padding: 0.5rem; } */
 .ability__sheet__list div:nth-child(odd) { 
@@ -946,15 +963,17 @@ p {
 .textarea__dynamic {
   background-color: transparent;
   resize: none;
-  margin-left: 4px;
-  width: 95%;
-  border: #99ca3c;
+  /* margin-left: 4px;
+  margin-right: 40px; */
+  width: 100%;
+  box-sizing: border-box;
+  border: black;
   border-width: 2px;
   border-style: solid;
-  border-radius: 1px;
-  border: none;
+  border-radius: 3px;
+  /* border: none; */
   padding: .2rem;
-  outline: 2px solid #231F20;
+  outline: 2px solid transparent;
   transition: .3s all ease-in-out;
 }
 .textarea__dynamic:focus {
@@ -1031,11 +1050,11 @@ input:checked + .toggle__slider ion-icon {
   background-color: greenyellow !important;
 }
 
-@media (max-width: 480px) {
+@media (min-width: 1024px) {
   .grid {
     gap: 0.8rem 0;
     grid-template-rows: 3rem auto auto 3rem;
-    grid-template-columns: 3rem minMax(auto, 300px) 3rem;
+    grid-template-columns: 8rem auto 8rem;
   }
 }
 

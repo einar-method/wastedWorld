@@ -30,10 +30,10 @@ function clearPath() {
     //     elm.classList.remove("active");
     // });
     
-    document.getElementById("phys-mutations-holder").classList.remove("active");
-    document.getElementById("mental-mutations-holder").classList.remove("active");
-    document.getElementById("dna-mods-holder").classList.remove("active");
-    document.getElementById("bio-synth-holder").classList.remove("active");
+    document.getElementById("phys-mutations-holder").classList.add("dynamic");
+    document.getElementById("mental-mutations-holder").classList.add("dynamic");
+    document.getElementById("dna-mods-holder").classList.add("dynamic");
+    document.getElementById("bio-synth-holder").classList.add("dynamic");
 
 
     document.getElementById("incl-tip-main").innerHTML = "";
@@ -1566,20 +1566,19 @@ function initName() {
 function loadInclinations() {
     //document.getElementById("incl-header").style.display = "flex";
     document.getElementById("incl-header").classList.add("active");
-    document.getElementById("talents-holder").classList.add("active");
+    //document.getElementById("talents-holder").classList.add("active");
 
     if (app.physMutatationsMin >= 1) {
-        //document.getElementById("phys-mutations-holder").style.display = "block";
-        document.getElementById("phys-mutations-holder").classList.add("active");
+        document.getElementById("phys-mutations-holder").classList.remove("dynamic");
     };
     if (app.mentalMutationsMin >= 1) {
-        document.getElementById("mental-mutations-holder").classList.add("active");
+        document.getElementById("mental-mutations-holder").classList.remove("dynamic");
     };
     if (app.dnaModsMin >= 1) {
-        document.getElementById("dna-mods-holder").classList.add("active");
+        document.getElementById("dna-mods-holder").classList.remove("dynamic");
     };
     if (app.bioSynthMin >= 1) {
-        document.getElementById("bio-synth-holder").classList.add("active");
+        document.getElementById("bio-synth-holder").classList.remove("dynamic");
     };
 };
 
