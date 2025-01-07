@@ -62,6 +62,7 @@ function rrDisplay(textIn, titleIn) {
 
 
 function clearDiceResults() {
+    document.getElementById("stock-hold-result").innerHTML = "";
     dialogFade(document.getElementById("🎲🎲"), 0)
     dialogFade(document.getElementById("🎲"), 0)
     dialogFade(document.getElementById("stock-hold-result"), 0)
