@@ -81,17 +81,17 @@ function checkToggle() {
 
 function assignTab() {
     if (checkToggle() == "pc-tools") {
-        document.getElementById("pc-tab").style.display = 'block';
-        document.getElementById("veh-tab").style.display = 'none';
-        document.getElementById("rr-tab").style.display = 'none';
+        document.getElementById("pc-tab").classList.add("active");
+        document.getElementById("veh-tab").classList.remove("active");
+        document.getElementById("rr-tab").classList.remove("active");
     } else if (checkToggle() == "veh-tools") {
-        document.getElementById("veh-tab").style.display = 'block';
-        document.getElementById("pc-tab").style.display = 'none';
-        document.getElementById("rr-tab").style.display = 'none';
+        document.getElementById("veh-tab").classList.add("active");
+        document.getElementById("pc-tab").classList.remove("active");
+        document.getElementById("rr-tab").classList.remove("active");
     } else if (checkToggle() == "rr-tools") {
-        document.getElementById("veh-tab").style.display = 'none';
-        document.getElementById("pc-tab").style.display = 'none';
-        document.getElementById("rr-tab").style.display = 'block';
+        document.getElementById("veh-tab").classList.remove("active");
+        document.getElementById("pc-tab").classList.remove("active");
+        document.getElementById("rr-tab").classList.add("active");
     } else {
         alert("Sorry, there was an error getting a tab. Please refresh the page. ERROR CODE: 1409");
 }};
@@ -1549,7 +1549,7 @@ function initName() {
     app.getName();
 };
   
-document.getElementById("📝-container").style.display = "block";
+//document.getElementById("📝-container").style.display = "block";
 
 function loadInclinations() {
     //document.getElementById("incl-header").style.display = "flex";

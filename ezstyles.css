@@ -34,7 +34,7 @@
 body {
   margin: 0;
   /* background-color: #7e7e7e; */
-  background-image: url('Assets/wastedWorldBackground.png'); /* Path to your image */
+  background-image: url('Assets/wastedWorldBackgroundBordersWhite.webp'); /* Path to your image */
   background-size: 100% auto; /* Stretch to full width, auto height */
   background-repeat: repeat-y; /* Repeat vertically */
   background-position: top center; /* Center horizontally */
@@ -51,8 +51,8 @@ body {
     "f M g"
     "h i j";
 
-  grid-template-rows: 6rem auto auto 3rem;
-  grid-template-columns: 3rem auto 3rem;
+  grid-template-rows: 3rem auto auto 3rem;
+  grid-template-columns: auto 575px auto;
 }
 
 .card {
@@ -413,9 +413,13 @@ h2 {
 }
 
 .grid-box {
+  display: none;
+}
+.grid-box.active {
   display: grid;
-  grid-template-columns: auto 1fr;
+  /* grid-template-columns: auto 1fr; */
   transition: all 0.8s ease-in-out;
+  gap: 4px;
 }
 
 #pc-btns, #rr-btns, #dice-btns {
@@ -776,12 +780,14 @@ p {
 }
 
 .inner__section {
-  border: #000 2px solid;
-  border-radius: 2px;
+  /* border: #000 2px solid;
+  border-radius: 2px; */
   display: none;
 }
 .inner__section.active {
   display: block;
+  padding-left: 4px;
+  padding-right: 4px;
 }
 
 .ability__sheet__header-footer {
@@ -1025,4 +1031,11 @@ input:checked + .toggle__slider ion-icon {
   background-color: greenyellow !important;
 }
 
+@media (max-width: 480px) {
+  .grid {
+    gap: 0.8rem 0;
+    grid-template-rows: 3rem auto auto 3rem;
+    grid-template-columns: 3rem minMax(auto, 300px) 3rem;
+  }
+}
 
