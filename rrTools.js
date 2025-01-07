@@ -4,8 +4,6 @@ function rrRandomRoll(arrCheck) {
     let titleOut = "";
     let arrayToUse = null;
     if (arrCheck == "stock") {
-        // arrayToUse = synthEnhancementsArray;
-        // titleOut = "Synth Enhancement: "  
         stockHold()
         return;
     }
@@ -63,8 +61,6 @@ function rrDisplay(textIn, titleIn) {
 
 
 function clearDiceResults() {
-    
-    //dialogFade(document.getElementById("🎲🎲"), 0)
     dialogFade(document.getElementById("🎲"), 0);
     dialogFade(document.getElementById("stock-hold-result"), 0);
     
@@ -90,19 +86,6 @@ function showDiceRoll(num, face) {
     }
 
     let finalRoll = 0;
-
-    // if (die.type == "fr") {
-    //     finalRoll = rolls.reduce((sum, roll) => sum + roll, 0);
-    //     console.log("The final roll is:", finalRoll);
-    // } else if (die.type == "kh") {
-    //     finalRoll = Math.max(...rolls);
-    //     console.log("With a boon, final roll is:", finalRoll);
-    // } else if (die.type == "kl") {
-    //     finalRoll = Math.min(...rolls);
-    //     console.log("With a bane, final roll is:", finalRoll);
-    // } else {
-    //     console.error("Invalid die type");
-    // }
 
     innerAllRolls.innerHTML = rolls.join(", ");
     innerFinalRoll.innerHTML = finalRoll;
@@ -135,7 +118,6 @@ function stockHold() {
     ;
 
     const gearRolls = pickWithDuplicates(survivors * 2, wwGearArr);
-    //const vehicleAccessories = rollItems(rollDice(2, 6).filter(r => r >= 4).length, vehicleAccessoriesArray, 6);
     
     const vehicleAccessories = rollDice(2, 6).filter(r => r >= 4)
         .map(() => randomMath(vehicleAccessoriesArray));

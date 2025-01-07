@@ -20,16 +20,12 @@ function rollName(checker) {
 };
 
 function getPath(checker, btn) {
-    //selectBtn.firstElementChild.innerText = "Select a Path";
     app.getPath(checker, btn);
 };
 
 function clearPath() {
     app.resetToDefault();
-    // document.querySelectorAll(".inner__section").forEach( elm => {
-    //     elm.classList.remove("active");
-    // });
-    
+
     document.getElementById("phys-mutations-holder").classList.add("dynamic");
     document.getElementById("mental-mutations-holder").classList.add("dynamic");
     document.getElementById("dna-mods-holder").classList.add("dynamic");
@@ -52,31 +48,12 @@ function clearPath() {
     document.querySelectorAll(".green-box").forEach( elm => {
         elm.classList.remove("bold");
     });
-    //document.getElementById("incl-header").classList.remove("active");
-    //document.getElementById("talents-holder").classList.remove("active");
     document.getElementById("📝path").textContent = defPathMsg;
     document.getElementById("all-incl-list").textContent = defEquipmentMsg;
     document.getElementById("📝gear").textContent = defEquipmentMsg;
     document.getElementById("rnd-equipment-txt").textContent = defRndItemMsg;
     document.getElementById("📝name").value = "";
     console.log("Verifying character is reset to default", app)
-};
-
-/// Can Remove ?///
-function reset() {
-    //selectBtn.firstElementChild.innerText = "Select a Path";
-    document.querySelectorAll('.🌠').forEach(function(el) {
-        el.style.display = 'none';
-    });
-    document.querySelectorAll(".green-box").forEach(function(el) {
-        //console.log(el)
-        el.innerHTML = "";
-    });
-    //document.getElementById("📝name").value = "";
-    app.resetToDefault(); 
-    //document.getElementById("circle").innerHTML = ""
-
-    clearAll(); // some fields are just too stubborn
 };
 
 /// SWITCH BETWEEN TOOL TABS ///
@@ -119,7 +96,6 @@ class PC {
         this.style = "";
         this.core = "";
         this.description = "";
-        //this.wealth = "";
         this.wealthTier = 0;
         this.path = "";
         this.circle = "";
@@ -129,7 +105,6 @@ class PC {
         this.banes = [];
         this.features = "";
         this.maxInclinations = 2;
-        //this.inclinations = [];
         this.incTip = null;
         this.equipment = [];
         this.scrolls = [];
@@ -143,9 +118,6 @@ class PC {
         this.bodyBuild = "";
         this.bodyHeight = "";
         this.bodyVoice = "";
-        // original above
-        //this.strikes = 3;
-        //this.path = null;
         this.wealth = { name: "Hard-Up", value: 2 };
         this.sTalentsMin = 0;
         this.sTalentsMax = 0;
@@ -651,7 +623,6 @@ class PC {
                 description: "Versatile and adaptable, the Jack is a survivor built for customization. They can shape their path to fit any situation in the wasteland."
             }            
         ];               
-        //this.init();
     }
 
     // Initializes a random character
@@ -693,15 +664,6 @@ class PC {
     }
 
     updateStatsAndDom() {
-        //this.getPath();
-        // this.applyPathAttributes();
-        //document.getElementById("📝path").style.display = "block";
-        
-
-        // TODO: !!! sometimes this works and sometimes it
-        // clears edges when it should not
-        // I think the edge creator is overwriting now after
-        // removing the exists? checker
         if(this.getCurrentPath()) {
             this.applyPathAttributes();
             this.incTip = this.getIncTxt();
@@ -959,167 +921,6 @@ class PC {
         }
     };
 
-    // checkStats() {
-    //     console.log("stats checked")
-    //     //A: check if we can still add incl
-    //     //A No: escape and alert user
-    //     //A Yes: go to B
-    //     //B: check if we can still add incl while also having enough left for all the req min
-    //     //B No: escape and alert user
-    //     //B Yes: proceed, or return true
-    // }
-    // checkStats() {
-    //     console.log("Checking stats...");
-    //     const chosenIncl = this.calcChosenIncl();
-    
-    //     // A: Check if more inclinations can be added
-    //     if (this.calcChosenIncl().length >= this.maxInclinations) {
-    //         callError("Max inclinations reached. Cannot add more.");
-    //         return false;
-    //     }
-        
-    //     // B: Check if adding another inclination leaves enough for category minimums
-    //     const remaining = this.maxInclinations - chosenIncl.length;
-
-    //     // Count currently selected inclinations by category
-    //     const counts = {
-    //         sTalents: this.survivorTalents ? this.survivorTalents.filter(i => i.hasIt).length : 0,
-    //         physMutations: this.physMutations ? this.physMutations.filter(i => i.hasIt).length : 0,
-    //         mentalMutations: this.mentalMutations ? this.mentalMutations.filter(i => i.hasIt).length : 0,
-    //         dnaMods: this.dnaMods ? this.dnaMods.filter(i => i.hasIt).length : 0,
-    //         bioSynth: this.bioSynthPs ? this.bioSynthPs.filter(i => i.hasIt).length : 0,
-    //     };
-
-    //     // Calculate missing inclinations for each category (after accounting for current selections)
-    //     const missing = {
-    //         sTalents: Math.max(0, this.sTalentsMin - counts.sTalents),
-    //         physMutations: Math.max(0, this.physMutatationsMin - counts.physMutations),
-    //         mentalMutations: Math.max(0, this.mentalMutationsMin - counts.mentalMutations),
-    //         dnaMods: Math.max(0, this.dnaModsMin - counts.dnaMods),
-    //         bioSynth: Math.max(0, this.bioSynthMin - counts.bioSynth),
-    //     };
-
-    //     // Total missing inclinations
-    //     const totalMissing = Object.values(missing).reduce((sum, val) => sum + val, 0);
-
-    //     // Prevent over-selection in any single category, ensuring minimums can still be met
-    //     const overSelection = Object.entries(missing).some(([key, value]) => {
-    //         const unmet = value > 0 ? value : 0;
-    //         const canStillMeet = counts[key] + remaining >= unmet;
-
-    //         if (!canStillMeet) {
-    //             callError(`Not enough slots left. You need at least ${unmet} more ${key} to meet minimum requirements.`);
-    //             return true;
-    //         }
-    //         return false;
-    //     });
-
-    //     if (overSelection) {
-    //         return false;
-    //     }
-        
-    //     // If all checks pass
-    //     console.log("Inclination can be added.");
-    //     return true;
-    // };    
-
-    
-    // checkStats() {
-    //     console.log("Checking stats...");
-    //     const chosenIncl = this.calcChosenIncl();
-    
-    //     // A: Check if more inclinations can be added
-    //     if (this.calcChosenIncl().length >= this.maxInclinations) {
-    //         callError("Max inclinations reached. Cannot add more.");
-    //         return false;
-    //     }
-    //     const remaining = this.maxInclinations - this.calcChosenIncl().length;
-    
-    //     const unmet = {
-    //         sTalents: this.sTalentsMin - this.survivorTalents.filter(i => i.hasIt).length,
-    //         physMutations: this.physMutatationsMin - this.physMutations.filter(i => i.hasIt).length,
-    //         mentalMutations: this.mentalMutationsMin - this.mentalMutations.filter(i => i.hasIt).length,
-    //         dnaMods: this.dnaModsMin - this.dnaMods.filter(i => i.hasIt).length,
-    //         bioSynth: this.bioSynthMin - this.bioSynthPs.filter(i => i.hasIt).length,
-    //     };
-    
-    //     // Check if remaining slots can satisfy all unmet minimums
-    //     for (const [key, value] of Object.entries(unmet)) {
-    //         if (value > 0 && remaining < value) {
-    //             callError(`Not enough slots left to meet minimum ${key} requirements.`);
-    //             return false;
-    //         }
-    //     }
-    //     return true;
-    // }
-
-    // checkStats(nameIn) {
-    //THIS WAS WORKING OK
-    //     console.log("Checking stats...");
-    //     //const chosenIncl = this.calcChosenIncl();
-    
-    //     // A: Check if more inclinations can be added
-    //     if (this.calcChosenIncl().length >= this.maxInclinations) {
-    //         callError("Max inclinations reached. Cannot add more.");
-    //         return false;
-    //     }
-    //     const remaining = this.maxInclinations - this.calcChosenIncl().length;
-    //     let canProceed = true;
-    
-    //     if (
-    //         remaining + this.survivorTalents.filter(i => i.hasIt).length < this.sTalentsMin &&
-    //         !this.survivorTalents.some(i => i.name === nameIn)
-    //     ) {
-    //         callError("Not enough slots left for Survivor Talents.");
-    //         canProceed = false;
-    //     }
-    //     if (
-    //         remaining + this.physMutations.filter(i => i.hasIt).length < this.physMutatationsMin &&
-    //         !this.physMutations.some(i => i.name === nameIn)
-    //     ) {
-    //         callError("Not enough slots left for Physical Mutations.");
-    //         canProceed = false;
-    //     }
-    //     if (
-    //         remaining + this.mentalMutations.filter(i => i.hasIt).length < this.mentalMutationsMin &&
-    //         !this.mentalMutations.some(i => i.name === nameIn)
-    //     ) {
-    //         callError("Not enough slots left for Mental Mutations.");
-    //         canProceed = false;
-    //     }
-    //     if (
-    //         remaining + this.dnaMods.filter(i => i.hasIt).length < this.dnaModsMin &&
-    //         !this.dnaMods.some(i => i.name === nameIn)
-    //     ) {
-    //         callError("Not enough slots left for DNA Mods.");
-    //         canProceed = false;
-    //     }
-    //     if (
-    //         remaining + this.bioSynthPs.filter(i => i.hasIt).length < this.bioSynthMin &&
-    //         !this.bioSynthPs.some(i => i.name === nameIn)
-    //     ) {
-    //         callError("Not enough slots left for BioSynth.");
-    //         canProceed = false;
-    //     }
-    
-    //     // Step B: Ensure enough slots are left to meet ALL remaining minimums
-    //     // const unmet = [
-    //     //     this.sTalentsMin - this.survivorTalents.filter(i => i.hasIt).length,
-    //     //     this.physMutatationsMin - this.physMutations.filter(i => i.hasIt).length,
-    //     //     this.mentalMutationsMin - this.mentalMutations.filter(i => i.hasIt).length,
-    //     //     this.dnaModsMin - this.dnaMods.filter(i => i.hasIt).length,
-    //     //     this.bioSynthMin - this.bioSynthPs.filter(i => i.hasIt).length
-    //     // ].reduce((sum, n) => sum + Math.max(0, n), 0);
-    
-    //     // if (remaining < unmet) {
-    //     //     callError("Not enough slots to meet overall minimum requirements.");
-    //     //     canProceed = false;
-    //     // }
-    
-    //     return canProceed;
-    // }
-    
-    
     checkStats(nameIn) {
         console.log("Checking stats...");
 
@@ -1148,9 +949,6 @@ class PC {
                 canProceed = false;
             }
         });
-
-        //TODO: if all incl have been assigned, open Edges
-        // this.checkRequirements();
     
         return canProceed;
     };
@@ -1167,9 +965,6 @@ class PC {
 
     getPathIncl() {
         return this.paths.find(obj => (obj.hasIt)).pathIncls || [];
-        // const test2 = test.pathIncls;
-        // console.log(test2)
-        //return this.paths.filter(obj => (obj.hasIt)).pathIncls;
     }
 
     getCurrentPath() {
@@ -1197,15 +992,12 @@ class PC {
 
         console.log(allInclText);
         if(this.getCurrentPath()) {
-            //`The ${this.getCurrentPath().name} has no Path Inclinations`
             document.getElementById("all-incl-list").textContent = allInclText || "";
         } else { document.getElementById("all-incl-list").textContent = "First, pick a Path"; }
-        //document.getElementById("all-incl-list").textContent = allInclText || "First, pick a Path";
         
     };
 
     checkRequirements() {
-        //const remaining = this.maxInclinations - this.calcChosenIncl().length;
     
         const requirements = this.getReqIncl();
     
@@ -1226,31 +1018,16 @@ class PC {
         const total = this.maxInclinations;
         const slotsInfo = `Inclinations assigned: ${assigned}/${total}.`;
     
-        // Trigger if all requirements are met
-        // if (unmet.length === 0 && assigned == total) {
-        //     this.edgesToDom();
-        // }
-
-        //const output = [slotsInfo, ...unmet].join("\n");
-        //document.getElementById("incl-tip-main").textContent = output;
         document.getElementById("incl-tip-main").innerHTML = "";
         [slotsInfo, ...unmet].forEach(line => {
             const p = document.createElement("p");
             p.textContent = line;
             document.getElementById("incl-tip-main").appendChild(p);
         });
-    
-        // return {
-        //     unmet,
-        //     slotsInfo
-        // };
     }    
 
     edgesToDom() {
         console.log("edge selections sent to dom")
-        //TODO: build the Edges box
-        // console.log(this.getCurrentPath())
-        // console.error(this.getCurrentPath().edges)
         this.getCurrentPath().edges.forEach(obj => {
             console.log(obj.name)
         })
@@ -1258,13 +1035,9 @@ class PC {
     }
 
     getRndIncl(nameIn, isRnd) {
-        //this.survivorTalents.forEach(obj => { obj.hasIt = false; });
-        //this.bioSynthPs.forEach(obj => { obj.hasIt = false; });
         console.log("max incl:", this.maxInclinations)
-        let bigNum = this.maxInclinations;
 
         // TODO: get random based on exact group selected
-        //if(nameIn == "sTalents")
         let arrayToUse = null;
         let sheetName //don't think we need
         if (nameIn == "sTalents") {
@@ -1290,7 +1063,6 @@ class PC {
 
         
         if (isRnd) {
-            // runArrLoop(1, arrayToUse);
             const tempIncl = runArrLoop(1, arrayToUse);
             console.log(tempIncl)
             if (this.checkStats(tempIncl.name)) {
@@ -1327,25 +1099,12 @@ class PC {
                 bigNum = this.maxInclinations - this.dnaModsMin - this.sTalentsMin;
                 runNoReturnArrLoop(bigNum, [...this.dnaMods, ...this.survivorTalents]);
                 break;
-            // case "Hunter":
-            //     runNoReturnArrLoop(this.sTalentsMin, this.survivorTalents);
-            //     bigNum = this.maxInclinations - this.sTalentsMin;
-            //     runNoReturnArrLoop(bigNum, this.survivorTalents);
-            //     break;
             case "Mutie":
                 runNoReturnArrLoop(this.sTalentsMin, this.survivorTalents);
                 runNoReturnArrLoop(this.physMutatationsMin, this.physMutations);
                 bigNum = this.maxInclinations - this.physMutatationsMin - this.sTalentsMin;
                 runNoReturnArrLoop(bigNum, [...this.physMutations, ...this.survivorTalents]);
-
-                // this.inclinations.push(...pickUnique(physicalMutationsArray, this.physMutatationsMin));
-                // this.inclinations.push(...pickUnique(survivorTalentsArray, this.sTalentsMin));  
-                // this.inclinations.push(...pickUnique([...physicalMutationsArray, ...survivorTalentsArray], this.maxInclinations - this.sTalentsMin - this.physMutatationsMin));
                 break;
-            // case "Machine Head":
-            //     this.inclinations.push(...pickUnique(survivorTalentsArray, this.sTalentsMin));
-            //     this.inclinations.push(...pickUnique(survivorTalentsArray, this.maxInclinations - this.sTalentsMin));
-            //     break;
             case "Hunter":
             case "Jack":
             case "Machine Head":
@@ -1355,33 +1114,22 @@ class PC {
                 runNoReturnArrLoop(this.sTalentsMin, this.survivorTalents);
                 bigNum = this.maxInclinations - this.sTalentsMin;
                 runNoReturnArrLoop(bigNum, this.survivorTalents);
-                // this.inclinations.push(...pickUnique(survivorTalentsArray, this.sTalentsMin));
-                // this.inclinations.push(...pickUnique(survivorTalentsArray, this.maxInclinations - this.sTalentsMin));
                 break;
             case "Weird":
                 runNoReturnArrLoop(this.sTalentsMin, this.survivorTalents);
                 runNoReturnArrLoop(this.mentalMutationsMin, this.mentalMutations);
                 bigNum = this.maxInclinations - this.mentalMutationsMin - this.sTalentsMin;
                 runNoReturnArrLoop(bigNum, [...this.mentalMutations, ...this.survivorTalents]);
-
-                // this.inclinations.push(...pickUnique(mentalMutationsArray, this.mentalMutationsMin));
-                // this.inclinations.push(...pickUnique(survivorTalentsArray, this.sTalentsMin));
-                // this.inclinations.push(...pickUnique([...mentalMutationsArray, ...survivorTalentsArray], this.maxInclinations - this.mentalMutationsMin - this.sTalentsMin));
                 break;
-            // case "Jack":
-            //     this.inclinations.push(...pickUnique(survivorTalentsArray, this.maxInclinations));
-            //     break;
             default:
                 console.error("Could not assign random Inclinations. Error Code: 2429.")
         };
-        //this.allInclToDom();
         this.updateStatsAndDom();
     }
 
     getRndGear() {
         let selectedList;
         const lists = { weapons: wwWeaponsArr, gear: wwGearArr, drugs: drugsArray };
-        // const choice = prompt("Choose equipment list: weapons, gear, or drugs");
         const choice = randomMath(Object.keys(lists));
         selectedList = lists[choice] || wwGearArr;
 
@@ -1395,11 +1143,10 @@ class PC {
 
     resetToDefault() {
         const defaults = new PC();
-        // Copy default values to the current instance
         Object.assign(this, defaults);
     };
 
-    mapPropertiesToHtml() { // associate this with doc IDs
+    mapPropertiesToHtml() { // associate this with doc IDs (prob not needed)
         const propertyMapping = [];
 
         // Define the mapping of properties to HTML element IDs
@@ -1428,8 +1175,6 @@ class PC {
             core: "core",
             description: "phys",
         };
-
-        // If useEmojiIds is true, update the mapping to use emoji-prefixed IDs
         
         for (const prop in mapping) {
             mapping[prop] = `📝${mapping[prop]}`;
@@ -1468,7 +1213,7 @@ class PC {
         }  
     }
 
-    displayValid() {
+    displayValid() { // I suspect this is no longer needed
         //const propertiesMapping = this.mapPropertiesToHtml(checker);
         const propertiesMapping = this.mapPropertiesToHtml();
 
@@ -1483,43 +1228,23 @@ class PC {
             if (isValid) {
                 this.showInfo(mapping);
             }
-            // if (!isValid) {
-            //     this.hideInfo(mapping);
-            // }
         }
     };
 
     getPath(checker, nameIn) {
         if (checker == 1) { // custom builder random
-            //this.path = randomMath(pathsArray);
             const randomPath = randomMath(this.paths);
-            //this.path = randomPath.name;
             this.paths.forEach(p => p.hasIt = false);  // Reset all paths
             randomPath.hasIt = true;  // Set the selected path to active
         } else if (checker == 2) { // custom builder manual
-            //this.path = getButtonText(nameIn);
             const randomPath = this.paths.find(obj => obj.name === nameIn);
             randomPath.hasIt = true;
         }
-
-        // else { // main tool random
-        //     this.path = randomMath(pathsArray);
-        //     displayPath.style.display = "block"
-        // }
-
-        // Set the dropdown to default and avoid errors
-        //selectBtn.firstElementChild.innerText = "Select a Path";
     
         this.applyPathAttributes();
         this.updateStatsAndDom();
 
-        //this.allInclToDom();
-
-        //this.updateStats();
-        //this.displayValid(checkBuilder);
         console.log("A path was chosen:", this.path);
-
-        //loadInclinations();
     };
 
     getIncTxt() {
@@ -1544,13 +1269,8 @@ class PC {
             this.name = input;
             console.log("Custom name:", this.name)
         }
-        //this.displayValid();
-        //this.updateStats();
 
         document.getElementById("📝name").value = this.name;
-        // if (checker !== 1) { // custom builder random
-        //     document.getElementById("📝name").innerText = this.name;
-        // }
     };
 
 };
@@ -1560,13 +1280,9 @@ const app = new PC;
 function initName() {
     app.getName();
 };
-  
-//document.getElementById("📝-container").style.display = "block";
 
 function loadInclinations() {
-    //document.getElementById("incl-header").style.display = "flex";
     document.getElementById("incl-header").classList.add("active");
-    //document.getElementById("talents-holder").classList.add("active");
 
     if (app.physMutatationsMin >= 1) {
         document.getElementById("phys-mutations-holder").classList.remove("dynamic");
@@ -1675,10 +1391,6 @@ function buildBuilderSheet(elm) {
         const toggle = document.getElementById("incToggle"+toCamelCase(inc.name));
         const icon = document.getElementById("icon" + toCamelCase(inc.name));
 
-        // if (inc.hasIt) {
-        //     // toggle slider
-        //     toggle.checked = true;
-        // } else { toggle.checked = false }
         if (inc.hasIt) {
             toggle.checked = true;
             icon.setAttribute("name", "person-remove-outline");
@@ -1688,39 +1400,12 @@ function buildBuilderSheet(elm) {
             icon.setAttribute("name", "person-add-outline");
         }
 
-        // toggle.addEventListener("change", () => {
-        //     if (toggle.checked) {
-        //         inc.hasIt = true;
-        //         console.log(inc.name + " is ready to be removed.")
-
-        //         app.checkStats();
-
-        //         icon.setAttribute("name", "person-remove-outline");
-        //         // inner.style.backgroundColor = "green";
-        //         inner.classList.add("green__background");
-        //         //app.getPath(2, inc.name, arrayToUse);
-        //         //console.log(inc.name)
-        //     } else {
-        //         inc.hasIt = false;
-        //         console.log(inc.name + " is ready to be added.")
-
-        //         app.checkStats()
-
-        //         icon.setAttribute("name", "person-add-outline");
-        //         inner.classList.remove("green__background");
-        //     }
-        //     app.updateStatsAndDom();
-        // });
-
         toggle.addEventListener("change", () => {
             if (toggle.checked) {
                 if (sheetID == "path") {
-                    // (app.getCurrentPath().name == inc.name) {
                     icon.setAttribute("name", "person-remove-outline");
                     inner.classList.add("green__background");
-                    //inc.hasIt = true;
                     console.log(`${inc.name} is being set as the active Path...`);
-                    //app.applyPathAttributes();
                     app.getPath(2, inc.name);
 
                     const onTimeout = () => {
@@ -1759,7 +1444,6 @@ function buildBuilderSheet(elm) {
                 
                 if (sheetID == "path") {
                     console.log("Reseting entire Survivor...")
-                    //app.resetToDefault();
                     clearPath();
                 } else if (sheetID == "vehicle") {
                     console.log("This toggle was from the Mods sheet")
@@ -1781,51 +1465,10 @@ function buildBuilderSheet(elm) {
             }
             app.updateStatsAndDom();
         });
-
-        //THIS WAS WORKING OK
-        // toggle.addEventListener("change", () => {
-        //     if (toggle.checked) {
-        //         if (app.checkStats(inc.name)) {
-        //             icon.setAttribute("name", "person-remove-outline");
-        //             inner.classList.add("green__background");
-        //             inc.hasIt = true;
-        //             console.log(`${inc.name} is active and ready to be removed.`);
-        //         } else { toggle.checked = false}
-        //     } else {
-        //         inc.hasIt = false;
-        //         console.log(`${inc.name} is inactive and ready to be added.`);
-        //         icon.setAttribute("name", "person-add-outline");
-        //         inner.classList.remove("green__background");
-        //     }
-        //     app.updateStatsAndDom();
-        // });        
-
-        // toggle.addEventListener('change', function() {
-        //     const isChecked = toggle.checked;
-        //     console.log(`Inclination ${inc.name} is now ${isChecked ? 'checked' : 'unchecked'}`);
-        //     if (isChecked == true) {
-        //         if (!addAbility(inc, self)) {
-        //             toggle.checked = false;
-        //         } else { toggle.checked = true; return; }
-                
-        //     }
-        //     if (isChecked == false) {
-        //         promptRemoveAbility(inner, ability, self, toggle);
-        //     }
-        // });
     });
 };
 
-// console.log(!isElmPresent("📝ainer"))
-// console.log(isElmPresent("📝-container"))
-
 function buildEdgesSection(arr) {
-    // if (isElmPresent("edge-list-checker")) {
-    //     console.log("edges elm exists, exiting buildEdgesSection function")
-    //     return;
-    // } // TODO: there may be a better way to do this, basically, we only
-    // want to create the edges list if it does not exist, or
-    // if we change Paths
 
     const list = document.createElement("ul");
     list.id = "edge-list-checker";
@@ -1859,7 +1502,6 @@ function buildEdgesSection(arr) {
             console.log("Survivor is a Jack (disabling toggle)");
             toggle.disabled = true;
             toggle.checked = true;
-            //toggle.style.setProperty("cursor", "not-allowed", "important");
             const span = inner.querySelector("span");
             if (span) {
                 span.style.setProperty("cursor", "not-allowed", "important");
@@ -1893,157 +1535,6 @@ function buildEdgesSection(arr) {
         });        
     });
 };
-// function buildEdgesSection(arr) {
-//     if (isElmPresent("edges-holder")) {
-//         console.log("edges elm exists, exiting buildEdgesSection function")
-//         return;
-//     }
-//     let arrayToUse = arr;
-//     // if (elm == "path") {
-//     //     arrayToUse = app.paths;
-//     //     sheetName = "Paths";
-//     // }
-
-//     //<div class="outer__section" id="edges-holder">
-//     const divSection = document.createElement("div");
-//     divSection.classList.add("outer__section");
-//     divSection.id = "edges-holder";
-
-//     //<hr>
-//     //<p class="📝-class"><strong>Edges:</strong></p>
-//     const hr = document.createElement("hr");
-
-//     const titleP = document.createElement("p");
-//     titleP.classList.add("📝-class");
-//     const strongElement = document.createElement("strong");
-//     strongElement.textContent = "Edges:";
-//     titleP.appendChild(strongElement);
-
-//     // <div class="inner__section" id="edges-list">
-//     // list of all edges
-//     const main = document.createElement("div");
-//     main.classList.add("inner__section");
-//     main.classList.add("active");
-//     main.id = "edges-list"
-
-//     const list = document.createElement("ul");
-//     list.classList.add("ability__sheet__list");
-
-//     //document.getElementById("pc-tab").appendChild(divSection);
-//     //document.getElementById("📝-container")?.lastElementChild?.insertAdjacentHTML('beforebegin', divSection);
-//     // document.querySelector("📝-container")?.lastElementChild?.insertAdjacentHTML('beforebegin', "");
-//     const lastChild = document.querySelector("#📝-container")?.lastElementChild;
-//     if (lastChild) {
-//     lastChild.parentNode.insertBefore(divSection, lastChild);
-//     }
-
-
-//     divSection.classList.add("active");
-    
-//     divSection.appendChild(hr);
-//     divSection.appendChild(titleP);
-//     divSection.appendChild(main);
-//     main.appendChild(list);
-
-//     console.log(app.getCurrentPath()) // are any edges already true?
-
-//     arrayToUse.forEach(inc => {
-//         const inner = document.createElement("div");
-//         inner.innerHTML = `
-//         <label class="switch">
-//             <input type="checkbox" id="incToggle-${toCamelCase(inc.name)}" autocomplete="off">
-//             <span class="toggle__slider">
-//                 <ion-icon id="icon-${toCamelCase(inc.name)}" name="person-add-outline"></ion-icon>
-//             </span>
-//         </label>
-//         <li><strong>${inc.name}:</strong> ${inc.description}</li>
-//         `;
-
-//         list.appendChild(inner);
-
-//         const toggle = document.getElementById("incToggle-" + toCamelCase(inc.name));
-//         const icon = document.getElementById("icon-" + toCamelCase(inc.name));
-
-//         console.log(inc.hasIt)
-//         console.log(toggle)
-
-//         toggle.checked = false;
-//         toggle.value = "off"
-//         icon.setAttribute("name", "person-add-outline");
-
-//         console.log(toggle.value)
-//         console.log(toggle.checked)
-
-//         if (app.getCurrentPath().name === "Jack") {
-//             console.log("Survivor is a Jack (disabling toggle)");
-//             toggle.disabled = true;
-//             toggle.checked = true;
-//             //toggle.style.setProperty("cursor", "not-allowed", "important");
-//             const span = inner.querySelector("span");
-//             if (span) {
-//                 span.style.setProperty("cursor", "not-allowed", "important");
-//             }
-//             icon.setAttribute("name", "person-remove-outline");
-//             inner.classList.add("green__background");
-//             inc.hasIt = true;
-//             return;
-//         }        
-
-//         // if (inc.hasIt) {
-//         //     // toggle slider
-//         //     toggle.checked = true;
-//         // } else { toggle.checked = false }
-//         // if (inc.hasIt) {
-//         //     toggle.checked = true;
-//         //     icon.setAttribute("name", "person-remove-outline");
-//         //     inner.classList.add("green__background");
-//         // } else {
-//         //     toggle.checked = false;
-//         //     icon.setAttribute("name", "person-add-outline");
-//         // }
-
-//         toggle.addEventListener("change", () => {
-//             if (toggle.checked) {
-//                 const edges = app.getCurrentPath().edges;
-//                 const otherObj = edges.find(obj => obj !== inc);
-                
-//                 if (!otherObj.hasIt) {
-//                     icon.setAttribute("name", "person-remove-outline");
-//                     inner.classList.add("green__background");
-//                     inc.hasIt = true;
-//                     console.log(`${inc.name} is active and ready to be removed.`);
-//                 } else {
-//                     callError("You can only select one Edge.");
-//                     toggle.checked = false;
-//                 }
-//             } else {
-//                 inc.hasIt = false;
-//                 console.log(`${inc.name} is inactive and ready to be added.`);
-//                 icon.setAttribute("name", "person-add-outline");
-//                 inner.classList.remove("green__background");
-//             }            
-//             // if (toggle.checked == true) {
-//             //     console.log("got here")
-//             //     if (app.getCurrentPath().edges.find(obj => obj.hasIt)?.name != inc.name) {
-//             //         console.log("got here too")
-//             //         icon.setAttribute("name", "person-remove-outline");
-//             //         inner.classList.add("green__background");
-//             //         inc.hasIt = true;
-//             //         console.log(`${inc.name} is ready to be removed.`);
-//             //     } else { 
-//             //         console.log("toggle back off here")
-//             //         toggle.checked = false
-//             //     }
-//             // } else {
-//             //     inc.hasIt = false;
-//             //     console.log(`${inc.name} is ready to be added.`);
-//             //     icon.setAttribute("name", "person-add-outline");
-//             //     inner.classList.remove("green__background");
-//             // }
-//             //app.updateStatsAndDom();
-//         });        
-//     });
-// };
 
 function setUpAspects() {
     if (isElmPresent("aspects-holder")) {
@@ -2095,73 +1586,6 @@ function getRndAspect() {
 }
 
 function buildAspectsSection() {
-    // if (isElmPresent("aspects-holder")) {
-    //     console.log("Aspects elm exists, exiting buildEdgesSection function")
-    //     return;
-    // }
-    // let arrayToUse = arr;
-
-    // //<div class="outer__section" id="aspects-holder">
-    // const divSection = document.createElement("div");
-    // divSection.classList.add("outer__section");
-    // divSection.id = "aspects-holder";
-
-    // //<hr>
-    // //<p class="📝-class"><strong>Aspects:</strong></p>
-    // const hr = document.createElement("hr");
-
-    // const titleP = document.createElement("p");
-    // titleP.classList.add("📝-class");
-    // const strongElement = document.createElement("strong");
-    // strongElement.textContent = "Edges:";
-    // titleP.appendChild(strongElement);
-
-    // // <div class="inner__section" id="aspects-list">
-    // // list of all aspects
-    // const main = document.createElement("div");
-    // main.classList.add("inner__section");
-    // main.classList.add("active");
-    // main.id = "aspects-list"
-
-    // const list = document.createElement("ul");
-    // list.classList.add("ability__sheet__list");
-
-    // const lastChild = document.querySelector("#📝-container")?.lastElementChild;
-    // if (lastChild) {
-    // lastChild.parentNode.insertBefore(divSection, lastChild);
-    // }
-
-
-    // divSection.classList.add("active");
-    
-    // divSection.appendChild(hr);
-    // divSection.appendChild(titleP);
-    // divSection.appendChild(main);
-    // main.appendChild(list);
-
-    // arrayToUse.forEach(item => {
-    //     const inner = document.createElement("div");
-    //     inner.innerHTML = `
-    //     <label class="switch">
-    //         <input type="checkbox" id="incToggle-${toCamelCase(item)}" autocomplete="off">
-    //         <span class="toggle__slider">
-    //             <ion-icon id="icon-${toCamelCase(item)}" name="person-add-outline"></ion-icon>
-    //         </span>
-    //     </label>
-    //     <li>${item}</li>
-    //     `;
-
-    //     list.appendChild(inner);
-
-    //     const toggle = document.getElementById("incToggle-" + toCamelCase(item));
-    //     const icon = document.getElementById("icon-" + toCamelCase(item));
-
-    //     console.log(item.hasIt)
-    //     console.log(toggle)
-
-    //     toggle.checked = false;
-    //     toggle.value = "off"
-    //     icon.setAttribute("name", "person-add-outline");   
     console.log("Aspects sheet was called for.")
 
     const overlay = document.createElement("div");
@@ -2263,38 +1687,7 @@ function buildAspectsSection() {
             }
             console.log(app.aspects)
             app.aspectsToDom();
-            // document.getElementById("📝aspects").textContent = app.aspects.join(", ");
-            // if (app.aspects.length > 0) {
-            //     document.getElementById("📝aspects").classList.add("active")
-            // }
-        });        
-
-        // toggle.addEventListener("change", () => {
-        //     //const listContainer = document.querySelector("#aspects-list"); // Parent container for the list
-        //     const activeItems = main.querySelectorAll(".green__background");
-            
-        //     if (toggle.checked) {
-        //         // Check if the item's text matches any in the array
-        //         if (survivorAspectsArray.includes(obj)) {
-        //             console.log("some match");
-                    
-        //             if (activeItems.length < 2) {
-        //                 icon.setAttribute("name", "person-remove-outline");
-        //                 inner.classList.add("green__background");
-        //                 inner.setAttribute("data-has-it", "true");
-        //                 console.log(`${obj} is active and ready to be removed.`);
-        //             } else {
-        //                 callError("You can only select two Aspects.");
-        //                 toggle.checked = false;
-        //             }
-        //         }
-        //     } else {
-        //         inner.removeAttribute("data-has-it");
-        //         console.log(`${obj} is inactive and ready to be added.`);
-        //         icon.setAttribute("name", "person-add-outline");
-        //         inner.classList.remove("green__background");
-        //     }
-        // });             
+        });            
     });
 };
 
@@ -2321,7 +1714,6 @@ function getItem(checker) {
             app.equipment.push(pickUnique([...drugsArray, ...app.getCurrentPath().gear], 1))
         }
         console.log("Current equipment:", app.equipment)
-        //document.getElementById("rnd-equipment-txt").innerHTML = [...app.getCurrentPath().gear, ...app.equipment].join(", ");
         document.getElementById("rnd-equipment-txt").innerHTML = app.equipment.join(", ");
         document.getElementById("rnd-equipment-txt").classList.add("bold");
     } else { callError("Please pick a Path to begin.") }
@@ -2329,13 +1721,6 @@ function getItem(checker) {
 }
 
 function toggleBuilderSheet(elm, checker, aspect) {
-    //const fullId = findParentByClass(elm, parentClass).id;
-
-    //const parentId = fullId[0] === "a" ? fullId.slice("builderSheet-".length) : fullId.slice("card-".length);
-
-    // if (elm == "path") {
-    //     console.log("SUCCESS")
-    // }
 
     if(checker == true) {
         document.body.style.overflow = "hidden";
@@ -2352,9 +1737,7 @@ function toggleBuilderSheet(elm, checker, aspect) {
 
         const editContainer = document.querySelector('.edit-container');
         editContainer.style.overflow = "auto";
-        //console.log("Before scroll:", editContainer.scrollTop);
         editContainer.scrollTop = 0;
-        //console.log("After scroll:", editContainer.scrollTop);
 
         document.querySelector('.edit-overlay').style.display = 'flex';
         editContainer.style.display = 'block';
@@ -2366,7 +1749,6 @@ function toggleBuilderSheet(elm, checker, aspect) {
 };
 
 function getRndIncl(nameIn) {
-    //app.rollInclination(1, nameIn);
     if(app.getCurrentPath()) {
         app.getRndIncl(nameIn, true);
     } else { callError("Please pick a Path first.")}
@@ -2404,24 +1786,19 @@ function rndAll() {
         console.log("Attempting to select a random Edge...")
         const pickTrue = Math.random() < 0.5;
         app.getCurrentPath().edges.forEach((item, i) => item.hasIt = i === (pickTrue ? 0 : 1));
-        //app.getCurrentPath().edges.forEach(item => item.hasIt = Math.random() < 0.5 ? true : false);
 
-        //const edges = app.getCurrentPath().edges;
         const otherObj = app.getCurrentPath().edges.find(obj => obj.hasIt == true);
         const inner = document.getElementById("edges-li-holder-" + toCamelCase(otherObj.name));
         const toggle = document.getElementById("edgeToggle-" + toCamelCase(otherObj.name));
         const icon = document.getElementById("icon-" + toCamelCase(otherObj.name));
         
         if (otherObj.hasIt) {
-            //icon.setAttribute("name", "person-remove-outline");
-            //inner.classList.add("green__background");
             console.log(toggle)
             toggle.checked = true;
             toggle.dispatchEvent(new Event("change"));
-            //toggle.checked = !toggle.checked;
             console.log(`${otherObj.name} was randomly selected and updated in dom.`);
         } else {
-            //callError("You can only select one Edge.");
+            //TODO: !!!! callError("You can only select one Edge.");
             toggle.checked = false;
         }
         console.log("Verification of Edge selection:", app.getCurrentPath().edges)
@@ -2515,22 +1892,4 @@ function checkInputChange(target) {
         garage.current.description = target.value;
         console.log("Verification of vehicle description change:", garage.current)
     }
-    // if (target.id === `forceCardName-${unit.unitID}`) {
-    //     unit.name = target.value;
-    // }
-    // if (target.id === `editReserves-${unit.unitID}`) {
-    //     unit.reserveCount = target.value;
-    // }
-    // if (target.id === `freeRerolls-${unit.unitID}`) {
-    //     unit.freeRerolls = target.value;
-    // }
-    // if (target.id === `range-${unit.unitID}`) {
-    //     unit.attackRange = target.value;
-    // }
-    // if (target.id === `unitDice-${unit.unitID}`) {
-    //     unit.unitDice = target.value;
-    // }
-    // if (target.id === `maxAbilities-${unit.unitID}`) {
-    //     unit.maxAbilities = target.value;
-    // }
 };
