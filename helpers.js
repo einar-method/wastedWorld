@@ -87,52 +87,6 @@ function makingElements(variable, parentId) {
     parentId.innerHTML = variable;
 }; // Not currently used.
 
-// function clearAll() {
-//     // Get all span elements in the DOM
-//     const spanElements = document.querySelectorAll('span:not(.keep-span)');
-  
-//     // Loop through each span element and remove its innerHTML
-//     for (let i = 0; i < spanElements.length; i++) {
-//         const spanElement = spanElements[i];
-//         spanElement.innerHTML = '';
-//       }
-
-//     // Clear input fields in forms
-//     const formInputElements = document.querySelectorAll('.📝form');
-//     for (let j = 0; j < formInputElements.length; j++) {
-//         const formInputElement = formInputElements[j];
-//         // Check if the input element is not a button or checkbox (adjust as needed)
-//         if (formInputElement.type !== 'button' && formInputElement.type !== 'checkbox') {
-//         formInputElement.value = '';
-//         }
-//     }
-// };
-
-// function runArrLoop(limit, arr) {
-//     let i = 0;
-//     while (i < limit) {
-//         let tempIncl = randomMath(arr);
-//         console.log(tempIncl);
-//         let isDuplicate = false;
-
-//         arr.forEach(obj => {
-//             if (obj.name === tempIncl.name && obj.hasIt) {
-//                 console.log(tempIncl.name + " was a duplicate.");
-//                 isDuplicate = true;
-//             }
-//         });
-
-//         if (!isDuplicate) {
-//             arr.forEach(obj => {
-//                 if (obj.name === tempIncl.name) {
-//                     obj.hasIt = true;
-//                 }
-//             });
-//             i++;
-//         }
-//     };
-// };
-
 function runArrLoop(limit, arr) {
     console.log("Initiating loop looking for " + limit + " item(s).")
     let i = 0;

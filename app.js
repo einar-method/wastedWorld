@@ -25,6 +25,7 @@ function getPath(checker, btn) {
 
 function clearPath() {
     app.resetToDefault();
+    app.aspectsToDom();
 
     document.getElementById("phys-mutations-holder").classList.add("dynamic");
     document.getElementById("mental-mutations-holder").classList.add("dynamic");
@@ -644,17 +645,17 @@ class PC {
     }
 
     aspectsToDom() {
-        if (app.aspects.length == 0) {
+        if (this.aspects.length == 0) {
             document.getElementById("📝aspects").textContent = "Choose or roll (🎲) for 2 Aspects.";
             document.getElementById("📝aspects").classList.remove("bold");
         }
 
-        if (app.aspects.length > 0) {
-            document.getElementById("📝aspects").textContent = app.aspects.join(", ");
+        if (this.aspects.length > 0) {
+            document.getElementById("📝aspects").textContent = this.aspects.join(", ");
             document.getElementById("📝aspects").classList.add("bold")
         }
 
-        if (app.aspects.length == 2) {
+        if (this.aspects.length == 2) {
             console.log("TODO: open next step (gear or name)")
         }
     }
@@ -1351,9 +1352,7 @@ function buildBuilderSheet(elm) {
     header.classList.add("ability__sheet__header-footer");
 
     header.innerHTML = `
-        <div class="orange"></div>
         <h1 class="builder__sheet__title">${sheetName}</h1>
-        <div class="orange"></div>  
     `;
 
     // Footer elements
@@ -1536,46 +1535,7 @@ function buildEdgesSection(arr) {
     });
 };
 
-function setUpAspects() {
-    if (isElmPresent("aspects-holder")) {
-        console.log("Aspects elm exists, exiting setUpAspects function");
-        return;
-    }
 
-    const aspectsHolder = document.createElement("div");
-    aspectsHolder.className = "inner__section";
-    aspectsHolder.id = "aspects-holder";
-
-    const aspectsBox = document.createElement("div");
-    aspectsBox.className = "📝box";
-    aspectsBox.id = "aspects-box";
-
-    const buildBtn = document.createElement("button");
-    buildBtn.className = "form-btn";
-    buildBtn.textContent = "Choose Aspects";
-    buildBtn.onclick = () => toggleBuilderSheet("aspects", true, true);
-
-    const randomButton = document.createElement("button");
-    randomButton.className = "form-btn";
-    randomButton.innerHTML = "🎲";
-    randomButton.onclick = getRndAspect;
-
-    //<p class="green-box" id="📝path">Click 'Build' or 🎲 for a random ones.</p>
-    const pBox = document.createElement("p");
-    pBox.className = "green-box";
-    pBox.id = "📝aspects";
-    pBox.textContent = "Click 'Build' or 🎲 for a random ones."
-
-    aspectsBox.append(buildBtn, randomButton);
-    aspectsHolder.appendChild(aspectsBox);
-    aspectsBox.appendChild(pBox);
-
-    const lastChild = document.querySelector("#📝-container")?.lastElementChild;
-    if (lastChild) {
-        lastChild.parentNode.insertBefore(aspectsHolder, lastChild);
-    }
-    aspectsHolder.classList.add("active")
-};
 
 function getRndAspect() {
     if(!app.getCurrentPath()) {
@@ -1601,9 +1561,7 @@ function buildAspectsSection() {
     header.classList.add("ability__sheet__header-footer");
 
     header.innerHTML = `
-        <div class="orange"></div>
         <h1 class="builder__sheet__title">Aspects</h1>
-        <div class="orange"></div>  
     `;
 
     // Footer elements
