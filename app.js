@@ -26,31 +26,43 @@ function getPath(checker, btn) {
 
 function clearPath() {
     app.resetToDefault();
+    // document.querySelectorAll(".inner__section").forEach( elm => {
+    //     elm.classList.remove("active");
+    // });
+    
+    document.getElementById("phys-mutations-holder").classList.remove("active");
+    document.getElementById("mental-mutations-holder").classList.remove("active");
+    document.getElementById("dna-mods-holder").classList.remove("active");
+    document.getElementById("bio-synth-holder").classList.remove("active");
 
-    // document.getElementById("📝path").innerHTML = "";
-    // document.getElementById("📝boons").innerHTML = "";
-    // document.getElementById("📝features").innerHTML = "";
-    // document.getElementById("📝strikes").innerHTML = "";
-    // document.getElementById("📝armor").innerHTML = "";
-    // document.getElementById("📝aSave").innerHTML = "";
-    // document.getElementById("📝mSave").innerHTML = "";
 
-    document.querySelectorAll(".inner__section").forEach( elm => {
-        elm.classList.remove("active");
-    });
+    document.getElementById("incl-tip-main").innerHTML = "";
+    
+    document.getElementById("edges-list").innerHTML = "";
+    const ul = document.createElement('ul');
+    ul.classList.add('ability__sheet__list');
+    
+    const li = document.createElement('li');
+    li.textContent = 'First, pick a Path';
+    
+    ul.appendChild(li);
+    document.getElementById("edges-list").appendChild(ul);
+    
+    
     document.querySelectorAll(".green-box").forEach( elm => {
         elm.classList.remove("bold");
     });
-    document.getElementById("incl-header").classList.remove("active");
-    document.getElementById("talents-holder").classList.remove("active");
+    //document.getElementById("incl-header").classList.remove("active");
+    //document.getElementById("talents-holder").classList.remove("active");
     document.getElementById("📝path").textContent = defPathMsg;
+    document.getElementById("all-incl-list").textContent = defEquipmentMsg;
     document.getElementById("📝gear").textContent = defEquipmentMsg;
     document.getElementById("rnd-equipment-txt").textContent = defRndItemMsg;
     document.getElementById("📝name").value = "";
     console.log("Verifying character is reset to default", app)
 };
 
-/// PC Reset ///
+/// Can Remove ?///
 function reset() {
     //selectBtn.firstElementChild.innerText = "Select a Path";
     document.querySelectorAll('.🌠').forEach(function(el) {
