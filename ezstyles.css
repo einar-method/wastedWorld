@@ -1,40 +1,15 @@
-@import url('https://fonts.googleapis.com/css2?family=Finger+Paint&family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&family=Road+Rage&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Alegreya:ital,wght@0,400..900;1,400..900&display=swap');
 
-* {
-  /* font-family: "Finger Paint", serif; */
-  /* font-family: "Newsreader", serif; */
-  /* font-family: 'Times New Roman', Times, serif; */
-  /* font-weight: 600; */
-  font-style: normal;
-  /* line-height: 1.1rem; */
+
+:root {
+  --green-color: #63AE32;
 }
 
-.main__header {
-  /* src: local('TheyPerished'), url(../wastedWorld/Assets/TheyPerished.ttf) format('truetype');
-  font-family: "TheyPerished", serif; */
-  /* font-weight: 400;
-  font-style: normal; */
-  font-family: 'Road Rage','Times New Roman', Times, serif;
-  font-size: xx-large;
-}
-
-.finger-paint-regular {
-  font-family: "Finger Paint", serif;
-  font-weight: 400;
-  font-style: normal;
-}
-
-.newsreader {
-  font-family: "Newsreader", serif;
-  font-optical-sizing: auto;
-  font-weight: 400;
-  font-style: normal;
-}
 
 body {
   margin: 0;
   /* background-color: #7e7e7e; */
-  background-image: url('Assets/wastedWorldBackgroundBordersWhite.webp'); /* Path to your image */
+  background-image: url('Assets/wastedWorldBackgroundBordersWhite.webp');
   background-size: 100% auto; /* Stretch to full width, auto height */
   background-repeat: repeat-y; /* Repeat vertically */
   background-position: top center; /* Center horizontally */
@@ -51,7 +26,7 @@ body {
     "f M g"
     "h i j";
 
-  grid-template-rows: 3rem auto auto 3rem;
+  grid-template-rows: 75px auto auto 3rem;
   grid-template-columns: 3rem auto 3rem;
 }
 
@@ -194,6 +169,7 @@ fieldset {
   text-align: center;
   justify-content: center;
   /*   font-size: 3.2vmin; */
+  font-size: 14px;
   transition: 0.2s all ease-in-out;
   width: 100%;
   font-weight: normal;
@@ -674,7 +650,7 @@ input[type="number"] {
   text-align: center;
   font-weight: bold;
   border-radius: 5px;
-  background-color: #99ca3c;
+  background-color: #63AE32;
   color: black;
 }
 .green-box {
@@ -683,7 +659,10 @@ input[type="number"] {
   border-radius: 4px;
   background-color: white;
   color: rgb(59, 59, 59);
-  font-weight: normal;
+  font-style: normal;
+  font-family: "Alegreya", Times, serif;
+  font-size: 16px;
+  font-optical-sizing: auto;
   height: 25px;
   width: 100%;
   transition: all 0.3s ease;
@@ -775,7 +754,11 @@ p {
 
 .edit-container {
   /* background: url("assets/imgs/wmbg.webp") center/cover repeat; */
-  background-color: #7e7e7e;
+  background-color: white;
+  background-image: url('Assets/wastedWorldBackgroundBordersWhite.webp');
+  background-size: 100% auto; /* Stretch to full width, auto height */
+  background-repeat: repeat-y; /* Repeat vertically */
+  background-position: top center; /* Center horizontally */
   padding: 20px;
   width: 100%;
   height: 100%;
@@ -805,26 +788,38 @@ p {
   padding-right: 4px;
 }
 
-.ability__sheet__header-footer {
+/* .ability__sheet__header-footer {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   place-content: center;
   padding-bottom: .3rem;
-}
+} */
 
 .ability__sheet__header-footer div {
   width: 100%;
 }
 
-.ability__sheet__header-footer h2 {
+.ability__sheet__header-footer h1 {
   text-align: center;
+  font-family: "Alegreya", Times, serif;
+  font-optical-sizing: auto;
+  font-style: italic;
+  text-transform: uppercase;
+  font-weight: bold;
 }
 
-.ability__sheet__header-footer button {
+.ability__sheet__header-footer h2 {
   background-color: transparent;
   border: none;
   cursor: pointer;
   text-decoration: underline;
+
+  text-align: center;
+  font-family: "Alegreya", Times, serif;
+  font-optical-sizing: auto;
+  font-style: italic;
+  text-transform: uppercase;
+  font-weight: bold;
 }
 
 .ability__sheet__list {
@@ -866,12 +861,16 @@ p {
   align-self: center;
   width: 100%;
   display: block;
+  font-style: normal;
+  font-family: "Alegreya", Times, serif;
+  font-optical-sizing: auto;
 }
 .ability__sheet__list li strong {
   /* font-weight: bold; */
   display: inline;
   white-space: nowrap;
   word-break: keep-all;
+  font-weight: 600;
 }
 .ability__sheet__list.simple {
   width: 100%;
@@ -975,6 +974,8 @@ p {
   padding: .2rem;
   outline: 2px solid transparent;
   transition: .3s all ease-in-out;
+  /* font-size: smaller; */
+  /* height: 25px; */
 }
 .textarea__dynamic:focus {
   outline: 2px dashed #BA6F35;
@@ -991,6 +992,11 @@ p {
 }
 .section__title {
   text-align: center;
+  font-family: "Alegreya", Times, serif;
+  font-optical-sizing: auto;
+  font-style: italic;
+  text-transform: uppercase;
+  font-weight: bold;
   background-color: #000;
   color: white;
 }
@@ -1053,7 +1059,7 @@ input:checked + .toggle__slider ion-icon {
 @media (min-width: 1024px) {
   .grid {
     gap: 0.8rem 0;
-    grid-template-rows: 3rem auto auto 3rem;
+    grid-template-rows: 100px auto auto 3rem;
     grid-template-columns: 8rem auto 8rem;
   }
 }

@@ -1636,7 +1636,7 @@ function buildBuilderSheet(elm) {
 
     header.innerHTML = `
         <div class="orange"></div>
-        <h2 class="builder__sheet__title">${sheetName}</h2>
+        <h1 class="builder__sheet__title">${sheetName}</h1>
         <div class="orange"></div>  
     `;
 
@@ -1644,9 +1644,7 @@ function buildBuilderSheet(elm) {
     const footer = document.createElement("div");
     footer.classList.add("ability__sheet__header-footer");
     footer.innerHTML = `
-        <div class="orange"></div>
-        <button type="button" onclick="toggleBuilderSheet(this, false, 'edit-overlay')">Save & Close</button>
-        <div class="orange"></div>
+        <h2 type="button" onclick="toggleBuilderSheet(this, false, 'edit-overlay')">Save & Close</h2>
     `;
 
     const main = document.createElement("div");
@@ -2188,9 +2186,7 @@ function buildAspectsSection() {
     const footer = document.createElement("div");
     footer.classList.add("ability__sheet__header-footer");
     footer.innerHTML = `
-        <div class="orange"></div>
-        <button type="button" onclick="toggleBuilderSheet(this, false, 'edit-overlay')">Save & Close</button>
-        <div class="orange"></div>
+        <h2 type="button" onclick="toggleBuilderSheet(this, false, 'edit-overlay')">Save & Close</h2>
     `;
 
     const main = document.createElement("div");
@@ -2506,6 +2502,9 @@ function setUpTextAreas() {
 setUpTextAreas()
 
 function checkInputChange(target) {
+    if(!garage.current) {
+        return;
+    }
     if (target.id === "vehNameDef") {
         console.log("Changing vehicle name from " + garage.current.name + " to " + target.value + "...")
         garage.current.name = target.value;
