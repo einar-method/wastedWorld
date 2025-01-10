@@ -55,25 +55,25 @@ function rrDisplay(textIn, titleIn) {
     document.getElementById("all-roll").innerHTML = textIn;
     document.getElementById("rr-result-name").textContent = titleIn;
     document.getElementById("🎲").open = true;
-    document.getElementById("🎲").classList.add("active");
+    //document.getElementById("🎲").classList.add("active");
     fadeInElements(["🎲"]);
 };
 
 
 function clearDiceResults() {
     dialogFade(document.getElementById("🎲"), 0);
-    dialogFade(document.getElementById("stock-hold-result"), 0);
+    //dialogFade(document.getElementById("stock-hold-result"), 0);
     
     document.getElementById("🎲").classList.remove("active");
-    document.getElementById("stock-hold-result").classList.remove("active");
+    //document.getElementById("stock-hold-result").classList.remove("active");
 
 
-    const largeDialog = document.getElementById("stock-hold-result");
-    if (largeDialog.innerHTML != "") {
-        setTimeout(() => {
-            largeDialog.innerHTML = "";
-        }, 1000);
-    } // this prevents a small black box from showing
+    // const largeDialog = document.getElementById("stock-hold-result");
+    // if (largeDialog.innerHTML != "") {
+    //     setTimeout(() => {
+    //         largeDialog.innerHTML = "";
+    //     }, 1000);
+    // } // this prevents a small black box from showing
     
 };
 
@@ -105,6 +105,7 @@ function stockHold() {
     
     const moddedMelee = rollDice(1, 6)[0] === 6 ? 
         randomMath(moddedMeleeArr) : null;
+        //TODO: check the array above
     ;
 
     const weaponRolls = rollItems(survivors * 2, wwWeaponsArr, 20);
@@ -150,9 +151,8 @@ function rollItems(count, array, faces) {
 };
 
 function displayStockResults(results) {
-    const output = document.createElement('section');
-    output.innerHTML = `
-        <h2>Stock Hold Results</h2>
+    //const output = document.createElement("div");
+    const output = `
         <ul class="ability__sheet__list simple">
             <li><strong>Standard Hold Gear:</strong> ${results.lootRoll}</li>
             <li><strong>Drugs:</strong> ${results.drugRolls.join(", ")}</li>
@@ -166,10 +166,12 @@ function displayStockResults(results) {
         </ul>
     `;
 
-    document.getElementById("stock-hold-result").appendChild(output);
-    document.getElementById("stock-hold-result").open = true;
-    document.getElementById("stock-hold-result").classList.add("active");
-    fadeInElements(["stock-hold-result"]);
+    rrDisplay(output, "Stock Hold Results:");
+
+    //document.getElementById("stock-hold-result").appendChild(output);
+    // document.getElementById("stock-hold-result").open = true;
+    // document.getElementById("stock-hold-result").classList.add("active");
+    // fadeInElements(["stock-hold-result"]);
 };
 
 function createMission() {
@@ -195,9 +197,8 @@ function createMission() {
 };
 
 function displayMission(results) {
-    const output = document.createElement('section');
-    output.innerHTML = `
-        <h2>Random Mission</h2>
+    //const output = document.createElement('section');
+    const output = `
         <ul class="ability__sheet__list simple">
             <li><strong>You Bump Into:</strong> ${results.bump}</li>
             <li><strong>Ok, So the Mission Is:</strong> ${results.mission}</li>
@@ -208,8 +209,10 @@ function displayMission(results) {
         </ul>
     `;
 
-    document.getElementById("stock-hold-result").appendChild(output);
-    document.getElementById("stock-hold-result").open = true;
-    document.getElementById("stock-hold-result").classList.add("active");
-    fadeInElements(["stock-hold-result"]);
+    rrDisplay(output, "Random Misssion:");
+
+    // document.getElementById("stock-hold-result").appendChild(output);
+    // document.getElementById("stock-hold-result").open = true;
+    // document.getElementById("stock-hold-result").classList.add("active");
+    // fadeInElements(["stock-hold-result"]);
 };

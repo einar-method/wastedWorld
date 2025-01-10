@@ -292,15 +292,6 @@ dialog {
   transition: all 0.4s ease-in-out;
 }
 
-.dice-results {
-  display: grid;
-  grid-template-rows: 1fr 1fr;
-  /* grid-template-rows: repeat(3, minmax(0, 1fr)); */
-  gap: .15rem;
-  /* display: flex;
-  flex-direction: column; */
-}
-
 #error {
   position: fixed;
   top: 50%;
@@ -318,19 +309,14 @@ dialog {
 }
 
 .rr__results {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
   width: 100%;
   height: 100%;
   position: relative;
-  box-sizing: border-box; /* Include padding and border in the element's total width and height */
+  box-sizing: border-box;
 }
-.rr__results.active {
-  grid-row: 1 / 3; /* Span from row 1 to 3 (covers both rows) */
-  z-index: 2000;      /* Ensures it overlaps other content */
-}
-/* #stock-hold-result {
-  align-self: stretch;
-  order: -1;
-} */
 
 .📝builder-btns {
   height: 25px;
