@@ -110,7 +110,7 @@ class PC {
         this.equipment = [];
         this.scrolls = [];
         this.potions = [];
-        this.karma = "";
+        this.karma = 3;
         this.strikes = "";
         this.armorType = "";
         this.armorSave = "";
@@ -533,7 +533,7 @@ class PC {
                 avoidance: 6,
                 miasmaResist: "1D6",
                 wealth: "Hard-Up",
-                gear: ["Cobbled pistol", "cobbled melee weapon", "junk armor", "backpack", "musical instrument of choice", "pain away (X2)", "supplies (X3)", "memento"],
+                gear: ["Cobbled pistol", "cobbled melee weapon", "junk armor", "musical instrument of choice", "backpack", "pain away (X2)", "supplies (X3)", "memento"],
                 pathIncls: [
                     { name: "Traveling Thespian", hasIt: false, id: "7-1", description: "Boon to performance, gambling, and sleight of hand." },
                     { name: "Distraction", hasIt: false, id: "7-2", description: "When an ally takes a strike, roll 1D6. On a 6, prevent the strike." }
@@ -629,9 +629,22 @@ class PC {
     // Initializes a random character
     init() {
         this.path = randomMath(pathsArray);
+        this.karma = 3;
         this.applyPathAttributes();
         this.aspects = pickUnique(survivorAspectsArray, 2);
         this.addRandomGear();
+    }
+
+    checkAllReady() {
+        if(!this.getCurrentPath()) return {check: false, msg: "Please select or roll for a Path."};
+        if(this.calcAllIncl().length < 3) return {check: false, msg: "Please select or roll for remaining Inclinations."};
+        if(!this.getCurrentPath().edges.find(e => e.hasIt)) return {check: false, msg: "Please select an Edge."};
+        if(this.aspects.length < 2) return {check: false, msg: "Please select or roll for two Aspects."};
+        if(this.name == "") return {check: false, msg: "Please type in or roll for a name."};
+        if(this.equipment.length < 1) return {check: false, msg: "Please select or roll for 1 weapon, gear, or drug."};
+        if(this.getCurrentPath()) return {check: true, msg: "Passed all checks, ready for PDF export..."};
+        // TODO: Inclinations check needs to be more robust
+        // TODO: Allow bypass of aspects according to book?
     }
 
     getRandomEdge() {
@@ -1728,8 +1741,14 @@ const observer = new MutationObserver(() => {
 observer.observe(pathElement, { childList: true, subtree: true });
 
 function fillForm() {
-    callError("Exporter coming soon...");
-}
+    const checker = app.checkAllReady();
+    if(checker.check == false) {
+        callError(checker.msg);
+    } else { 
+        generateCharacterPDF();
+        console.log(checker.msg);
+    }
+};
 
 function rndAll() {
     console.log("Initiating a completely random Survivor...");

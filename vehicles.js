@@ -362,7 +362,7 @@ class Garage {
 };
 
 const garage = new Garage;
-console.log("All vehicles:", garage.getAllVeh().map(v => v.name).join(", "));
+//console.log("All vehicles:", garage.getAllVeh().map(v => v.name).join(", "));
 
 //const defaultVehicles = createDefaultVehicles();
 //console.log(defaultVehicles);

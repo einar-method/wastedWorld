@@ -1,155 +1,144 @@
-///// PDF Stuff /////
-const { degrees, PDFDocument, rgb, StandardFonts, PDFTextField, PDFRadioGroup, PDFDropdown } = PDFLib
+///// PDF Exporter Functions /////
+const { PDFDocument, rgb } = PDFLib;
 
-const btn = document.querySelector('#fillForm');
+async function generateCharacterPDF() {
+    try {
+        // Load the background image
+        const backgroundImageUrl = '/Assets/csheet.jpg';
+        const backgroundBytes = await fetch(backgroundImageUrl).then(res => res.arrayBuffer());
 
-// pdfBtn.addEventListener("click", fillForm);
-// pdfBtn.addEventListener("click", () => {
-//     fillForm()
-//       .then(() => {
-//         console.log("Form filled successfully!");
-//       })
-//       .catch((error) => {
-//         console.log("Error:", error)
-//         const erMsg = "Not enough info to complete character sheet";
-//         callError(erMsg);
-//       });
-// });
+        // Create a new PDF
+        const pdfDoc = await PDFDocument.create();
 
-async function fillForm() {
-    // Fetch the PDF with form fields
-    const formUrl = "Assets/ezd6PCform.pdf";
-    const formPdfBytes = await fetch(formUrl).then(res => res.arrayBuffer());
+        // Add a page and set dimensions
+        const page = pdfDoc.addPage([600, 800]); // Width x Height
 
-    // Load a PDF with form fields
-    const pdfDoc = await PDFDocument.load(formPdfBytes);
+        // Embed the background image
+        const bgImage = await pdfDoc.embedJpg(backgroundBytes);
+        page.drawImage(bgImage, {
+            x: 0,
+            y: 0,
+            width: page.getWidth(),
+            height: page.getHeight(),
+        });
 
-    // Get the form containing all the fields
-    const form = pdfDoc.getForm();
+        // Define the character's properties
+        const character = {
+            name: app.name,
+            aspectA: app.aspects[0],
+            aspectB: app.aspects[1],
+            edge: app.getCurrentPath().edges.find(a => a.hasIt == true).name,
+            ...Array.from({ length: app.calcAllIncl().length }, (_, index) => {
+                return { [`inclination${index + 1}`]: app.calcAllIncl()[index].name };
+            }).reduce((acc, curr) => ({ ...acc, ...curr }), {}), // Merge
+            // inclination1: app.calcAllIncl()[0].name,
+            // inclination2: app.calcAllIncl()[1].name,
+            // inclination3: app.calcAllIncl()[2].name,
+            // inclination4: app.calcAllIncl()[3].name,
+            // inclination5: app.calcAllIncl()[4].name,
+            // inclination6: app.calcAllIncl()[5].name,
+            armor: app.getCurrentPath().armor.value,
+            avoidance: app.getCurrentPath().avoidance,
+            miasma: app.getCurrentPath().miasmaResist,
+            karma: app.karma,
+            path: app.getCurrentPath().name,
+            items: "ITEMS",
+            equip1: app.equipment[0],
+            ...Array.from({ length: 5 }, (_, index) => {
+                const gearStart = index * 2; // Start index for gear pairs
+                const gearEnd = gearStart + 2; // End index for gear pairs
+                return { [`equip${index + 2}`]: app.gear.slice(gearStart, gearEnd).join(", ") };
+            }).reduce((acc, curr) => ({ ...acc, ...curr }), {}), // Merge into character object
+            // equip2: `${app.gear[0]},  ${app.gear[1]}`,
+            // equip3: `${app.gear[2]},  ${app.gear[3]}`,
+            // equip4: `${app.gear[4]},  ${app.gear[5]}`,
+            // equip5: `${app.gear[6]},  ${app.gear[7]}`,
+            // equip6: `${app.gear[8]},  ${app.gear[9]}`,
+            //equip2: app.gear[1],
+            // equip2: app.gear[0],
+            // equip2: app.gear[0],
+            // equip2: app.gear[0],
+            // equip1: app.gear[app.gear.length -1],
+        };
 
-    //Find form fields and set the default font size
-    const fields = form.getFields();
+        // Set the font and write the character data on the page
+        const font = await pdfDoc.embedFont(PDFLib.StandardFonts.Helvetica);
+        const fontSize = 12;
 
-    fields.forEach(field => {
+        // Define x and y positions for each property
+        const propertyPositions = {
+            name: { x: 200, y: 725 },
+            aspectA: { x: 150, y: 637 },
+            aspectB: { x: 150, y: 602 },
+            edge: { x: 400, y: 618 },
+            // inclination1: { x: 90, y: 475 },
+            // inclination2: { x: 90, y: 445 },
+            // inclination3: { x: 90, y: 415 },
+            // inclination4: { x: 90, y: 385 },
+            armor: { x: 374, y: 290 },
+            avoidance: { x: 455, y: 263 },
+            miasma: { x: 528, y: 285 },
+            karma: { x: 523, y: 174,},
+            path: { x: 250, y: 679 },
+            items: { x: 171, y: 234 },
+            equip1: { x: 90, y: 231 },
+            // equip2: { x: 90, y: 173 },
+            // equip3: { x: 90, y: 144 },
+            // equip4: { x: 90, y: 115 },
+            // equip5: { x: 90, y: 86 },
+            // equip6: { x: 90, y: 57 },
+        };
 
-        if (field instanceof PDFTextField) {
-            const type = "Text Field";
-            const name = field.getName();
-            console.log(`${type}: ${name}`);
+        const maxInclItems = Math.min(app.calcAllIncl().length, 10);
+        const inclStartY = 475;
+        const inclX = 90;
+        const itemLinepacing = 29; // Spacing between each item
+
+        for (let i = 1; i <= maxInclItems; i++) {
+            propertyPositions[`inclination${i}`] = {
+                x: inclX,
+                y: inclStartY - (i - 1) * itemLinepacing,
+            };
         }
-        if (field instanceof PDFRadioGroup) {
-            const type = "Radio Group";
-            const name = field.getName();
-            const options = field.getOptions()
-            console.log(`${type}: ${name} | ` + 'Options:', options);
+
+        const maxGearItems = app.gear.length; // Define maximum number of gear items
+        const gearStartY = 202; // Starting Y position for gear items
+        const gearX = 90; // Fixed X position for gear items
+        //const gearSpacing = 29; // Spacing between each item
+
+        for (let i = 1; i <= maxGearItems; i++) {
+            propertyPositions[`equip${i}`] = {
+                x: gearX,
+                y: gearStartY - (i - 1) * itemLinepacing, // Adjust Y position based on index
+            };
         }
-        if (field instanceof PDFDropdown) {
-            const type = "Dropdown";
-            const name = field.getName();
-            const options = field.getOptions()
-            console.log(`${type}: ${name} | ` + 'Options:', options)
-        }
-    });
 
-    // Set metadata
-    pdfDoc.setTitle("EZD6 CS");
-    pdfDoc.setAuthor("EZ Tools, by TBG");
+        Object.keys(character).forEach((key) => {
+            if (propertyPositions[key]) {
+                const { x, y } = propertyPositions[key];
+                page.drawText(`${character[key]}`, {
+                    x: x,
+                    y: y,
+                    size: fontSize,
+                    font: font,
+                    color: rgb(0, 0, 0), // Black
+                });
+            }
+        });
 
-    // Get all fields in the PDF by their names
-    const nameField = form.getTextField('Name');
-    const speciesField = form.getTextField('Species');
-    const inclField = form.getTextField('Inclinations');
-    inclField.setFontSize(12); //default huge for some reason
+        // Save the PDF
+        const pdfBytes = await pdfDoc.save();
 
-
-    const boonsField = form.getTextField('Boons');
-    const sorcDetailsField = form.getTextField('Sorcery');
-    const gearField = form.getTextField('Equipment');
-    const karmaDrop = form.getDropdown('Karma');
-    const karmaOptions = karmaDrop.getOptions();
-
-    const wealthGroup = form.getRadioGroup('Group1');
-    const wealthOptions = wealthGroup.getOptions();
-
-    const detailsField = form.getTextField('Equipment 2');
-    const featuresField = form.getTextField('Features');
-    featuresField.setFontSize(13); //default strange size
-
-    const sorcCircleField = form.getTextField('Circle');
-    const armorField = form.getTextField('Armor');
-
-    const potionsField = form.getTextField('Potions');
-    const scrollsField = form.getTextField('Scrolls');
-    const weaponsField = form.getTextField('Weapons');
-    const pathField = form.getTextField('Path');
-    const strikesField = form.getTextField('Strikes');
-    strikesField.setFontSize(60); //more legible
-    strikesField.setAlignment(1); //1 for center in pdf-lib
-
-    const heroDrop = form.getDropdown('Hero Die');
-    const heroOptions = heroDrop.getOptions();
-
-    const aSaveDrop = form.getDropdown('Armor Save');
-    aSaveDrop.setOptions(['2+', '3+', '4+', '5+', '6'])
-    const aSaveOptions = aSaveDrop.getOptions();
-
-    const healthField = form.getTextField('Health');
-    const aspectsField = form.getTextField('Aspects');
-
-    // Fill in pdf fields
-    //if (app.name) {nameField.setText(app.name)};
-    nameField.setText(app.name)
-    speciesField.setText(app.species);
-    wealthGroup.select(wealthOptions[wealthDropFix]);
-    
-    if (app.inclinations.length <= 0) {
-        getInclinations(1);
-        console.log("Auto rolled Inclinations")
-    };
-
-    inclField.setText(
-        app.inclinations.join('\n')
-    );
-
-    karmaDrop.select(karmaOptions[app.karma]);
-    
-    if (app.boons) {boonsField.setText(app.boons.join(", "))};
-
-    if (app.path === "Conjurer") {
-        sorcCircleField.setText(app.circleTxt);
-        sorcDetailsField.setText("Pages 35-39 detail the Circles of Sorcery. ");
+        // Trigger download
+        const blob = new Blob([pdfBytes], { type: "application/pdf" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = `${character.name}_Character_Sheet.pdf`;
+        a.click();
+        URL.revokeObjectURL(url);
+    } catch (error) {
+        console.error(error)
+        callError("Error generating PDF. Please insure all info is completed.");
     }
-    
-    gearField.setText(app.equipment.join(", "));
-    detailsField.setText(app.description);
-    featuresField.setText(app.features);
-    
-    armorField.setText("M. Save: " + app.miracleSave);
-
-    //heroDrop.select(heroOptions[1]); //set by default
-    
-    aSaveDrop.select(aSaveOptions[aSaveOption]);
-
-    healthField.setText(app.strikes);
-    aspectsField.setText(app.story);
-
-    if (app.potions) {
-        potionsField.setText(
-            app.potions.join('\n'),
-        );
-    };
-    if (app.scrolls) {
-        scrollsField.setText(
-            app.scrolls.join('\n'),
-        );
-    };
-    weaponsField.setText("Decide on your weaponry (pg. 40)");
-    pathField.setText(app.path);
-    strikesField.setText(app.strikes);
-
-    // Serialize the PDFDocument to bytes (a Uint8Array)
-    const pdfBytes = await pdfDoc.save();
-
-    // Trigger the browser to download the PDF document
-    download(pdfBytes, app.name, "application/pdf");
 };
