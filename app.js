@@ -1251,8 +1251,8 @@ class PC {
             this.paths.forEach(p => p.hasIt = false);  // Reset all paths
             randomPath.hasIt = true;  // Set the selected path to active
         } else if (checker == 2) { // custom builder manual
-            const randomPath = this.paths.find(obj => obj.name === nameIn);
-            randomPath.hasIt = true;
+            const customPath = this.paths.find(obj => obj.name === nameIn);
+            customPath.hasIt = true;
         }
     
         this.applyPathAttributes();
@@ -1415,15 +1415,23 @@ function buildBuilderSheet(elm) {
         toggle.addEventListener("change", () => {
             if (toggle.checked) {
                 if (sheetID == "path") {
-                    icon.setAttribute("name", "person-remove-outline");
-                    inner.classList.add("green__background");
-                    console.log(`${inc.name} is being set as the active Path...`);
-                    app.getPath(2, inc.name);
+                    if(app.getCurrentPath()) {
+                        console.error("path already")
+                        toggle.checked = false;
+                        callError("Only one Path may be chosen.");
+                        return
+                    } else if (!app.getCurrentPath()) {
+                        icon.setAttribute("name", "person-remove-outline");
+                        inner.classList.add("green__background");
+                        console.log(`${inc.name} is being set as the active Path...`);
+                        app.getPath(2, inc.name);
 
-                    const onTimeout = () => {
-                        toggleBuilderSheet(this, false, 'edit-overlay');
-                    };
-                    setTimeout(onTimeout, 800);
+                        const onTimeout = () => {
+                            toggleBuilderSheet(this, false, 'edit-overlay');
+                        };
+                        setTimeout(onTimeout, 600);
+                    }
+                    
                     console.log("Verifying new Path is updated:", app)
                     
                 } else if (sheetID == "vehicle") {
